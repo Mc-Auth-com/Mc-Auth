@@ -1,3 +1,5 @@
+const Utils = require('../utils');
+
 const { Pool } = require('pg');
 const pool = new Pool({
   host: require('./../storage/db.json')['host'],
@@ -118,43 +120,23 @@ module.exports = {
 
         callback(null, res.rows.length > 0 ? res.rows[0] : null);
       });
-  },
-
-  /* Queue: UserAgent */
-  /**
-   * @param {String} userAgent 
-   * @param {Boolean} internal 
-   * @param {Function} callback 
-   */
-  // getAgentID(userAgent, internal, callback) {
-  //   if (userAgent && userAgent.length > 255) {
-  //     userAgent = userAgent.substring(0, 252) + '...';
-  //   }
-
-  //   pool.connect((err, con, done) => {
-  //     if (err) return callback(err);
-
-  //     con.query(`SELECT "ID" FROM "QueuingAgents" WHERE "Agent"=$1 AND "Internal"=$2;`,
-  //       [userAgent, internal], (err, res) => {
-  //         if (err) {
-  //           done();
-  //           return callback(err);
-  //         }
-
-  //         if (res.rowCount <= 0) {
-  //           return con.query(`INSERT INTO "QueuingAgents" ("Agent","Internal") VALUES ($1,$2) RETURNING "ID";`,
-  //             [userAgent, internal], (err, res) => {
-  //               done();
-
-  //               if (err) return callback(err);
-
-  //               callback(null, res.rows[0]['ID']);
-  //             });
-  //         }
-  //         done();
-
-  //         return callback(null, res.rows[0]['ID']);
-  //       });
-  //   });
-  // }
+  }
 };
+
+/* Maintenance */
+
+setInterval(async () => {
+  pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+    [], (err, res) => {
+      if (err) return Utils.logAndCreateError(err);
+
+      console.log(`Deleted ${res.rowCount} stale grants`);
+    });
+
+  pool.query(`DELETE FROM otp WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+    [], (err, res) => {
+      if (err) return Utils.logAndCreateError(err);
+
+      console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
+    });
+}, 3 * 24 * 60 * 60 * 1000 /* 3d */);
