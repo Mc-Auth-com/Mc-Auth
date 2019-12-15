@@ -76,7 +76,7 @@ app.use(require('express-session')({
   saveUninitialized: false,
   rolling: true,
   unset: 'destroy',
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
+  cookie: { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
 }));
 
 // Default response headers
