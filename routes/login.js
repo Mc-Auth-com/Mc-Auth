@@ -55,7 +55,7 @@ router.get('/verify', (req, res, next) => {
     otp = req.query.otp;
 
   if (!uuid || !Utils.isUUID(uuid)) return next(Utils.createError(400, 'Missing or invalid parameter: uuid'));
-  if (!otp || otp.length != 6) return next(Utils.createError(400, 'Missing or invalid parameter: otp'));
+  if (!otp || typeof otp != 'string' || otp.length != 6) return next(Utils.createError(400, 'Missing or invalid parameter: otp'));
 
   db.invalidateOneTimePassword(uuid, otp, (err, success) => {
     if (err) return next(Utils.logAndCreateError(err));

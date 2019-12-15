@@ -38,13 +38,13 @@ router.get('/authorize/:grantID', (req, res, next) => {
         db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
           if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
 
-          return res.redirect(redirectURI + `#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${state ? '?state=' + state : ''}`);
+          return res.redirect(redirectURI + `#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${state ? '?state=' + encodeURIComponent(state) : ''}`);
         });
       } else {
         db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
           if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
 
-          return res.redirect(redirectURI + `?code=${encodeURIComponent(token)}&expires_in=${300}${state ? '?state=' + state : ''}`);
+          return res.redirect(redirectURI + `?code=${encodeURIComponent(token)}&expires_in=${300}${state ? '?state=' + encodeURIComponent(state) : ''}`);
         });
       }
     });
@@ -135,22 +135,6 @@ router.get('/authorize', (req, res, next) => {
       });
     });
   });
-
-  // db.getApplication(clientID, (err, app) => {
-  //   if (responseType == 'token') {
-  //     db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
-  //       if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
-
-  //       return res.redirect(redirectURI + `#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${state ? '?state=' + state : ''}`);
-  //     });
-  //   } else {
-  //     db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
-  //       if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
-
-  //       return res.redirect(redirectURI + `?code=${encodeURIComponent(token)}&expires_in=${300}${state ? '?state=' + state : ''}`);
-  //     });
-  //   }
-  // });
 });
 
 router.post('/token', (req, res, next) => {

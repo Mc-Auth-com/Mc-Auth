@@ -186,6 +186,8 @@ module.exports = {
 
   Minecraft: {
     getUsername(uuid, callback) {
+      if (!uuid) return callback(null, null);
+
       uuid = uuid.toLowerCase().replace(/-/g, '');
 
       const cached = mcUsernameCache.get(uuid);
