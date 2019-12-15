@@ -1,0 +1,39 @@
+{
+  "name": "mc-auth-web",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Sprax2013",
+  "license": "MIT",
+  "homepage": "https://mc-auth.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mc-Auth-com/Mc-Auth-Web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mc-Auth-com/Mc-Auth-Web/issues"
+  },
+  "dependencies": {
+    "connect-pg-simple": "^6.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "morgan": "^1.9.1",
+    "node-cache": "^5.1.0",
+    "nodemon": "^2.0.1",
+    "pg": "^7.14.0",
+    "request": "^2.88.0",
+    "rotating-file-stream": "^2.0.0",
+    "uuid": "^3.3.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./storage",
+      "./logs"
+    ],
+    "ext": "js,json,html"
+  }
+}
