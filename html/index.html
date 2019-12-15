@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  ${HTML_HEAD_TOP}
+
+  <style>
+    .langDropdown .flag-icon {
+      border-radius: 3px;
+    }
+  </style>
+
+  <title>Mc-Auth.com — Easy Minecraft Authentication</title>
+
+  ${HTML_HEAD_BOTTOM}
+</head>
+
+<body class="d-flex flex-column h-100">
+  ${HTML_HEADER}
+
+  <main style="margin-bottom: 2rem">
+    <div class="container">
+      <h2>What is Mc-Auth.com?</h2>
+      <p>
+        Mc-Auth.com allows users to login with their minecraft account without requiring the account password.
+        <br>
+        Other websites and developers can then request verification that you have access to that minecraft
+        account.
+      </p>
+      <p>
+        Thanks to Mc-Auth.com, all kinds of websites can provide a secure way of a 'Minecraft-Login' feature.
+      </p>
+
+      <h2>How does it work?</h2>
+      <p>
+        <i>You are a developer? Have a look at the <a href="https://docs.mc-auth.com">documentation</a>.</i>
+      </p>
+
+
+      <ol>
+        <li>Visit <a href="${URL_BASE}/login">${URL_BASE}/login</a></li>
+        <li>Enter your Minecraft-Username (or UUID if you are one of those crazy persons)</li>
+        <li>Start Minecraft and try connecting to ${MINECRAFT_HOST}</li>
+        <li>Enter the 6-digit code you see in Minecraft, to complete your login<br><br></li>
+
+        <li>Confirm or Dismiss the shown message to verify your account</li>
+      </ol>
+
+      <h2><a href="${URL_BASE}/demo"><u>Try our Demo</u></a></h2>
+    </div>
+
+    <hr>
+
+    <h2 style="text-align: center">
+      Mc-Auth.com is already used by:
+    </h2>
+    <br>
+
+    <div class="text-center">
+      <img src="${URL_STATIC_CONTENT}/assets/img/SkinDB.svg" style="max-height: 150px; max-width: 150px"
+        class="img-fluid rounded" alt="SkinDB.net Logo">
+
+      <img src="${URL_STATIC_CONTENT}/assets/img/CherryBread_Network.jpg" style="max-height: 150px; max-width: 150px"
+        class="img-fluid rounded" alt="CherryBread-Network Logo">
+    </div>
+  </main>
+
+  ${HTML_FOOTER}
+</body>
+
+</html>
