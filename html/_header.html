@@ -1,0 +1,56 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" style="color: #7952B3" href="${URL_BASE}">
+      <img src="https://mcauth.org/img/mcauth-256.png" style="height:2.5rem; width: auto" alt="Logo">
+      Minecraft Authentication
+      <small style="font-size: 60%">Made easy</small>
+    </a>
+
+    <div class=" navbar-collapse">
+      <ul class="navbar-nav mr-auto"></ul>
+
+      <ul class="navbar-nav" style="align-items: center">
+        ?{LoggedIn:
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Eingeloggt als ${Minecraft_Username}
+            <img src="https://minotar.net/helm/${Minecraft_UUID}/64.png"
+              style="width: auto; height: 2.5rem; border-radius: 25px; border: 3px solid #F27405"
+              alt="Your Minecraft-Face">
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="profileDropdown">
+            <a class="dropdown-item" href="${URL_BASE}/settings"><i class="fas fa-cog"></i> Einstellungen</a>
+            <a class="dropdown-item" href="${URL_BASE}/logout"><i class="fas fa-sign-out-alt"></i> Ausloggen</a>
+          </div>
+        </li>
+        ?:
+        <li class="nav-item">
+          <a class="nav-link" href="${URL_BASE}/login">
+            Einloggen
+          </a>
+        </li>
+        ?}
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="far fa-moon fa-lg"></i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-language fa-lg"></i>
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right langDropdown" aria-labelledby="langDropdown">
+            <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de"></span> Deutsch</a>
+            <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-us"></span> English</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

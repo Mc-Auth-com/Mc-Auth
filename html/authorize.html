@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  ${HTML_HEAD_TOP}
+
+  <style>
+    .langDropdown .flag-icon {
+      border-radius: 3px;
+    }
+
+    .centeredCard {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      max-width: 40vw;
+    }
+  </style>
+
+  <title>Authorizing ${APP_NAME} | Mc-Auth.com</title>
+
+  ${HTML_HEAD_BOTTOM}
+</head>
+
+<body class="d-flex flex-column h-100">
+  ${HTML_HEADER}
+
+  <main style="margin-bottom: 2rem">
+    <div class="container">
+      <div class="card centeredCard">
+        <div class="card-body">
+          <h3 class="card-title text-center"><u>Login Anfrage von <i>${APP_NAME}</i></u></h3>
+
+          <br>
+
+          <div class="row">
+            <div class="col-2">
+              <img src="${APP_LOGO_URL}" class="img-fluid" style="max-height: 128px; max-width: 128px;"
+                alt="Application Logo of '${APP_NAME}'">
+            </div>
+
+            <div class="col-1"></div>
+
+            <div class="col">
+              <p class="text-center">${APP_DESCRIPTION}</p>
+              <hr>
+              <p>
+                <b>Besitzer:</b> ${APP_OWNER_NAME}
+                <br>
+                <b>Erstellt:</b> ${APP_PUBLISHED}
+              </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-3"></div>
+
+            <div class="col">
+              <hr>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-2">
+              <img src="https://minotar.net/helm/${Minecraft_UUID}/128.png" class="img-fluid"
+                style="max-height: 128px; max-width: 128px;" alt="Your Minecraft-Skin">
+            </div>
+
+            <div class="col-1"></div>
+
+            <div class="col">
+              <p class="text-center"><b>${APP_NAME} wants access to</b></p>
+
+              <ul>
+                <li>
+                  <p>
+                    Public account data
+                    <br>
+                    <i class="text-muted">Current Username, Skin, ...</i>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col" style="padding-right: 6px">
+              <a class="btn btn-danger float-right"
+                href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=0" role="button">Deny</a>
+            </div>
+
+            <div class="col" style="padding-left: 6px">
+              <a class="btn btn-success" href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=1"
+                role="button">Agree</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${HTML_FOOTER}
+</body>
+
+</html>
