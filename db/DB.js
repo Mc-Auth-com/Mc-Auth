@@ -40,7 +40,7 @@ module.exports = {
    * @param {Function} callback 
    */
   getApplication(clientID, callback) {
-    pool.query(`SELECT * FROM applications WHERE id =$1;`[clientID], (err, res) => {
+    pool.query(`SELECT * FROM applications WHERE id =$1;`, [clientID], (err, res) => {
       if (err) return callback(err);
 
       return callback(null, res.rowCount > 0 ? res.rows[0] : null);
