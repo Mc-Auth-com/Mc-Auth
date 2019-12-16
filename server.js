@@ -31,9 +31,9 @@ app.set('trust proxy', require('./storage/config.json')['trustProxy']);
 
 // Log to console and file
 app.use(morgan('dev'));
-// app.use(morgan('dev', { skip: function (req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); } }));
+// app.use(morgan('dev', { skip(req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); } }));
 app.use(morgan(logFormat, { stream: accessLogStream }));
-app.use(morgan(logFormat, { skip: function (req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); }, stream: errorLogStream }));
+app.use(morgan(logFormat, { skip(req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); }, stream: errorLogStream }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -85,7 +85,7 @@ app.use('/oauth2', require('./routes/oAuth2_post'));
 app.use(require('express-session')({
   name: 'sessID',
   store: new (require('connect-pg-simple')(require('express-session')))({
-    pool: pool,
+    pool,
     pruneSessionInterval: 60 * 60 * 24 /* 24h */
   }),
   secret: require('./storage/misc').CookieSecret,

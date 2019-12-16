@@ -6,7 +6,6 @@ const crypto = require('crypto'),
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
   UUID_PATTERN_ADD_DASH = new RegExp('(.{8})(.{4})(.{4})(.{4})(.{12})'),
   ABSOLUTE_URL_PATTERN = /^[a-z][a-z\d+\-.]*:/i;
-;
 
 const errLogStream = require('rotating-file-stream').createStream('error.log', {
   interval: '1d',
@@ -47,7 +46,13 @@ module.exports = {
 
     errLogStream.write(JSON.stringify({
       time: new Date().toUTCString(),
-      error: error
+      error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+
+        error
+      }
     }) + module.exports.EOL, 'utf-8', console.error);
 
     return module.exports.createError(undefined, undefined, true);
@@ -222,7 +227,7 @@ module.exports = {
 
             return callback(null, null);
           } else {
-            const error = Utils.createError(500, `Api.Sprax2013.de responded with HTTP-StatusCode ${res.statusCode}`);
+            const error = module.exports.createError(500, `Api.Sprax2013.de responded with HTTP-StatusCode ${res.statusCode}`);
 
             mcUsernameCache.set(uuid, error);
             return callback(error);

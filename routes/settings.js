@@ -41,7 +41,7 @@ router.post('/:appID', (req, res, next) => {
 
     return true;
   });
-  newRedirectURIs.forEach((el) => { return Utils.toNeutralString(el) });
+  newRedirectURIs.forEach((el) => { return Utils.toNeutralString(el); });
 
   db.getApplicationForOwner(appID, req.session['mc_UUID'], (err, app) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
