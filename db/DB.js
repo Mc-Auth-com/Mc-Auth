@@ -43,7 +43,7 @@ module.exports = {
     pool.query(`SELECT * FROM applications WHERE id =$1;`, [clientID], (err, res) => {
       if (err) return callback(err);
 
-      return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+      return callback(null, firstRow(res));
     });
   },
 
@@ -57,7 +57,7 @@ module.exports = {
       [clientID, mcUUID], (err, res) => {
         if (err) return callback(err);
 
-        return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+        return callback(null, firstRow(res));
       });
   },
 
@@ -68,7 +68,7 @@ module.exports = {
   getActiveApplications(mcUUID, callback) {
     pool.query(`SELECT * FROM applications WHERE owner =$1::UUID AND deleted =FALSE;`,
       [mcUUID], (err, res) => {
-        if (err && err.code != 22003 /* numeric_value_out_of_range */) return callback(err);
+        if (err) return callback(err);
 
         const result = [];
 
@@ -106,7 +106,7 @@ module.exports = {
       [name, description, mcUUID], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows[0]);
+        callback(null, firstRow(res));
       });
   },
 
@@ -119,7 +119,7 @@ module.exports = {
       [clientID], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows[0]);
+        callback(null, firstRow(res));
       });
   },
 
@@ -133,7 +133,7 @@ module.exports = {
     pool.query(`SELECT * FROM grants WHERE id =$1;`, [grantID], (err, res) => {
       if (err) return callback(err);
 
-      return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+      return callback(null, firstRow(res));
     });
   },
 
@@ -150,7 +150,7 @@ module.exports = {
       [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows[0]);
+        callback(null, firstRow(res));
       });
   },
 
@@ -167,7 +167,7 @@ module.exports = {
       [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows[0]['access_token']);
+        callback(null, firstRow(res, 'access_token'));
       });
   },
 
@@ -184,7 +184,7 @@ module.exports = {
       [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows[0]['exchange_token']);
+        callback(null, firstRow(res, 'exchange_token'));
       });
   },
 
@@ -198,7 +198,7 @@ module.exports = {
       [clientID, exchangeToken, redirectURI.toLowerCase()], (err, res) => {
         if (err) return callback(err);
 
-        callback(null, res.rows.length > 0 ? res.rows[0] : null);
+        callback(null, firstRow(res));
       });
   },
 
@@ -230,3 +230,10 @@ setInterval(async () => {
       console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
     });
 }, 3 * 24 * 60 * 60 * 1000 /* 3d */);
+
+/* Helper */
+function firstRow(res, key = null) {
+  const result = res.rows.length > 0 ? res.rows[0] : null;
+
+  return (result && key) ? result[key] : result;
+}

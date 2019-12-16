@@ -98,9 +98,9 @@ app.use(require('express-session')({
 
 // ToDo Set caching headers on routes
 /** static **/
-app.use('/', Utils.Express.staticDynamic(Utils.Storage.INDEX));
-app.use('/legal', Utils.Express.staticDynamic(Utils.Storage.LEGAL));
-app.use('/privacy', Utils.Express.staticDynamic(Utils.Storage.PRIVACY));
+app.use('/', Utils.Express.staticDynamicRouter(Utils.Storage.INDEX));
+app.use('/legal', Utils.Express.staticDynamicRouter(Utils.Storage.LEGAL));
+app.use('/privacy', Utils.Express.staticDynamicRouter(Utils.Storage.PRIVACY));
 app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 /** dynamic **/

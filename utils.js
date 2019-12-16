@@ -377,18 +377,26 @@ module.exports = {
   },
 
   Express: {
-    staticDynamic(html) {
+    staticDynamicRouter(html) {
       const router = require('express').Router();
 
-      router.get('/', (req, res, _next) => {
-        module.exports.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {
-          if (err) module.exports.logAndCreateError(err);
-
-          return res.send(module.exports.HTML.formatHTML(req, module.exports.HTML.replaceVariables(req, username, html)));
-        });
-      });
+      router.get('/', module.exports.Express.staticDynamicHandler(html));
 
       return router;
+    },
+
+    staticDynamicHandler(html) {
+      return (req, res, _next) => {
+        module.exports.Express.handleStaticDynamic(req, res, html);
+      };
+    },
+
+    handleStaticDynamic(req, res, html) {
+      module.exports.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {
+        if (err) module.exports.logAndCreateError(err);
+
+        return res.send(module.exports.HTML.formatHTML(req, module.exports.HTML.replaceVariables(req, username, html)));
+      });
     }
   },
 

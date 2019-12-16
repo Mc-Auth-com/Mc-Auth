@@ -63,29 +63,26 @@ router.get('/:appID?', (req, res, next) => {
 
   if (appID) {
     if (appID.toLowerCase() == 'create') {
+      return Utils.Express.handleStaticDynamic(req, res, Utils.Storage.SETTINGS_CREATE)
+    }
+
+    if (!Utils.isNumber(appID)) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
+
+    db.getApplication(appID, (err, app) => {
+      if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
+      if (!app || app.deleted) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
+
       Utils.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {
         if (err) Utils.logAndCreateError(err);
 
-        return res.send(Utils.HTML.formatHTML(req, Utils.HTML.replaceVariables(req, username, Utils.Storage.SETTINGS_CREATE)));
+        return res.send(
+          Utils.HTML.formatHTML(req,
+            Utils.HTML.replaceVariables(req, username, Utils.Storage.SETTINGS_APP, Utils.HTML.appVariableCallback, [app, username, true])
+          )
+        );
       });
-    } else {
-      if (!Utils.isNumber(appID)) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
+    });
 
-      db.getApplication(appID, (err, app) => {
-        if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
-        if (!app || app.deleted) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
-
-        Utils.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {
-          if (err) Utils.logAndCreateError(err);
-
-          return res.send(
-            Utils.HTML.formatHTML(req,
-              Utils.HTML.replaceVariables(req, username, Utils.Storage.SETTINGS_APP, Utils.HTML.appVariableCallback, [app, username, true])
-            )
-          );
-        });
-      });
-    }
   } else {
     db.getActiveApplications(req.session['mc_UUID'], (err, apps) => {
       if (err) return next(Utils.logAndCreateError(err));
