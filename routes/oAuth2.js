@@ -9,7 +9,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
   if (!Utils.isNumber(req.params.grantID)) return next(Utils.createError(404, 'Resource Not Found'));
 
   db.getGrant(req.params.grantID, (err, grant) => {
-    if (err) return next(Utils.logAndCreateError(err));
+    if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!grant) return next(Utils.createError(404, 'Resource Not Found'));
 
     const clientID = req.query['client_id'],
@@ -22,7 +22,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
     if (!clientID || !Utils.isNumber(clientID)) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
     db.getApplication(clientID, (err, app) => {
-      if (err) return next(Utils.logAndCreateError(err));
+      if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
       if (!app) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
       if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'ToDo: Invalid redirect_uri (notify user - do not redirect)'));
@@ -64,7 +64,7 @@ router.get('/authorize', (req, res, next) => {
   if (!clientID || !Utils.isNumber(clientID)) return next(Utils.createError(404, 'client_id is invalid'));
 
   db.getApplication(clientID, (err, app) => {
-    if (err) return next(Utils.logAndCreateError(err));
+    if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!app) return next(Utils.createError(404, 'client_id is invalid'));
 
     if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'redirect_uri is not listed for client_id'));
@@ -147,7 +147,7 @@ router.post('/token', (req, res, next) => {
   if (!clientID || !clientSecret || !Utils.isNumber(clientID)) return next(Utils.createError(400, 'client_id does not exist or does not match client_secret'));
 
   db.getApplication(clientID, (err, app) => {
-    if (err) return next(Utils.logAndCreateError(err));
+    if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!app || app.secret != clientSecret) return next(Utils.createError(400, 'client_id does not exist or does not match client_secret'));
 
     if (!grantType || grantType.toLowerCase() != 'authorization_code') return next(Utils.createError(400, 'Invalid grant_type'));
