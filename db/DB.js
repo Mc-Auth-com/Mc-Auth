@@ -14,6 +14,14 @@ pool.on('error', (err, _client) => {
   console.error('Unexpected error on idle client:', err);
 });
 
+/* Helper */
+function firstRow(res, key = null) {
+  const result = res.rows.length > 0 ? res.rows[0] : null;
+
+  return (result && key) ? result[key] : result;
+}
+
+/* exports */
 module.exports = {
   pool,
 
@@ -230,10 +238,3 @@ setInterval(async () => {
       console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
     });
 }, 3 * 24 * 60 * 60 * 1000 /* 3d */);
-
-/* Helper */
-function firstRow(res, key = null) {
-  const result = res.rows.length > 0 ? res.rows[0] : null;
-
-  return (result && key) ? result[key] : result;
-}
