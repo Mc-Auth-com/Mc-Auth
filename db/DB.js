@@ -1,3 +1,5 @@
+const Utils = require('../utils');
+
 const { Pool } = require('pg');
 const pool = new Pool({
   host: require('./../storage/db.json')['host'],
@@ -15,6 +17,8 @@ pool.on('error', (err, _client) => {
 module.exports = {
   pool,
 
+  /* OTPs (Minecraft) */
+
   /**
    * @param {String} uuid 
    * @param {Number} otp 
@@ -29,6 +33,8 @@ module.exports = {
       });
   },
 
+  /* Applications */
+
   /**
    * @param {String} clientID 
    * @param {Function} callback 
@@ -41,6 +47,84 @@ module.exports = {
         return callback(null, res.rowCount > 0 ? res.rows[0] : null);
       });
   },
+
+  /**
+   * @param {String} clientID 
+   * @param {String} mcUUID
+   * @param {Function} callback 
+   */
+  getApplicationForOwner(clientID, mcUUID, callback) {
+    pool.query(`SELECT * FROM applications WHERE id =$1::BIGINT AND owner =$2::UUID;`,
+      [clientID, mcUUID], (err, res) => {
+        if (err) return callback(err);
+
+        return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+      });
+  },
+
+  /**
+   * @param {String} mcUUID 
+   * @param {Function} callback 
+   */
+  getActiveApplications(mcUUID, callback) {
+    pool.query(`SELECT * FROM applications WHERE owner =$1::UUID AND deleted =FALSE;`,
+      [mcUUID], (err, res) => {
+        if (err && err.code != 22003 /* numeric_value_out_of_range */) return callback(err);
+
+        const result = [];
+
+        for (const row of res.rows) {
+          result.push(row);
+        }
+
+        return callback(null, result);
+      });
+  },
+
+  /**
+   * @param {String} clientID 
+   * @param {String} name 
+   * @param {String} description 
+   * @param {String} redirectURIs 
+   * @param {Function} callback 
+   */
+  updateApplication(clientID, name, description, redirectURIs, callback) {
+    pool.query(`UPDATE applications SET name =$2, description =$3, redirect_uris =$4 WHERE id =$1;`,
+      [clientID, name, description, JSON.stringify(redirectURIs)], (err, _res) => {
+        return callback(err || null);
+      });
+  },
+
+  /**
+   * @param {String} name 
+   * @param {String} description
+   * @param {String} secret
+   * @param {String} mcUUID
+   * @param {Function} callback 
+   */
+  createApplication(name, description, mcUUID, callback) {
+    pool.query(`INSERT INTO applications(name,description,owner) VALUES ($1,$2,$3) RETURNING *;`,
+      [name, description, mcUUID], (err, res) => {
+        if (err) return callback(err);
+
+        callback(null, res.rows[0]);
+      });
+  },
+
+  /**
+   * @param {String} clientID 
+   * @param {Function} callback 
+   */
+  regenerateApplicationSecret(clientID, callback) {
+    pool.query(`UPDATE applications SET secret =DEFAULT WHERE id =$1 RETURNING secret;`,
+      [clientID], (err, res) => {
+        if (err) return callback(err);
+
+        callback(null, res.rows[0]);
+      });
+  },
+
+  /* Grants */
 
   /**
    * @param {String} grantID 
@@ -65,7 +149,7 @@ module.exports = {
    */
   generateGrant(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING *;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]);
@@ -82,7 +166,7 @@ module.exports = {
    */
   generateAccessToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token) VALUES ($1,$2,$3,$4,$5,random_string(32)) RETURNING access_token;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['access_token']);
@@ -99,7 +183,7 @@ module.exports = {
    */
   generateExchangeToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING exchange_token;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['exchange_token']);
@@ -113,48 +197,28 @@ module.exports = {
    */
   invalidateExchangeToken(clientID, exchangeToken, redirect_uri, callback) {
     pool.query(`UPDATE grants SET access_token =random_string(32), issued =CURRENT_TIMESTAMP WHERE application =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
-      [clientID, exchangeToken, redirect_uri], (err, res) => {
+      [clientID, exchangeToken, redirect_uri.toLowerCase()], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows.length > 0 ? res.rows[0] : null);
       });
-  },
-
-  /* Queue: UserAgent */
-  /**
-   * @param {String} userAgent 
-   * @param {Boolean} internal 
-   * @param {Function} callback 
-   */
-  // getAgentID(userAgent, internal, callback) {
-  //   if (userAgent && userAgent.length > 255) {
-  //     userAgent = userAgent.substring(0, 252) + '...';
-  //   }
-
-  //   pool.connect((err, con, done) => {
-  //     if (err) return callback(err);
-
-  //     con.query(`SELECT "ID" FROM "QueuingAgents" WHERE "Agent"=$1 AND "Internal"=$2;`,
-  //       [userAgent, internal], (err, res) => {
-  //         if (err) {
-  //           done();
-  //           return callback(err);
-  //         }
-
-  //         if (res.rowCount <= 0) {
-  //           return con.query(`INSERT INTO "QueuingAgents" ("Agent","Internal") VALUES ($1,$2) RETURNING "ID";`,
-  //             [userAgent, internal], (err, res) => {
-  //               done();
-
-  //               if (err) return callback(err);
-
-  //               callback(null, res.rows[0]['ID']);
-  //             });
-  //         }
-  //         done();
-
-  //         return callback(null, res.rows[0]['ID']);
-  //       });
-  //   });
-  // }
+  }
 };
+
+/* Maintenance */
+
+setInterval(async () => {
+  pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+    [], (err, res) => {
+      if (err) return Utils.logAndCreateError(err);
+
+      console.log(`Deleted ${res.rowCount} stale grants`);
+    });
+
+  pool.query(`DELETE FROM otp WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+    [], (err, res) => {
+      if (err) return Utils.logAndCreateError(err);
+
+      console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
+    });
+}, 3 * 24 * 60 * 60 * 1000 /* 3d */);

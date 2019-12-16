@@ -1,0 +1,31 @@
+.langDropdown .flag-icon {
+  border-radius: 3px;
+}
+
+.centeredCard {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  max-width: 40vw;
+}
+
+.text-unrevealed {
+  color: #007bff !important;
+  text-decoration: underline;
+}
+
+.text-unrevealed:hover {
+  color: #0056b3 !important;
+  cursor: pointer;
+}
+
+.langDropdown .flag-icon {
+  border-radius: 3px;
+}
+
+.hidden {
+  display: none;
+}

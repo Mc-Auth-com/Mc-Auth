@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  ${HTML_HEAD_TOP}
+
+  <title>Settings | Mc-Auth.com</title>
+
+  ${HTML_HEAD_BOTTOM}
+</head>
+
+<body class="d-flex flex-column h-100">
+  ${HTML_HEADER}
+
+  <main style="margin-bottom: 2rem">
+    <div class="container">
+      <div class="card centeredCard">
+        <div class="card-header">
+          <h5 class="text-center">Neue Anwendungen erstellen</h5>
+        </div>
+
+        <div class="card-body">
+          <p>Die folgenden Werte sind öffentlich sichtbar<br>und können nachträglich geändert werden.</p>
+
+          <form method="POST">
+            <div class="form-group">
+              <label for="name">Name<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="name" name="name" maxlength="128" data-remaining="nameRemain"
+                oninput="updateRemainingChars(this)" required>
+              <small id="nameRemain" class="form-text text-muted">Maximal 128 Zeichen</small>
+            </div>
+
+            <div class="form-group">
+              <label for="desc">Beschreibung</label>
+              <textarea rows="3" class="form-control" id="desc" name="desc" maxlength="512" data-remaining="descRemain"
+                oninput="updateRemainingChars(this)"></textarea>
+              <small id="descRemain" class="form-text text-muted">Maximal 512 Zeichen</small>
+            </div>
+
+            <hr>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">Erstellen »</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${HTML_FOOTER}
+</body>
+
+</html>

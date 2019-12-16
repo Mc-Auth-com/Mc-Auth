@@ -14,6 +14,9 @@ const ERR = require('fs').readFileSync('./html/err.html', { encoding: 'UTF-8' })
   INDEX = require('fs').readFileSync('./html/index.html', { encoding: 'UTF-8' }),
   LOGIN = require('fs').readFileSync('./html/login.html', { encoding: 'UTF-8' }),
   AUTHORIZE = require('fs').readFileSync('./html/authorize.html', { encoding: 'UTF-8' }),
+  SETTINGS = require('fs').readFileSync('./html/settings.html', { encoding: 'UTF-8' }),
+  SETTINGS_CREATE = require('fs').readFileSync('./html/settings_create.html', { encoding: 'UTF-8' }),
+  SETTINGS_APP = require('fs').readFileSync('./html/settings_app.html', { encoding: 'UTF-8' }),
 
   LEGAL = require('fs').readFileSync('./html/legal.html', { encoding: 'UTF-8' }),
   PRIVACY = require('fs').readFileSync('./html/privacy.html', { encoding: 'UTF-8' });
@@ -29,7 +32,7 @@ module.exports = {
   INDEX,
   LOGIN,
   AUTHORIZE,
-
+  SETTINGS, SETTINGS_CREATE, SETTINGS_APP,
 
   LEGAL,
   PRIVACY

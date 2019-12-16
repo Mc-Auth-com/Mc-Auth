@@ -1,10 +1,12 @@
 const crypto = require('crypto'),
   request = require('request'),
-  NodeCache = require('node-cache');
+  NodeCache = require('node-cache'),
+  htmlEscape = require('escape-html');
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
   UUID_PATTERN_ADD_DASH = new RegExp('(.{8})(.{4})(.{4})(.{4})(.{12})'),
-  URL_PATTERN = new RegExp('^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$', 'i');
+  ABSOLUTE_URL_PATTERN = /^[a-z][a-z\d+\-.]*:/i;
+;
 
 const errLogStream = require('rotating-file-stream').createStream('error.log', {
   interval: '1d',
@@ -100,12 +102,16 @@ module.exports = {
   },
 
   /**
+   * Acording to RFC3986 (https://tools.ietf.org/html/rfc3986#section-4.3)
+   * 
+   * This function only checks for the layout. Not the actual content (illegal characters etc.)
+   * 
    * @param {String} str 
    * 
    * @returns {Boolean}
    */
-  isURL(str) {
-    return typeof str === 'string' && str.length < 2083 && URL_PATTERN.test(str);
+  isAbsoluteURL(str) {
+    return typeof str === 'string' && str.length < 2083 && ABSOLUTE_URL_PATTERN.test(str);
   },
 
   /**
@@ -223,6 +229,145 @@ module.exports = {
           }
         });
       }
+    }
+  },
+
+  HTML: {
+    /* Replace */
+
+    appVariableCallback(str = '', args) {
+      const app = args[0],
+        appOwnerName = args[1],
+        reqByAppOwner = args[2];
+
+      try {
+        switch (str) {
+          /* App */
+          case 'APP_ID': return app.id;
+          case 'APP_NAME': return htmlEscape(app.name);
+          case 'APP_SECRET': return app.secret;
+          case 'APP_DESCRIPTION': return htmlEscape(app.description) || (reqByAppOwner ? '<i>Der Besitzer dieser Anwendung hat keine Beschreibung angegeben</i>' : '<i>Du hast keine Beschreibung verfasst</i>');
+          case 'APP_DESCRIPTION_RAW': return app.description || '';
+          case 'APP_OWNER_NAME': return appOwnerName;
+          case 'APP_PUBLISHED': return new Date(app.created).toDateString().substring(4);
+          case 'APP_REDIRECT_URIs': return (app.redirect_uris || []).join('\r\n');
+
+          default: break;
+        }
+      } catch (err) {
+        module.exports.logAndCreateError(err);
+      }
+
+      return null;
+    },
+
+    grantVariableCallback(str = '', args) {
+      const grant = args[0];
+
+      try {
+        switch (str) {
+          /* Grant */
+          case 'GRANT_ID': return `${grant.id}`;
+
+          default: break;
+        }
+      } catch (err) {
+        module.exports.logAndCreateError(err);
+      }
+
+      return null;
+    },
+
+    replaceVariables(req, mcUsername = undefined, html, customCallback = undefined, customCallbackArgs = []) {
+      return module.exports.replacer(html, '${', '}', (str) => {
+        try {
+          switch (str) {
+            /* Static */
+            case 'HTML_HEADER': return module.exports.Storage.HEADER;
+            case 'HTML_FOOTER': return module.exports.Storage.FOOTER;
+            case 'HTML_HEAD_TOP': return module.exports.Storage.HEAD_TOP;
+            case 'HTML_HEAD_BOTTOM': return module.exports.Storage.HEAD_BOTTOM;
+
+            case 'URL_STATIC_CONTENT': return module.exports.Storage.STATIC_CONTENT_URL;
+            case 'URL_BASE': return module.exports.Storage.BASE_URL;
+            case 'URL_DOCS': return module.exports.Storage.DOCS_URL;
+            case 'MINECRAFT_HOST': return module.exports.Storage.MINECRAFT_HOST;
+
+            /* Dynamic */
+            case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') > 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
+
+            /* Session */
+            case 'Minecraft_Username': return (mcUsername || req.session['mc_Name']) || '';
+            case 'Minecraft_UUID': return req.session['mc_UUID'] || '';
+
+            default: break;
+          }
+
+          if (customCallback) {
+            return customCallback(str, customCallbackArgs) || '';
+          }
+        } catch (err) {
+          module.exports.logAndCreateError(err);
+        }
+
+        return '';
+      });
+    },
+
+    /* Format */
+    appsFormatCallback(str, args) {
+      const apps = args[0];
+
+      if (str.startsWith('HasApps:')) {
+        if (apps && apps.length > 0) {
+          let result = '';
+          const template = str.substring('HasApps:'.length, str.lastIndexOf('?:'));
+
+          for (const app of apps) {
+            result += module.exports.replacer(template, '$?{', '}', (str) => {
+              try {
+                switch (str) {
+                  case 'APP_ID': return app.id;
+                  case 'APP_NAME': return htmlEscape(app.name);
+                  // case 'APP_LOGO_URL': return app.image;
+
+                  default: break;
+                }
+              } catch (err) {
+                module.exports.logAndCreateError(err);
+              }
+
+              return '';
+            });
+          }
+
+          return result;
+        } else {
+          let index = str.lastIndexOf('?:');
+
+          return index >= 0 ? str.substring(index + 2) : '';
+        }
+      }
+
+      return null;
+    },
+
+    formatHTML(req, html, customCallback = undefined, customCallbackArgs = []) {
+      return module.exports.replacer(html, '?{', '?}', (str) => {
+        if (str.startsWith('LoggedIn:')) {
+          if (req.session['loggedIn']) {
+            return str.substring('LoggedIn:'.length, str.lastIndexOf('?:'));
+          }
+
+          let index = str.lastIndexOf('?:');
+
+          return index >= 0 ? str.substring(index + 2) : '';
+        } else if (customCallback) {
+          return customCallback(str, customCallbackArgs) || '';
+        }
+
+        return '';
+      });
     }
   },
 

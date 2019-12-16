@@ -36,6 +36,7 @@ app.use(morgan(logFormat, { stream: accessLogStream }));
 app.use(morgan(logFormat, { skip: function (req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); }, stream: errorLogStream }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Remove duplicate query-params (Last one wins)
 app.use((req, _res, next) => {
@@ -65,6 +66,22 @@ pool.on('error', (err, _client) => {
   console.error('Unexpected error on idle client:', err);
 });
 
+// Default response headers
+app.use((_req, res, next) => {
+  res.set({
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Headers': 'User-Agent,Content-Type',
+
+    'Cache-Control': 'private, max-age=0'
+  });
+
+  next();
+});
+
+/* Non-Cookie Routes */
+app.use('/oauth2', require('./routes/oAuth2_post'));
+
+/* Cookie Routes */
 app.use(require('express-session')({
   name: 'sessID',
   store: new (require('connect-pg-simple')(require('express-session')))({
@@ -76,20 +93,8 @@ app.use(require('express-session')({
   saveUninitialized: false,
   rolling: true,
   unset: 'destroy',
-  cookie: { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
+  cookie: { secure: require('./storage/config.json')['secureCookies'], httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
 }));
-
-// Default response headers
-app.use((_req, res, next) => {
-  res.set({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'User-Agent,Content-Type',
-
-    'Cache-Control': 'private, max-age=0'
-  });
-
-  next();
-});
 
 // ToDo Set caching headers on routes
 app.use('/', require('./routes/index'));
@@ -98,7 +103,8 @@ app.use('/logout', require('./routes/logout'));
 app.use('/legal', require('./routes/legal'));
 app.use('/privacy', require('./routes/privacy'));
 app.use('/oauth2', require('./routes/oAuth2'));
-app.use(['/settings', '/demo'], (_req, res, _next) => { res.send('Work In Progress!'); });
+app.use('/settings', require('./routes/settings'));
+app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 // Prepare 404
 app.use((_req, _res, next) => {

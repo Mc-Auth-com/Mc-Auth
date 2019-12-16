@@ -5,32 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  ${HTML_HEAD_TOP}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
     integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous">
-
-  <style>
-    .langDropdown .flag-icon {
-      border-radius: 3px;
-    }
-
-    .centeredCard {
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
-
-    .hidden {
-      display: none;
-    }
-  </style>
+  ${HTML_HEAD_TOP}
 
   <title>Login | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
+
+  ?{LoggedIn:?:
+  <script src="${URL_STATIC_CONTENT}/script-login.js"></script>
+  ?}
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -39,9 +24,11 @@
   <main style="margin-bottom: 2rem">
     <div class="container">
       <div class="card centeredCard">
-        <div class="card-body">
-          <h3 class="card-title text-center"><u>Login</u></h3>
+        <div class="card-header">
+          <h3 class="text-center">Login</h3>
+        </div>
 
+        <div class="card-body">
           ?{LoggedIn:
           <p>Du bist bereits eingeloggt!</p>
 
@@ -68,9 +55,10 @@
               <hr>
 
               <p>
-                Starte nun Minecraft und verbinde dich mit dem Server <code>mc-auth.com</code>
-                <button type="button" class="btn btn-outline-primary"><i class="far fa-clipboard"></i></button>
-                zu verbinden.<br>
+                Starte nun Minecraft und verbinde dich mit dem Server <code>${MINECRAFT_HOST}</code>.
+                <button type="button" class="btn btn-sm btn-outline-info"
+                  onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"><i class="far fa-clipboard"></i></button>
+                <br>
                 Du wirst automatisch gekickt und bekommst einen Code angezeigt
               </p>
 
@@ -100,115 +88,6 @@
       </div>
     </div>
   </main>
-
-  ?{LoggedIn:?:
-  <script>
-    async function submitUsername(event) {
-      event.preventDefault();
-
-      const submitBtn = document.getElementById('submitBtn'),
-        nameInput = document.getElementById('mcName');
-
-      submitBtn.classList.add('disabled');
-      nameInput.classList.add('disabled');
-
-      submitBtn.setAttribute('disabled', 'disabled');
-      nameInput.setAttribute('disabled', 'disabled');
-      try {
-        const res = await fetch('https://api.sprax2013.de/mojang/profile/' + document.getElementById('mcName').value, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (res.status === 200) {
-          const json = await res.json();
-
-          event.target.onsubmit = submitCode;
-
-          nameInput.setAttribute('data-mcUUID', json.id);
-          document.getElementById('otp').setAttribute('required', 'required');
-          document.getElementById('form2').classList.remove('hidden');
-
-          submitBtn.classList.remove('disabled');
-          submitBtn.removeAttribute('disabled');
-
-          console.log('Valid Username:', json.name);
-        } else {
-          console.error('That username does not exist!');
-
-          submitBtn.classList.remove('disabled');
-          submitBtn.removeAttribute('disabled');
-
-          nameInput.classList.remove('disabled');
-          nameInput.removeAttribute('disabled');
-        }
-      } catch (err) {
-        console.error('Request failed - Sending form to server instead!', err);
-
-        event.target.onsubmit = undefined;
-        event.target.submit();
-      }
-    }
-
-    async function submitCode(event) {
-      event.preventDefault();
-
-      const submitBtn = document.getElementById('submitBtn'),
-        mcUUID = document.getElementById('mcName').getAttribute('data-mcUUID'),
-        codeInput = document.getElementById('otp');
-
-      submitBtn.classList.add('disabled');
-      codeInput.classList.add('disabled');
-
-      submitBtn.setAttribute('disabled', 'disabled');
-      codeInput.setAttribute('disabled', 'disabled');
-      try {
-        const res = await fetch('http://localhost:8091/login/verify?uuid=' + mcUUID + '&otp=' + codeInput.value + '&keepLogin=' + document.getElementById('keepLogin').checked, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (res.status === 200) {
-          const json = await res.json();
-
-          event.target.onsubmit = submitCode;
-
-          nameInput.setAttribute('data-mcUUID', json.id);
-          document.getElementById('otp').setAttribute('required', 'required');
-          document.getElementById('form2').classList.remove('hidden');
-
-          submitBtn.classList.remove('disabled');
-          submitBtn.removeAttribute('disabled');
-
-          if (json.url) {
-            window.location.href = json.url;
-          } else {
-            window.location.reload();
-          }
-
-          console.log('Login was successful!');
-        } else {
-          console.error('The code is invalid!');
-
-          submitBtn.classList.remove('disabled');
-          submitBtn.removeAttribute('disabled');
-
-          codeInput.classList.remove('disabled');
-          codeInput.removeAttribute('disabled');
-        }
-      } catch (err) {
-        console.error('Request failed - Sending form to server instead!', err);
-
-        event.target.onsubmit = undefined;
-        event.target.submit();
-      }
-    }
-  </script>
-  ?}
 
   ${HTML_FOOTER}
 </body>
