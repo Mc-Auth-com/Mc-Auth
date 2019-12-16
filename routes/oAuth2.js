@@ -1,5 +1,3 @@
-const htmlEscape = require('escape-html');
-
 const Utils = require('../utils'),
   db = require('../db/DB');
 
@@ -19,7 +17,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
       state = req.query['state'],
       responseType = (req.query['response_type'] || '').toLowerCase(),
       scope = (req.query['scope'] || '').toLowerCase().split(' ').filter((elem) => { return elem; }),
-      agreed = req.query['agreed'];
+      agreed = req.query['agreed']; //TODO
 
     if (!clientID || !Utils.isNumber(clientID)) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
@@ -59,7 +57,6 @@ router.get('/authorize', (req, res, next) => {
   const clientID = req.query['client_id'],
     redirectURI = req.query['redirect_uri'],
     state = req.query['state'],
-    // promt = Utils.toBoolean(req.query['promt']),
     responseType = (req.query['response_type'] || '').toLowerCase(),
     scope = (req.query['scope'] || '').toLowerCase().split(' ').filter((elem) => { return elem; });
 
@@ -87,52 +84,11 @@ router.get('/authorize', (req, res, next) => {
         Utils.Minecraft.getUsername(app.owner, (err, appOwner) => {
           if (err) return next(Utils.logAndCreateError(err));
 
-          let result = Utils.replacer(Utils.Storage.AUTHORIZE, '${', '}', (str) => {
-            try {
-              switch (str) {
-                case 'HTML_HEADER': return Utils.Storage.HEADER;
-                case 'HTML_FOOTER': return Utils.Storage.FOOTER;
-                case 'HTML_HEAD_TOP': return Utils.Storage.HEAD_TOP;
-                case 'HTML_HEAD_BOTTOM': return Utils.Storage.HEAD_BOTTOM;
-
-                case 'URL_STATIC_CONTENT': return Utils.Storage.STATIC_CONTENT_URL;
-                case 'URL_BASE': return Utils.Storage.BASE_URL;
-                case 'URL_DOCS': return Utils.Storage.DOCS_URL;
-                case 'MINECRAFT_HOST': return Utils.Storage.MINECRAFT_HOST;
-
-                case 'Minecraft_Username': return (username || req.session['mc_Name']);
-                case 'Minecraft_UUID': return req.session['mc_UUID'];
-
-                case 'APP_NAME': return htmlEscape(app.name);
-                case 'APP_DESCRIPTION': return htmlEscape(app.description) || 'Der Besitzer dieser Anwendung hat keine Beschreibung verfasst';
-                case 'APP_OWNER_NAME': return appOwner;
-                case 'APP_PUBLISHED': return new Date(app.created).toDateString().substring(4);
-
-                case 'QUERY_PARAMS': return req.originalUrl.substring(req.originalUrl.indexOf('?'));
-                case 'GRANT_ID': return `${grant.id}`;
-
-                default: return '';
-              }
-            } catch (err) {
-              Utils.logAndCreateError(err);
-            }
-
-            return '';
-          });
-
-          result = Utils.replacer(result, '?{', '?}', (str) => {
-            if (str.startsWith('LoggedIn:')) {
-              if (req.session['loggedIn']) {
-                return str.substring('LoggedIn:'.length, str.lastIndexOf('?:'));
-              } else {
-                let index = str.lastIndexOf('?:');
-
-                return index >= 0 ? str.substring(index + 2) : '';
-              }
-            }
-          });
-
-          res.send(result);
+          res.send(
+            Utils.HTML.formatHTML(req, Utils.HTML.replaceVariables(req, username, Utils.Storage.AUTHORIZE, (str, args) => {
+              return Utils.HTML.appVariableCallback(str, args[0]) || Utils.HTML.grantVariableCallback(str, args[1]);
+            }, [[app, appOwner, false], [req, grant]]))
+          );
         });
       });
     });
