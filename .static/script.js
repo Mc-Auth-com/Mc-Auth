@@ -54,3 +54,21 @@ function copyToClipboard(elem, str) {
     }, 1000);
   }
 }
+
+function updateRemainingChars(elem) {
+  if (elem.hasAttribute('maxlength') && elem.hasAttribute('data-remaining')) {
+    const target = document.getElementById(elem.getAttribute('data-remaining'));
+
+    if (target) {
+      if (!target.hasAttribute('data-orgHTML')) {
+        target.setAttribute('data-orgHTML', target.innerHTML);
+      }
+
+      if (elem.value.length == 0 && target.hasAttribute('data-orgHTML')) {
+        target.innerHTML = target.getAttribute('data-orgHTML');
+      } else {
+        target.innerText = elem.value.length + "/" + elem.getAttribute('maxlength');
+      }
+    }
+  }
+}

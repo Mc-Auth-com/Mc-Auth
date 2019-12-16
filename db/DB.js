@@ -49,6 +49,84 @@ module.exports = {
   },
 
   /**
+   * @param {String} clientID 
+   * @param {String} mcUUID
+   * @param {Function} callback 
+   */
+  getApplicationForOwner(clientID, mcUUID, callback) {
+    pool.query(`SELECT * FROM applications WHERE id =$1::BIGINT AND owner =$2::UUID;`,
+      [clientID, mcUUID], (err, res) => {
+        if (err) return callback(err);
+
+        return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+      });
+  },
+
+  /**
+   * @param {String} mcUUID 
+   * @param {Function} callback 
+   */
+  getActiveApplications(mcUUID, callback) {
+    pool.query(`SELECT * FROM applications WHERE owner =$1::UUID AND deleted =FALSE;`,
+      [mcUUID], (err, res) => {
+        if (err && err.code != 22003 /* numeric_value_out_of_range */) return callback(err);
+
+        const result = [];
+
+        for (const row of res.rows) {
+          result.push(row);
+        }
+
+        return callback(null, result);
+      });
+  },
+
+  /**
+   * @param {String} clientID 
+   * @param {String} name 
+   * @param {String} description 
+   * @param {String} redirectURIs 
+   * @param {Function} callback 
+   */
+  updateApplication(clientID, name, description, redirectURIs, callback) {
+    pool.query(`UPDATE applications SET name =$2, description =$3, redirect_uris =$4 WHERE id =$1;`,
+      [clientID, name, description, JSON.stringify(redirectURIs)], (err, _res) => {
+        return callback(err || null);
+      });
+  },
+
+  /**
+   * @param {String} name 
+   * @param {String} description
+   * @param {String} secret
+   * @param {String} mcUUID
+   * @param {Function} callback 
+   */
+  createApplication(name, description, mcUUID, callback) {
+    pool.query(`INSERT INTO applications(name,description,owner) VALUES ($1,$2,$3) RETURNING *;`,
+      [name, description, mcUUID], (err, res) => {
+        if (err) return callback(err);
+
+        callback(null, res.rows[0]);
+      });
+  },
+
+  /**
+   * @param {String} clientID 
+   * @param {Function} callback 
+   */
+  regenerateApplicationSecret(clientID, callback) {
+    pool.query(`UPDATE applications SET secret =DEFAULT WHERE id =$1 RETURNING secret;`,
+      [clientID], (err, res) => {
+        if (err) return callback(err);
+
+        callback(null, res.rows[0]);
+      });
+  },
+
+  /* Grants */
+
+  /**
    * @param {String} grantID 
    * @param {Function} callback 
    */

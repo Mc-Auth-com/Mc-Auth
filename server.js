@@ -36,6 +36,7 @@ app.use(morgan(logFormat, { stream: accessLogStream }));
 app.use(morgan(logFormat, { skip: function (req, res) { return res.statusCode < 400 || res.hideFromConsole || req.originalUrl.startsWith('/.well-known/acme-challenge/'); }, stream: errorLogStream }));
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Remove duplicate query-params (Last one wins)
 app.use((req, _res, next) => {
@@ -98,7 +99,8 @@ app.use('/logout', require('./routes/logout'));
 app.use('/legal', require('./routes/legal'));
 app.use('/privacy', require('./routes/privacy'));
 app.use('/oauth2', require('./routes/oAuth2'));
-app.use(['/settings', '/demo'], (_req, res, _next) => { res.send('Work In Progress!'); });
+app.use('/settings', require('./routes/settings'));
+app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 // Prepare 404
 app.use((_req, _res, next) => {

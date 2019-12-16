@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  ${HTML_HEAD_TOP}
+
+  <title>Settings | Mc-Auth.com</title>
+
+  ${HTML_HEAD_BOTTOM}
+</head>
+
+<body class="d-flex flex-column h-100">
+  ${HTML_HEADER}
+
+  <main style="margin-bottom: 2rem">
+    <div class="container">
+      <div class="card centeredCard">
+        <div class="card-header">
+          <h5 class="text-center">Deine Anwendungen (Für Programmierer)</h5>
+        </div>
+
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            ?{HasApps:
+            <li class="list-group-item">
+              <img src="$?{APP_LOGO_URL}" class="img-fluid" style="max-width: 128px; max-height: 128px;"
+                alt="Application Logo">
+              $?{APP_NAME}
+              <a href="${BASE_URL}/settings/$?{APP_ID}" class="btn btn-outline-primary float-right"
+                style="margin-left: 25px;" role="button">Verwalten</a>
+            </li>
+            ?:
+            <b>Du hast bisher keine Anwendungen erstellt</b>
+            ?}
+          </ul>
+        </div>
+
+        <div class="card-footer">
+          <a href="${BASE_URL}/settings/create" class="btn btn-primary float-right" role="button">
+            Anwendung erstellen
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  ${HTML_FOOTER}
+</body>
+
+</html>
