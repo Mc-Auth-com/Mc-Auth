@@ -1,3 +1,5 @@
+const htmlEscape = require('escape-html');
+
 const Utils = require('../utils'),
   db = require('../db/DB');
 
@@ -101,8 +103,8 @@ router.get('/authorize', (req, res, next) => {
                 case 'Minecraft_Username': return (username || req.session['mc_Name']);
                 case 'Minecraft_UUID': return req.session['mc_UUID'];
 
-                case 'APP_NAME': return app.name;
-                case 'APP_DESCRIPTION': return app.description || 'Der Besitzer dieser Anwendung hat keine Beschreibung verfasst';
+                case 'APP_NAME': return htmlEscape(app.name);
+                case 'APP_DESCRIPTION': return htmlEscape(app.description) || 'Der Besitzer dieser Anwendung hat keine Beschreibung verfasst';
                 case 'APP_OWNER_NAME': return appOwner;
                 case 'APP_PUBLISHED': return new Date(app.created).toDateString().substring(4);
 

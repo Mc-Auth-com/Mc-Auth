@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "connect-pg-simple": "^6.0.1",
+    "escape-html": "^1.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "morgan": "^1.9.1",
