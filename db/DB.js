@@ -149,7 +149,7 @@ module.exports = {
    */
   generateGrant(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING *;`,
-      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]);
@@ -166,7 +166,7 @@ module.exports = {
    */
   generateAccessToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token) VALUES ($1,$2,$3,$4,$5,random_string(32)) RETURNING access_token;`,
-      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['access_token']);
@@ -183,7 +183,7 @@ module.exports = {
    */
   generateExchangeToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING exchange_token;`,
-      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['exchange_token']);
@@ -197,7 +197,7 @@ module.exports = {
    */
   invalidateExchangeToken(clientID, exchangeToken, redirect_uri, callback) {
     pool.query(`UPDATE grants SET access_token =random_string(32), issued =CURRENT_TIMESTAMP WHERE application =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
-      [clientID, exchangeToken, redirect_uri], (err, res) => {
+      [clientID, exchangeToken, redirect_uri.toLowerCase()], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows.length > 0 ? res.rows[0] : null);

@@ -66,6 +66,22 @@ pool.on('error', (err, _client) => {
   console.error('Unexpected error on idle client:', err);
 });
 
+// Default response headers
+app.use((_req, res, next) => {
+  res.set({
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Headers': 'User-Agent,Content-Type',
+
+    'Cache-Control': 'private, max-age=0'
+  });
+
+  next();
+});
+
+/* Non-Cookie Routes */
+app.use('/oauth2', require('./routes/oAuth2_post'));
+
+/* Cookie Routes */
 app.use(require('express-session')({
   name: 'sessID',
   store: new (require('connect-pg-simple')(require('express-session')))({
@@ -79,18 +95,6 @@ app.use(require('express-session')({
   unset: 'destroy',
   cookie: { secure: require('./storage/config.json')['secureCookies'], httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
 }));
-
-// Default response headers
-app.use((_req, res, next) => {
-  res.set({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'User-Agent,Content-Type',
-
-    'Cache-Control': 'private, max-age=0'
-  });
-
-  next();
-});
 
 // ToDo Set caching headers on routes
 app.use('/', require('./routes/index'));
