@@ -67,7 +67,7 @@ router.get('/authorize', (req, res, next) => {
 
   db.getApplication(clientID, (err, app) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
-    if (!app) return next(Utils.createError(404, 'client_id is invalid'));
+    if (!app || app.deleted) return next(Utils.createError(404, 'client_id is invalid'));
 
     if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'redirect_uri is not listed for client_id'));
     if (responseType != 'code' && responseType != 'token') return next(Utils.createError(400, 'ToDo: unsupported_response_type'));
