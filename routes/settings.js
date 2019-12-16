@@ -45,8 +45,6 @@ router.post('/:appID', (req, res, next) => {
   });
   newRedirectURIs.forEach((el) => { return Utils.toNeutralString(el) });
 
-  console.log(newRedirectURIs);
-
   db.getApplicationForOwner(appID, req.session['mc_UUID'], (err, app) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!app || app.deleted) return next(Utils.createError(403, 'ToDo: Invalid client_id or not the owner'));
