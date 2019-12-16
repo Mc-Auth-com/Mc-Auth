@@ -108,7 +108,8 @@ async function initStorage(callback) {
           host: '127.0.0.1',
           port: 8091
         },
-        trustProxy: false
+        trustProxy: false,
+        secureCookies: 'auto'
       }
       , null, 4));
 
