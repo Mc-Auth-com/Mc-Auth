@@ -37,13 +37,13 @@ router.get('/authorize/:grantID', (req, res, next) => {
       }
 
       if (responseType == 'token') {
-        db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
+        db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
           if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
 
           return res.redirect(redirectURI + `#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${state ? '?state=' + encodeURIComponent(state) : ''}`);
         });
       } else {
-        db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, token) => {
+        db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
           if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
 
           return res.redirect(redirectURI + `?code=${encodeURIComponent(token)}&expires_in=${300}${state ? '?state=' + encodeURIComponent(state) : ''}`);
@@ -78,7 +78,7 @@ router.get('/authorize', (req, res, next) => {
       }
     }
 
-    db.generateGrant(clientID, req.session['mc_UUID'], redirectURI, state, JSON.stringify(scope), (err, grant) => {
+    db.generateGrant(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, grant) => {
       if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
 
       Utils.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {

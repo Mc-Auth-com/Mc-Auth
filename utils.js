@@ -103,6 +103,8 @@ module.exports = {
   /**
    * Acording to RFC3986 (https://tools.ietf.org/html/rfc3986#section-4.3)
    * 
+   * This function only checks for the layout. Not the actual content (illegal characters etc.)
+   * 
    * @param {String} str 
    * 
    * @returns {Boolean}

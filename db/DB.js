@@ -17,6 +17,8 @@ pool.on('error', (err, _client) => {
 module.exports = {
   pool,
 
+  /* OTPs (Minecraft) */
+
   /**
    * @param {String} uuid 
    * @param {Number} otp 
@@ -30,6 +32,8 @@ module.exports = {
         callback(null, res.rows.length > 0);
       });
   },
+
+  /* Applications */
 
   /**
    * @param {String} clientID 
@@ -67,7 +71,7 @@ module.exports = {
    */
   generateGrant(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING *;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]);
@@ -84,7 +88,7 @@ module.exports = {
    */
   generateAccessToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token) VALUES ($1,$2,$3,$4,$5,random_string(32)) RETURNING access_token;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['access_token']);
@@ -101,7 +105,7 @@ module.exports = {
    */
   generateExchangeToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING exchange_token;`,
-      [clientID, mcUUID, redirect_uri, state, scope], (err, res) => {
+      [clientID, mcUUID, redirect_uri, state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['exchange_token']);
