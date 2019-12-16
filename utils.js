@@ -376,5 +376,21 @@ module.exports = {
     }
   },
 
+  Express: {
+    staticDynamic(html) {
+      const router = require('express').Router();
+
+      router.get('/', (req, res, _next) => {
+        module.exports.Minecraft.getUsername(req.session['mc_UUID'], (err, username) => {
+          if (err) module.exports.logAndCreateError(err);
+
+          return res.send(module.exports.HTML.formatHTML(req, module.exports.HTML.replaceVariables(req, username, html)));
+        });
+      });
+
+      return router;
+    }
+  },
+
   EOL: require('os').EOL
 };
