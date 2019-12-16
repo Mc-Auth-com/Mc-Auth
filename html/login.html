@@ -53,8 +53,9 @@
               <hr>
 
               <p>
-                <button type="button" class="btn btn-outline-primary"><i class="far fa-clipboard"></i></button>
                 Starte nun Minecraft und verbinde dich mit dem Server <code>${MINECRAFT_HOST}</code>.
+                <button type="button" class="btn btn-sm btn-outline-info"
+                  onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"><i class="far fa-clipboard"></i></button>
                 <br>
                 Du wirst automatisch gekickt und bekommst einen Code angezeigt
               </p>
