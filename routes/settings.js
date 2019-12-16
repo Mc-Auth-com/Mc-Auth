@@ -63,7 +63,7 @@ router.get('/:appID?', (req, res, next) => {
 
   if (appID) {
     if (appID.toLowerCase() == 'create') {
-      return Utils.Express.handleStaticDynamic(req, res, Utils.Storage.SETTINGS_CREATE)
+      return Utils.Express.handleStaticDynamic(req, res, Utils.Storage.SETTINGS_CREATE);
     }
 
     if (!Utils.isNumber(appID)) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
