@@ -140,14 +140,14 @@ module.exports = {
   /**
    * @param {String} clientID 
    * @param {String} mcUUID
-   * @param {String} redirect_uri
+   * @param {String} redirectURI
    * @param {String} state
    * @param {String[]} scope
    * @param {Function} callback 
    */
-  generateGrant(clientID, mcUUID, redirect_uri, state, scope, callback) {
+  generateGrant(clientID, mcUUID, redirectURI, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING *;`,
-      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]);
@@ -157,14 +157,14 @@ module.exports = {
   /**
    * @param {String} clientID 
    * @param {String} mcUUID
-   * @param {String} redirect_uri
+   * @param {String} redirectURI
    * @param {String} state
    * @param {String[]} scope
    * @param {Function} callback 
    */
-  generateAccessToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
+  generateAccessToken(clientID, mcUUID, redirectURI, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token) VALUES ($1,$2,$3,$4,$5,random_string(32)) RETURNING access_token;`,
-      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['access_token']);
@@ -174,14 +174,14 @@ module.exports = {
   /**
    * @param {String} clientID 
    * @param {String} mcUUID
-   * @param {String} redirect_uri
+   * @param {String} redirectURI
    * @param {String} state
    * @param {String[]} scope
    * @param {Function} callback 
    */
-  generateExchangeToken(clientID, mcUUID, redirect_uri, state, scope, callback) {
+  generateExchangeToken(clientID, mcUUID, redirectURI, state, scope, callback) {
     pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING exchange_token;`,
-      [clientID, mcUUID, redirect_uri.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
+      [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows[0]['exchange_token']);
@@ -190,12 +190,12 @@ module.exports = {
 
   /**
    * @param {String} clientID 
-   * @param {String} redirect_uri
+   * @param {String} redirectURI
    * @param {Function} callback err (Error), success (Boolean)
    */
-  invalidateExchangeToken(clientID, exchangeToken, redirect_uri, callback) {
+  invalidateExchangeToken(clientID, exchangeToken, redirectURI, callback) {
     pool.query(`UPDATE grants SET access_token =random_string(32), issued =CURRENT_TIMESTAMP WHERE application =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
-      [clientID, exchangeToken, redirect_uri.toLowerCase()], (err, res) => {
+      [clientID, exchangeToken, redirectURI.toLowerCase()], (err, res) => {
         if (err) return callback(err);
 
         callback(null, res.rows.length > 0 ? res.rows[0] : null);
