@@ -97,14 +97,17 @@ app.use(require('express-session')({
 }));
 
 // ToDo Set caching headers on routes
-app.use('/', require('./routes/index'));
+/** static **/
+app.use('/', Utils.Express.staticDynamic(Utils.Storage.INDEX));
+app.use('/legal', Utils.Express.staticDynamic(Utils.Storage.LEGAL));
+app.use('/privacy', Utils.Express.staticDynamic(Utils.Storage.PRIVACY));
+app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
+
+/** dynamic **/
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
-app.use('/legal', require('./routes/legal'));
-app.use('/privacy', require('./routes/privacy'));
 app.use('/oauth2', require('./routes/oAuth2'));
 app.use('/settings', require('./routes/settings'));
-app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 // Prepare 404
 app.use((_req, _res, next) => {
