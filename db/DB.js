@@ -40,12 +40,11 @@ module.exports = {
    * @param {Function} callback 
    */
   getApplication(clientID, callback) {
-    pool.query(`SELECT * FROM applications WHERE id =$1::BIGINT;`,
-      [clientID], (err, res) => {
-        if (err) return callback(err);
+    pool.query(`SELECT * FROM applications WHERE id =$1;`[clientID], (err, res) => {
+      if (err) return callback(err);
 
-        return callback(null, res.rowCount > 0 ? res.rows[0] : null);
-      });
+      return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+    });
   },
 
   /**
@@ -54,7 +53,7 @@ module.exports = {
    * @param {Function} callback 
    */
   getApplicationForOwner(clientID, mcUUID, callback) {
-    pool.query(`SELECT * FROM applications WHERE id =$1::BIGINT AND owner =$2::UUID;`,
+    pool.query(`SELECT * FROM applications WHERE id =$1 AND owner =$2::UUID;`,
       [clientID, mcUUID], (err, res) => {
         if (err) return callback(err);
 
@@ -131,12 +130,11 @@ module.exports = {
    * @param {Function} callback 
    */
   getGrant(grantID, callback) {
-    pool.query(`SELECT * FROM grants WHERE id =$1::BIGINT;`,
-      [grantID], (err, res) => {
-        if (err) return callback(err);
+    pool.query(`SELECT * FROM grants WHERE id =$1;`, [grantID], (err, res) => {
+      if (err) return callback(err);
 
-        return callback(null, res.rowCount > 0 ? res.rows[0] : null);
-      });
+      return callback(null, res.rowCount > 0 ? res.rows[0] : null);
+    });
   },
 
   /**
@@ -202,6 +200,16 @@ module.exports = {
 
         callback(null, res.rows.length > 0 ? res.rows[0] : null);
       });
+  },
+
+  /**
+   * @param {String} grantID 
+   * @param {Function} callback err (Error), success (Boolean)
+   */
+  denyGrant(grantID, callback) {
+    pool.query(`UPDATE grants SET invalid =TRUE WHERE id =$1;`, [grantID], (err, _res) => {
+      callback(err || null);
+    });
   }
 };
 

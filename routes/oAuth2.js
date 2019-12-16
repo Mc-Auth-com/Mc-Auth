@@ -17,7 +17,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
       state = req.query['state'],
       responseType = (req.query['response_type'] || '').toLowerCase(),
       scope = (req.query['scope'] || '').toLowerCase().split(' ').filter((elem) => { return elem; }),
-      agreed = req.query['agreed']; //TODO
+      agreed = req.query['agreed'];
 
     if (!clientID || !Utils.isNumber(clientID)) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
@@ -25,26 +25,37 @@ router.get('/authorize/:grantID', (req, res, next) => {
       if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
       if (!app) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
+      const uriParamPrefix = responseType == 'token' ? '#' : '?',
+        stateSuffix = state ? '&state=' + encodeURIComponent(state) : '';
+
       if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'ToDo: Invalid redirect_uri (notify user - do not redirect)'));
-      if (responseType != 'code' && responseType != 'token') return next(Utils.createError(400, 'ToDo: unsupported_response_type'));
+      if (responseType != 'code' && responseType != 'token') return res.redirect(redirectURI + `${uriParamPrefix}error=unsupported_response_type${stateSuffix}`);
 
       for (const elem of scope) {
         if (elem != 'profile') {
-          return next(Utils.createError(400, 'ToDo: invalid_scope'));
+          return res.redirect(redirectURI + `${uriParamPrefix}error=invalid_scope&error_description=${elem}${stateSuffix}`);
         }
       }
 
-      if (responseType == 'token') {
-        db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
-          if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
+      if (agreed) {
+        if (responseType == 'token') {
+          db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
+            if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
 
-          return res.redirect(redirectURI + `#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${state ? '?state=' + encodeURIComponent(state) : ''}`);
-        });
+            return res.redirect(redirectURI + `${uriParamPrefix}access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${stateSuffix}`);
+          });
+        } else {
+          db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
+            if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
+
+            return res.redirect(redirectURI + `${uriParamPrefix}code=${encodeURIComponent(token)}&expires_in=${300}${stateSuffix}`);
+          });
+        }
       } else {
-        db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
-          if (err) return next(Utils.logAndCreateError(err)); // server_error, error_description=err.message
+        db.denyGrant(grant.id, (err) => {
+          if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
 
-          return res.redirect(redirectURI + `?code=${encodeURIComponent(token)}&expires_in=${300}${state ? '?state=' + encodeURIComponent(state) : ''}`);
+          return res.redirect(redirectURI + `${uriParamPrefix}error=access_denied&error_description=resource_owner_denied_request${stateSuffix}`);
         });
       }
     });
