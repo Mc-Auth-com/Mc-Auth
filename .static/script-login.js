@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost:8091';
+
 async function submitUsername(event) {
   event.preventDefault();
 
@@ -6,15 +8,13 @@ async function submitUsername(event) {
 
   submitBtn.classList.add('disabled');
   nameInput.classList.add('disabled');
-
   submitBtn.setAttribute('disabled', 'disabled');
   nameInput.setAttribute('disabled', 'disabled');
+
   try {
-    const res = await fetch('https://api.sprax2013.de/mojang/profile/' + document.getElementById('mcName').value, {
+    const res = await fetch(`https://api.sprax2013.de/mojang/profile/${nameInput.value}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     });
 
     if (res.status === 200) {
@@ -56,36 +56,20 @@ async function submitCode(event) {
 
   submitBtn.classList.add('disabled');
   codeInput.classList.add('disabled');
-
   submitBtn.setAttribute('disabled', 'disabled');
   codeInput.setAttribute('disabled', 'disabled');
+
   try {
-    const res = await fetch('http://localhost:8091/login/verify?uuid=' + mcUUID + '&otp=' + codeInput.value + '&keepLogin=' + document.getElementById('keepLogin').checked, {
+    const res = await fetch(`${BASE_URL}/login/verify?uuid=${mcUUID}&otp=${codeInput.value}&keepLogin=${document.getElementById('keepLogin').checked}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     });
 
-    if (res.status === 200) {
+    if (res.status == 200) {
       const json = await res.json();
 
-      event.target.onsubmit = submitCode;
-
-      nameInput.setAttribute('data-mcUUID', json.id);
-      document.getElementById('otp').setAttribute('required', 'required');
-      document.getElementById('form2').classList.remove('hidden');
-
-      submitBtn.classList.remove('disabled');
-      submitBtn.removeAttribute('disabled');
-
-      if (json.url) {
-        window.location.href = json.url;
-      } else {
-        window.location.reload();
-      }
-
       console.log('Login was successful!');
+      window.location.href = json.url || BASE_URL;
     } else {
       console.error('The code is invalid!');
 

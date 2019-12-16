@@ -3,6 +3,7 @@ function reveal(elem, str) {
   elem.innerText = str;
 }
 
+const btnClipboardClasses = ['btn-info', 'btn-outline-info', 'btn-secondary', 'btn-outline-secondary', 'btn-danger', 'btn-outline-danger', 'btn-warning', 'btn-outline-warning', 'btn-light', 'btn-outline-light', 'btn-dark', 'btn-outline-dark'];
 function copyToClipboard(elem, str) {
   const tempElem = document.createElement('textarea');
   tempElem.style.position = 'absolute';
@@ -28,18 +29,18 @@ function copyToClipboard(elem, str) {
     elem.setAttribute('data-orgHTML', elem.innerHTML);
     elem.innerHTML = elem.innerHTML == '<i class="far fa-clipboard"></i>' ? '<i class="far fa-check-circle"></i>' : 'Copied!';
 
-    if (elem.classList.contains('btn-info')) {
-      elem.setAttribute('data-class', 'btn-info');
-      elem.classList.remove('btn-info');
+    for (const c of btnClipboardClasses) {
+      if (elem.classList.contains(c)) {
+        elem.setAttribute('data-class', c);
+        elem.classList.remove(c);
 
-      elem.classList.add('btn-success');
-    } else if (elem.classList.contains('btn-outline-info')) {
-      elem.setAttribute('data-class', 'btn-outline-info');
-      elem.classList.remove('btn-outline-info');
+        elem.classList.add('btn-success');
 
-      elem.classList.add('btn-outline-success');
+        break;
+      }
     }
 
+    // Set old text (delayed)
     setTimeout(() => {
       elem.innerHTML = elem.getAttribute('data-orgHTML');
       elem.removeAttribute('data-orgHTML');
@@ -50,7 +51,6 @@ function copyToClipboard(elem, str) {
 
         elem.removeAttribute('data-class');
       }
-
     }, 1000);
   }
 }
