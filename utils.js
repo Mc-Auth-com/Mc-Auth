@@ -337,7 +337,7 @@ module.exports = {
                   case 'APP_ID': return app.id;
                   case 'APP_NAME': return htmlEscape(app.name);
                   case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
-                  case 'APP_ICON_ID': return app.icon || 'default'
+                  case 'APP_ICON_ID': return app.icon || 'default';
 
                   default: break;
                 }
