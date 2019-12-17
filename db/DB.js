@@ -95,9 +95,9 @@ module.exports = {
    * @param {String} redirectURIs 
    * @param {Function} callback 
    */
-  updateApplication(clientID, name, description, redirectURIs, callback) {
-    pool.query(`UPDATE applications SET name =$2, description =$3, redirect_uris =$4 WHERE id =$1;`,
-      [clientID, name, description, JSON.stringify(redirectURIs)], (err, _res) => {
+  updateApplication(clientID, name, description, icon, redirectURIs, callback) {
+    pool.query(`UPDATE applications SET name =$2, description =$3, icon =$4, redirect_uris =$5 WHERE id =$1;`,
+      [clientID, name, description, icon,JSON.stringify(redirectURIs)], (err, _res) => {
         return callback(err || null);
       });
   },
@@ -217,6 +217,77 @@ module.exports = {
   denyGrant(grantID, callback) {
     pool.query(`UPDATE grants SET invalid =TRUE WHERE id =$1;`, [grantID], (err, _res) => {
       callback(err || null);
+    });
+  },
+
+  /* Images */
+  /**
+   * @param {Buffer} png 
+   * @param {Buffer} original 
+   * @param {Function} callback 
+   */
+  createImage(png, original, callback) {  // What the actual fuck did I doe here o.0
+    pool.connect((err, client, done) => {
+      if (err) {
+        done();
+        return callback(err);
+      }
+
+      client.query(`SELECT id FROM images WHERE original =$1;`, [original], (err, res) => {
+        if (err) {
+          done();
+          return callback(err);
+        }
+
+        if (firstRow(res, 'id')) {
+          done();
+
+          module.exports.getImageID(original, callback);
+        } else {
+          client.query(`INSERT INTO images(optimized,original) VALUES ($1,$2) DO NOTHING RETURNING id;`,
+            [png, original], (err, res) => {
+              if (err) {
+                done();
+                return callback(err);
+              }
+
+              if (firstRow(res, 'id')) {
+                return callback(err, firstRow(res, 'id'));
+              }
+
+              this.getImageID(original, (err, id) => {
+                done();
+                if (err) return callback(err);
+
+                return this.getOptimizedImage(id, callback);
+              });
+            });
+        }
+      });
+    });
+  },
+
+  /**
+   * @param {Buffer} original 
+   * @param {Function} callback 
+   */
+  getImageID(original, callback) {
+    pool.query(`SELECT id FROM images WHERE original =$1;`, [original], (err, res) => {
+      if (err) return callback(err);
+
+      callback(null, firstRow(res, 'id'));
+    });
+  },
+
+  /**
+   * @param {Number|String} id 
+   * @param {Function} callback 
+   */
+  getOptimizedImage(id, callback) {
+    pool.query(`SELECT optimized FROM images WHERE id =$1;`, [id], (err, res) => {
+      if (err) return callback(err);
+
+      callback(null, firstRow(res, 'optimized'));
     });
   }
 };
