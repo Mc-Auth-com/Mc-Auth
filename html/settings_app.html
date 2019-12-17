@@ -15,6 +15,39 @@
 <body class="d-flex flex-column h-100">
   ${HTML_HEADER}
 
+  <script>
+    function startAppIconUpload(elem) {
+      const input = document.createElement('input');
+      input.type = 'file';
+
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+          const res = await fetch(`${BASE_URL}/uploads/new`, {
+            method: 'POST',
+            headers: { 'Content-Type': file.type },
+            body: file
+          });
+
+          const json = await res.json();
+
+          if (res.status === 201) {
+            console.log(`Stored at ` + res.headers.get('Location'));
+
+            document.getElementById('icon').value = json.id;
+            elem.src = res.headers.get('Location');
+
+            console.log('Upload succeeded:', json);
+          } else {
+            console.error('Upload failed:', json);
+          }
+        }
+      };
+
+      input.click();
+    }
+  </script>
   <main style="margin-bottom: 2rem">
     <div class="container">
       <div class="card centeredCard" style="max-width: unset; min-width: 40vw;">
@@ -31,6 +64,13 @@
 
           <form method="POST">
             <input type="text" class="hidden" name="client_id" value="${APP_ID}" required>
+
+            <div>
+              <img src="${APP_ICON}" onclick="startAppIconUpload(this)" class="rounded mx-auto d-block"
+                style="max-height: 128px; max-width: 128px;" alt="Application Logo">
+              <input type="text" class="form-control hidden" id="icon" name="icon" value="${APP_ICON_ID}" required>
+              <p class="text-muted">Click the image above to upload another one!</p>
+            </div>
 
             <div class="form-group">
               <label for="name">Name<span class="text-danger">*</span></label>

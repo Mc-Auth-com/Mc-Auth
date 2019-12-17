@@ -37,6 +37,7 @@ app.use(morgan(logFormat, { skip(req, res) { return res.statusCode < 400 || res.
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(require('body-parser').raw({ type: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'], limit: '3MB' }));
 
 // Remove duplicate query-params (Last one wins)
 app.use((req, _res, next) => {
@@ -104,6 +105,7 @@ app.use('/privacy', Utils.Express.staticDynamicRouter(Utils.Storage.PRIVACY));
 app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 /** dynamic **/
+app.use('/uploads', require('./routes/uploads'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/oauth2', require('./routes/oAuth2'));

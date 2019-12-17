@@ -23,9 +23,11 @@ router.post('/:appID', (req, res, next) => {
   const appID = req.body.client_id,
     name = Utils.toNeutralString(req.body.name || ''),
     desc = Utils.toNeutralString(req.body.desc || ''),
+    icon = Utils.toNeutralString(req.body.icon || '').toLowerCase(),
     redirectURIs = (req.body.redirect_uris || '').split(/\r?\n/).filter((el) => { return el; });
 
   if (!appID || !Utils.isNumber(appID)) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
+  if (!icon || (!Utils.isNumber(icon) && icon != 'default')) return next(Utils.createError(404, 'ToDo: Invalid icon'));
 
   if (!req.body.name) return Utils.createError(400, 'Missing Application-Name');
   if (req.body.name.length > 128) return Utils.createError(400, 'Application-Name exceed 128 characters');
@@ -41,13 +43,12 @@ router.post('/:appID', (req, res, next) => {
 
     return true;
   });
-  newRedirectURIs.forEach((el) => { return Utils.toNeutralString(el); });
 
   db.getApplicationForOwner(appID, req.session['mc_UUID'], (err, app) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!app || app.deleted) return next(Utils.createError(403, 'ToDo: Invalid client_id or not the owner'));
 
-    db.updateApplication(app.id, name, desc, newRedirectURIs, (err) => {
+    db.updateApplication(app.id, name, desc, icon != 'default' ? icon : null, newRedirectURIs, (err) => {
       if (err) return next(Utils.logAndCreateError(err));
 
       const note = removedURIs > 0 ? (`&note=${encodeURIComponent('Removed ' + removedURIs + ' invalid redirect URI' + (removedURIs != 1 ? 's' : ''))}`) : '';

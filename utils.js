@@ -256,6 +256,8 @@ module.exports = {
           case 'APP_OWNER_NAME': return appOwnerName;
           case 'APP_PUBLISHED': return new Date(app.created).toDateString().substring(4);
           case 'APP_REDIRECT_URIs': return (app.redirect_uris || []).join('\r\n');
+          case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
+          case 'APP_ICON_ID': return app.icon || 'default';
 
           default: break;
         }
@@ -334,7 +336,8 @@ module.exports = {
                 switch (str) {
                   case 'APP_ID': return app.id;
                   case 'APP_NAME': return htmlEscape(app.name);
-                  // case 'APP_LOGO_URL': return app.image;
+                  case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
+                  case 'APP_ICON_ID': return app.icon || 'default'
 
                   default: break;
                 }
