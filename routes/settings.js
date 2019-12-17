@@ -4,7 +4,7 @@ const Utils = require('../utils'),
 const router = require('express').Router();
 
 router.post('/create', (req, res, next) => {
-  if (!req.session['loggedIn']) return next(Utils.createError(400, 'ToDo: Not logged in'));
+  if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!'));
 
   if (!req.body.name) return Utils.createError(400, 'Missing Application-Name');
   if (req.body.name.length > 128) return Utils.createError(400, 'Application-Name exceed 128 characters');
@@ -18,7 +18,7 @@ router.post('/create', (req, res, next) => {
 });
 
 router.post('/:appID', (req, res, next) => {
-  if (!req.session['loggedIn']) return next(Utils.createError(400, 'ToDo: Not logged in'));
+  if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!'));
 
   const appID = req.body.client_id,
     name = Utils.toNeutralString(req.body.name || ''),
@@ -58,7 +58,7 @@ router.post('/:appID', (req, res, next) => {
 });
 
 router.get('/:appID?', (req, res, next) => {
-  if (!req.session['loggedIn']) return next(Utils.createError(400, 'ToDo: Not logged in'));
+  if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!'));  // TODO: HTML
 
   const appID = req.params.appID;
 

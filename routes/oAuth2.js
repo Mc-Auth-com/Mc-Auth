@@ -4,7 +4,7 @@ const Utils = require('../utils'),
 const router = require('express').Router();
 
 router.get('/authorize/:grantID', (req, res, next) => {
-  if (!req.session['loggedIn']) return next(Utils.createError(400, 'ToDo: Not logged in'));
+  if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!'));  // TODO: HTML
 
   if (!Utils.isNumber(req.params.grantID)) return next(Utils.createError(404, 'Resource Not Found'));
 
@@ -63,7 +63,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
 });
 
 router.get('/authorize', (req, res, next) => {
-  if (!req.session['loggedIn']) return next(Utils.createError(400, 'ToDo: Not logged in'));
+  if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!')); // TODO: HTML
 
   const clientID = req.query['client_id'],
     redirectURI = req.query['redirect_uri'],
