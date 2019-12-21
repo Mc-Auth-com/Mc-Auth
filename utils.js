@@ -234,6 +234,26 @@ module.exports = {
           }
         });
       }
+    },
+
+    getProfile(uuid, callback) {
+      if (!uuid) return callback(null, null);
+
+      uuid = uuid.toLowerCase().replace(/-/g, '');
+
+      request('https://api.sprax2013.de/mojang/profile/' + uuid, (err, res, body) => {
+        if (err) {
+          return callback(err);
+        }
+
+        if (res.statusCode == 200) {
+          return callback(null, JSON.parse(body));
+        } else if (res.statusCode == 204) {
+          return callback(null, null);
+        }
+
+        return callback(module.exports.createError(500, `Api.Sprax2013.de responded with HTTP-StatusCode ${res.statusCode}`));
+      });
     }
   },
 
@@ -301,6 +321,7 @@ module.exports = {
             case 'MINECRAFT_HOST': return module.exports.Storage.MINECRAFT_HOST;
 
             /* Dynamic */
+            case 'GET_ReturnTo_ENCODED': return encodeURIComponent(req.query['returnTo'] || '');
             case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') > 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
 
             /* Session */

@@ -60,7 +60,7 @@ async function submitCode(event) {
   codeInput.setAttribute('disabled', 'disabled');
 
   try {
-    const res = await fetch(`${BASE_URL}/login/verify?uuid=${mcUUID}&otp=${codeInput.value}&keepLogin=${document.getElementById('keepLogin').checked}`, {
+    const res = await fetch(`${BASE_URL}/login/verify?uuid=${mcUUID}&otp=${codeInput.value}&keepLogin=${document.getElementById('keepLogin').checked}&returnTo=${event.target.getAttribute('data-returnTo')}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     });

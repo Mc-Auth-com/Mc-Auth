@@ -1,6 +1,8 @@
 function reveal(elem, str) {
-  elem.classList.remove('text-unrevealed');
-  elem.innerText = str;
+  if (elem.innerText != str) {
+    elem.classList.remove('text-unrevealed');
+    elem.innerText = str;
+  }
 }
 
 const btnClipboardClasses = ['btn-info', 'btn-outline-info', 'btn-secondary', 'btn-outline-secondary', 'btn-danger', 'btn-outline-danger', 'btn-warning', 'btn-outline-warning', 'btn-light', 'btn-outline-light', 'btn-dark', 'btn-outline-dark'];

@@ -14,6 +14,7 @@ router.post('/token', (req, res, next) => {
 
   db.getApplication(clientID, (err, app) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
+
     if (!app || app.secret != clientSecret) return next(Utils.createError(400, 'client_id does not exist or does not match client_secret'));
 
     if (!grantType || grantType.toLowerCase() != 'authorization_code') return next(Utils.createError(400, 'Invalid grant_type'));
@@ -25,20 +26,30 @@ router.post('/token', (req, res, next) => {
       const result = {
         access_token: grant.access_token,
         token_type: 'Bearer',
-        expires_in: 3600 /* 1h */
-      };
-      if (grant.scope) {
-        result.scope = grant.scope.sort().join(' ');
-
-        if (grant.scope.includes('profile')) {
-          (result.data = {}).profile = null;
+        expires_in: 3600, /* 1h */
+        data: {
+          uuid: grant.mc_uuid
         }
-      }
+      };
       if (grant.state) {
         result.state = grant.state;
       }
+      if (grant.scope) {
+        Utils.Minecraft.getProfile(grant.mc_uuid, (err, profile) => {
+          if (err) return next(Utils.logAndCreateError(err));
+          if (!profile) return next(Utils.createError(500, 'Could not request minecraft-profile'));
 
-      return res.send(result);
+          result.scope = grant.scope.sort().join(' ');
+
+          if (grant.scope.includes('profile')) {
+            result.data.profile = profile;
+          }
+
+          return res.send(result);
+        });
+      } else {
+        return res.send(result);
+      }
     });
   });
 });

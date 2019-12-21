@@ -3,7 +3,15 @@ const Utils = require('../utils'),
 
 const router = require('express').Router();
 
-router.get('/', Utils.Express.staticDynamicHandler(Utils.Storage.LOGIN));
+router.get('/', (req, res, _next) => {
+  if (req.session['loggedIn']) {
+    const returnTo = (req.query['returnTo'] || '').toLowerCase();
+
+    return res.redirect(returnTo.startsWith(Utils.Storage.BASE_URL) ? returnTo : Utils.Storage.BASE_URL);
+  }
+
+  return Utils.Express.handleStaticDynamic(req, res, Utils.Storage.LOGIN);
+});
 
 router.get('/verify', (req, res, next) => {
   if (req.session['loggedIn']) return next(Utils.createError(400, 'You are already logged in!'));
@@ -31,9 +39,12 @@ router.get('/verify', (req, res, next) => {
 
       req.session['mc_Name'] = username;
 
+      const returnTo = (req.query['returnTo'] || '').toLowerCase();
+      let returnURL = returnTo.startsWith(Utils.Storage.BASE_URL) ? returnTo : Utils.Storage.BASE_URL;
+
       res.json({
         verified: success,
-        url: Utils.Storage.BASE_URL   //TODO Zur Ursprungs-URL zurück und nur fallback ist BASE_URL
+        url: returnURL
       });
     });
   });

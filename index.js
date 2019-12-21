@@ -5,9 +5,9 @@ function shutdownHook() {
   console.log('Shutting down...');
 
   const ready = async () => {
-    // try {
-    //   await require('./db-utils/DB_SkinDB').pool.end();
-    // } catch (ex) { }
+    try {
+      await require('./db/DB').pool.end();
+    } catch (ex) { }
 
     process.exit();
   };

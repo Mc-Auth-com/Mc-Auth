@@ -48,6 +48,7 @@
       input.click();
     }
   </script>
+
   <main style="margin-bottom: 2rem">
     <div class="container">
       <div class="card centeredCard" style="max-width: unset; min-width: 40vw;">
@@ -56,6 +57,18 @@
         </div>
 
         <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <p class="text-muted">${APP_ID}</p>
+            </div>
+
+            <div class="col">
+              <p class="text-muted text-unrevealed" onclick="reveal(this, '${APP_SECRET}')">Click to show</p>
+            </div>
+          </div>
+
+          <hr>
+
           <p class="text-center">
             Bitte versuche deine Angaben so prezise, wie möglich zu wählen,<br>
             da jeder User dieser Angezeigt bekommen kann.<br><br>

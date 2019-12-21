@@ -10,6 +10,17 @@
   <title>Authorizing ${APP_NAME} | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
+
+  <script>
+    // Force page-reload when using browser-pageinator to get to this page (regenerate Grant-ID)
+    window.addEventListener('pageshow', (e) => {
+      if (historyTraversal = e.persisted ||
+        (window.performance &&
+          window.performance.navigation.type === 2)) {
+        window.location.reload();
+      }
+    });
+  </script>
 </head>
 
 <body class="d-flex flex-column h-100">
