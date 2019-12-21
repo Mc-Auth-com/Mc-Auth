@@ -38,7 +38,7 @@
             <li><a href="${URL_BASE}/logout">Logout</a></li>
           </ul>
           ?:
-          <form onsubmit="submitUsername(event)" method="GET">
+          <form onsubmit="submitUsername(event)" data-returnTo="${GET_ReturnTo_ENCODED}" method="GET">
             <div class="form-group" id="form1">
               <label for="mcName">Dein Minecraft-Username</label>
 

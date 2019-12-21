@@ -97,7 +97,7 @@ module.exports = {
    */
   updateApplication(clientID, name, description, icon, redirectURIs, callback) {
     pool.query(`UPDATE applications SET name =$2, description =$3, icon =$4, redirect_uris =$5 WHERE id =$1;`,
-      [clientID, name, description, icon,JSON.stringify(redirectURIs)], (err, _res) => {
+      [clientID, name, description, icon, JSON.stringify(redirectURIs)], (err, _res) => {
         return callback(err || null);
       });
   },
@@ -137,12 +137,13 @@ module.exports = {
    * @param {String} grantID 
    * @param {Function} callback 
    */
-  getGrant(grantID, callback) {
-    pool.query(`SELECT * FROM grants WHERE id =$1;`, [grantID], (err, res) => {
-      if (err) return callback(err);
+  getUnusedGrant(grantID, mcUUID, callback) {
+    pool.query(`SELECT * FROM grants WHERE id =$1 AND invalid =FALSE AND mc_uuid =$2 AND issued >= CURRENT_TIMESTAMP - INTERVAL '24 HOUR';`,
+      [grantID, mcUUID], (err, res) => {
+        if (err) return callback(err);
 
-      return callback(null, firstRow(res));
-    });
+        return callback(null, firstRow(res));
+      });
   },
 
   /**
@@ -295,12 +296,12 @@ module.exports = {
 /* Maintenance */
 
 setInterval(async () => {
-  pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
-    [], (err, res) => {
-      if (err) return Utils.logAndCreateError(err);
+  // pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+  //   [], (err, res) => {
+  //     if (err) return Utils.logAndCreateError(err);
 
-      console.log(`Deleted ${res.rowCount} stale grants`);
-    });
+  //     console.log(`Deleted ${res.rowCount} stale grants`);
+  //   });
 
   pool.query(`DELETE FROM otp WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
     [], (err, res) => {
