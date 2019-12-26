@@ -44,7 +44,7 @@
 
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user"></i></span>
+                  <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
                 </div>
 
                 <input type="text" class="form-control" id="mcName" name="mcName" placeholder="Username" required>
@@ -57,7 +57,9 @@
               <p>
                 Starte nun Minecraft und verbinde dich mit dem Server <code>${MINECRAFT_HOST}</code>.
                 <button type="button" class="btn btn-sm btn-outline-info"
-                  onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"><i class="far fa-clipboard"></i></button>
+                  onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"
+                  aria-label="Click to copy the minecraft-server address to your clipboard"><i class="far fa-clipboard"
+                    aria-hidden="true"></i></button>
                 <br>
                 Du wirst automatisch gekickt und bekommst einen Code angezeigt
               </p>
@@ -65,7 +67,7 @@
               <label for="otp">6-Stelliger Code</label>
               <div class="input-group">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-key"></i></span>
+                  <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
                 </div>
 
                 <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
