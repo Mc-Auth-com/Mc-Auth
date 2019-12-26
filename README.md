@@ -6,6 +6,7 @@
 
 ## TODO
 * Publish Demo-Application
+* Don't jump between english and german text (allow easy translation)
 * When an application requests authorization and the user is not logged in, the user can't proceed as intended
 * App-Settings: Description looses line-breaks
 * Use reCAPTCHA when creating a new app
