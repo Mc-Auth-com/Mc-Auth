@@ -102,7 +102,7 @@ module.exports = {
 
     str = str.toLowerCase();
 
-    return UUID_PATTERN.test(str) || (str.length >= 32 && str.length <= 36 && UUID_PATTERN.test(str.replace(/-/g, '').replace(UUID_PATTERN_ADD_DASH, '$1-$2-$3-$4-$5')));
+    return str.length >= 32 && str.length <= 36 && (UUID_PATTERN.test(str) || UUID_PATTERN.test(str.replace(/-/g, '').replace(UUID_PATTERN_ADD_DASH, '$1-$2-$3-$4-$5')));
   },
 
   /**
