@@ -1,5 +1,4 @@
-const crypto = require('crypto'),
-  request = require('request'),
+const request = require('request'),
   NodeCache = require('node-cache'),
   htmlEscape = require('escape-html');
 
@@ -154,15 +153,6 @@ module.exports = {
     if (typeof str !== 'string') return null;
 
     return str.trim().replace(/\s\s+/g, ' ');
-  },
-
-  /**
-   * @param {String} str 
-   * 
-   * @returns {String} SHA1 (hex)
-   */
-  getSHA1(str) {
-    return crypto.createHash('SHA1').update(str).digest('hex');
   },
 
   /**
