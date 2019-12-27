@@ -1,10 +1,9 @@
-const crypto = require('crypto'),
-  request = require('request'),
+const request = require('request'),
   NodeCache = require('node-cache'),
   htmlEscape = require('escape-html');
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
-  UUID_PATTERN_ADD_DASH = new RegExp('(.{8})(.{4})(.{4})(.{4})(.{12})'),
+  UUID_PATTERN_ADD_DASH = /(.{8})(.{4})(.{4})(.{4})(.{12})/,
   ABSOLUTE_URL_PATTERN = /^[a-z][a-z\d+\-.]*:/i;
 
 const errLogStream = require('rotating-file-stream').createStream('error.log', {
@@ -103,7 +102,7 @@ module.exports = {
 
     str = str.toLowerCase();
 
-    return UUID_PATTERN.test(str) || UUID_PATTERN.test(str.replace(/-/g, '').replace(UUID_PATTERN_ADD_DASH, '$1-$2-$3-$4-$5'));
+    return str.length >= 32 && str.length <= 36 && (UUID_PATTERN.test(str) || UUID_PATTERN.test(str.replace(/-/g, '').replace(UUID_PATTERN_ADD_DASH, '$1-$2-$3-$4-$5')));
   },
 
   /**
@@ -154,15 +153,6 @@ module.exports = {
     if (typeof str !== 'string') return null;
 
     return str.trim().replace(/\s\s+/g, ' ');
-  },
-
-  /**
-   * @param {String} str 
-   * 
-   * @returns {String} SHA1 (hex)
-   */
-  getSHA1(str) {
-    return crypto.createHash('SHA1').update(str).digest('hex');
   },
 
   /**

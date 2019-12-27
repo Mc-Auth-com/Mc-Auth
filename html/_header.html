@@ -21,8 +21,10 @@
           </a>
 
           <div class="dropdown-menu" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="${URL_BASE}/settings"><i class="fas fa-cog"></i> Einstellungen</a>
-            <a class="dropdown-item" href="${URL_BASE}/logout"><i class="fas fa-sign-out-alt"></i> Ausloggen</a>
+            <a class="dropdown-item" href="${URL_BASE}/settings"><i class="fas fa-cog" aria-hidden="true"></i>
+              Einstellungen</a>
+            <a class="dropdown-item" href="${URL_BASE}/logout"><i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+              Ausloggen</a>
           </div>
         </li>
         ?:
@@ -34,15 +36,15 @@
         ?}
 
         <li class="nav-item">
-          <a class="nav-link" href="#">
-            <i class="far fa-moon fa-lg"></i>
+          <a class="nav-link" href="#" aria-label="Switch between dark and light mode">
+            <i class="far fa-moon fa-lg" aria-hidden="true"></i>
           </a>
         </li>
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-language fa-lg"></i>
+            aria-haspopup="true" aria-expanded="false" aria-label="Open language selection menu">
+            <i class="fas fa-language fa-lg" aria-hidden="true"></i>
           </a>
 
           <div class="dropdown-menu dropdown-menu-right langDropdown" aria-labelledby="langDropdown">
