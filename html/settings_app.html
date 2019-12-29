@@ -7,7 +7,7 @@
 
   ${HTML_HEAD_TOP}
 
-  <title>Settings | Mc-Auth.com</title>
+  <title>${LOC:html.settings.manage_app} | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
 </head>
@@ -53,7 +53,7 @@
     <div class="container">
       <div class="card centeredCard" style="max-width: unset; min-width: 40vw;">
         <div class="card-header">
-          <h5 class="text-center">Anwendungen Verwalten</h5>
+          <h5 class="text-center">${LOC:html.settings.manage_app}</h5>
         </div>
 
         <div class="card-body">
@@ -63,16 +63,17 @@
             </div>
 
             <div class="col">
-              <p class="text-muted text-unrevealed" onclick="reveal(this, '${APP_SECRET}')">Click to show</p>
+              <p class="text-muted text-unrevealed" onclick="reveal(this, '${APP_SECRET}')">
+                ${LOC:html.settings.click_to_show}</p>
             </div>
           </div>
 
           <hr>
 
           <p class="text-center">
-            Bitte versuche deine Angaben so prezise, wie möglich zu wählen,<br>
-            da jeder User dieser Angezeigt bekommen kann.<br><br>
-            Du kannst alle Angaben jederzeit Ändern
+            ${LOC:html.settings.please_provide_exact_info}
+            <br>
+            ${LOC:html.settings.you_can_edit_at_any_time}
           </p>
 
           <form method="POST">
@@ -80,27 +81,27 @@
 
             <div>
               <img src="${APP_ICON}" onclick="startAppIconUpload(this)" class="rounded mx-auto d-block"
-                style="max-height: 128px; max-width: 128px;" alt="Application Logo">
+                style="max-height: 128px; max-width: 128px;" alt="${LOC:html.authorize.app_logo}">
               <input type="text" class="form-control hidden" id="icon" name="icon" value="${APP_ICON_ID}" required>
-              <p class="text-muted">Click the image above to upload another one!</p>
+              <p class="text-muted text-center">${LOC:html.settings.click_image_above_to_upload}</p>
             </div>
 
             <div class="form-group">
-              <label for="name">Name<span class="text-danger">*</span></label>
+              <label for="name">${LOC:words.name}<span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="name" name="name" value="${APP_NAME}" maxlength="128"
                 data-remaining="nameRemain" oninput="updateRemainingChars(this)" required>
-              <small id="nameRemain" class="form-text text-muted">Maximal 128 Zeichen</small>
+              <small id="nameRemain" class="form-text text-muted">${LOC:html.settings.max_length_128_characters}</small>
             </div>
 
             <div class="form-group">
-              <label for="desc">Beschreibung</label>
+              <label for="desc">${LOC:words.description}</label>
               <textarea rows="3" class="form-control" id="desc" name="desc" maxlength="512" data-remaining="descRemain"
                 oninput="updateRemainingChars(this)">${APP_DESCRIPTION_RAW}</textarea>
-              <small id="descRemain" class="form-text text-muted">Maximal 512 Zeichen</small>
+              <small id="descRemain" class="form-text text-muted">${LOC:html.settings.max_length_512_characters}</small>
             </div>
 
             <div class="form-group">
-              <label for="redirect_uris">Redirect URIs (Eine pro Zeile)</label>
+              <label for="redirect_uris">${LOC:html.settings.redirect_uris}</label>
               <textarea rows="3" class="form-control" id="redirect_uris"
                 name="redirect_uris">${APP_REDIRECT_URIs}</textarea>
             </div>
@@ -109,11 +110,12 @@
 
             <div class="row">
               <div class="col" style="padding-right: 6px">
-                <a class="btn btn-danger float-right" href="${URL_BASE}/settings" role="button">Zurück zur Übersicht</a>
+                <a class="btn btn-danger float-right" href="${URL_BASE}/settings"
+                  role="button">${LOC:html.settings.return_to_settings}</a>
               </div>
 
               <div class="col" style="padding-left: 6px">
-                <button type="submit" class="btn btn-success">Speichern</button>
+                <button type="submit" class="btn btn-success">${LOC:words.save_data}</button>
               </div>
             </div>
           </form>

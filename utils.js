@@ -18,8 +18,18 @@ errLogStream.on('error', (err) => {
 
 const mcUsernameCache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
+/* StackOverflow ftw: https://stackoverflow.com/a/4673436/9346616 */
+String.prototype.format = function () {
+  const args = arguments.length == 1 && Array.isArray(arguments[0]) ? arguments[0] : arguments;
+
+  return this.replace(/{(\d+)}/g, (match, number) => {
+    return typeof args[number - 1] != 'undefined' ? args[number - 1] : match;
+  });
+};
+
 module.exports = {
   Storage: require('./storage'),
+  Localization: require('./localization'),
 
   /**
    * @param {Number} HTTPStatusCode The HTTP-StatusCode
@@ -295,6 +305,40 @@ module.exports = {
       return null;
     },
 
+    localizationCallback(str = '', args) {
+      const req = args[0],
+        mcUsername = args[1],
+        customCallback = args[2],
+        customCallbackArgs = args[3];
+
+      try {
+        if (str.startsWith('LOC:')) {
+          const locTerm = str.split(':')[1];
+
+          let result = module.exports.Localization.getString(locTerm);
+
+          if (!result) console.error(`HTML requires unknow translation: ${locTerm}`);
+
+          const args = module.exports.Localization.getArguments(locTerm);
+          if (args && args.length > 0) {
+            for (let i = 0; i < args.length; i++) {
+              const arg = args[i];
+
+              args[i] = module.exports.HTML.replaceVariables(req, mcUsername, arg, customCallback, customCallbackArgs) || arg;
+            }
+
+            result = result.format(args);
+          }
+
+          return result;
+        }
+      } catch (err) {
+        module.exports.logAndCreateError(err);
+      }
+
+      return null;
+    },
+
     replaceVariables(req, mcUsername = undefined, html, customCallback = undefined, customCallbackArgs = []) {
       return module.exports.replacer(html, '${', '}', (str) => {
         try {
@@ -320,6 +364,11 @@ module.exports = {
             case 'Minecraft_UUID': return req.session['mc_UUID'] || '';
 
             default: break;
+          }
+
+          const localization = module.exports.HTML.localizationCallback(str, [req, mcUsername, customCallback, customCallbackArgs]);
+          if (localization) {
+            return localization;
           }
 
           if (customCallback) {

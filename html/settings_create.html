@@ -7,7 +7,7 @@
 
   ${HTML_HEAD_TOP}
 
-  <title>Settings | Mc-Auth.com</title>
+  <title>${LOC:html.settings.create_app} | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
 </head>
@@ -19,30 +19,34 @@
     <div class="container">
       <div class="card centeredCard">
         <div class="card-header">
-          <h5 class="text-center">Neue Anwendungen erstellen</h5>
+          <h5 class="text-center">${LOC:html.settings.create_app}</h5>
         </div>
 
         <div class="card-body">
-          <p>Die folgenden Werte sind öffentlich sichtbar<br>und können nachträglich geändert werden.</p>
+          <p class="text-center">
+            ${LOC:html.settings.please_provide_exact_info}
+            <br>
+            ${LOC:html.settings.you_can_edit_at_any_time}
+          </p>
 
           <form method="POST">
             <div class="form-group">
-              <label for="name">Name<span class="text-danger">*</span></label>
+              <label for="name">${LOC:words.name}<span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="name" name="name" maxlength="128" data-remaining="nameRemain"
                 oninput="updateRemainingChars(this)" required>
-              <small id="nameRemain" class="form-text text-muted">Maximal 128 Zeichen</small>
+              <small id="nameRemain" class="form-text text-muted">${LOC:html.settings.max_length_128_characters}</small>
             </div>
 
             <div class="form-group">
-              <label for="desc">Beschreibung</label>
+              <label for="desc">${LOC:words.description}</label>
               <textarea rows="3" class="form-control" id="desc" name="desc" maxlength="512" data-remaining="descRemain"
                 oninput="updateRemainingChars(this)"></textarea>
-              <small id="descRemain" class="form-text text-muted">Maximal 512 Zeichen</small>
+              <small id="descRemain" class="form-text text-muted">${LOC:html.settings.max_length_512_characters}</small>
             </div>
 
             <hr>
 
-            <button type="submit" class="btn btn-primary float-right" id="submitBtn">Erstellen</button>
+            <button type="submit" class="btn btn-primary float-right" id="submitBtn">${LOC:words.create}</button>
           </form>
         </div>
       </div>

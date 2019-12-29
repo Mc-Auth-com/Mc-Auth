@@ -25,22 +25,22 @@
     <div class="container">
       <div class="card centeredCard">
         <div class="card-header">
-          <h3 class="text-center">Login</h3>
+          <h3 class="text-center">${LOC:words.login}</h3>
         </div>
 
         <div class="card-body">
           ?{LoggedIn:
-          <p>Du bist bereits eingeloggt!</p>
+          <p>${LOC:html.login.already_logged_in}</p>
 
           <ul>
-            <li><a href="${URL_BASE}">Startseite</a><br><br></li>
-            <li><a href="${URL_BASE}/settings">Einstellungen</a></li>
-            <li><a href="${URL_BASE}/logout">Logout</a></li>
+            <li><a href="${URL_BASE}">${LOC:words.frontpage}</a><br><br></li>
+            <li><a href="${URL_BASE}/settings">${LOC:words.settings}</a></li>
+            <li><a href="${URL_BASE}/logout">${LOC:words.logout}</a></li>
           </ul>
           ?:
           <form onsubmit="submitUsername(event)" data-returnTo="${GET_ReturnTo_ENCODED}" method="GET">
             <div class="form-group" id="form1">
-              <label for="mcName">Dein Minecraft-Username</label>
+              <label for="mcName">${LOC:html.login.your_minecraft_name}</label>
 
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -55,16 +55,18 @@
               <hr>
 
               <p>
-                Starte nun Minecraft und verbinde dich mit dem Server <code>${MINECRAFT_HOST}</code>.
+                ${LOC:html.login.start_minecraft_and_connect}
+
                 <button type="button" class="btn btn-sm btn-outline-info"
                   onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"
-                  aria-label="Click to copy the minecraft-server address to your clipboard"><i class="far fa-clipboard"
+                  aria-label="${LOC:html.login.click_to_copy_minecraft_host_to_clipboard}"><i class="far fa-clipboard"
                     aria-hidden="true"></i></button>
+
                 <br>
-                Du wirst automatisch gekickt und bekommst einen Code angezeigt
+                ${LOC:html.login.kicked_with_code}
               </p>
 
-              <label for="otp">6-Stelliger Code</label>
+              <label for="otp">${LOC:html.login.six_digit_code}</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
@@ -80,10 +82,10 @@
 
             <div class="form-group form-check">
               <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
-              <label class="form-check-label" for="keepLogin">Eingeloggt bleiben</label>
+              <label class="form-check-label" for="keepLogin">${LOC:html.login.stay_logged_in}</label>
             </div>
 
-            <button type="submit" class="btn btn-primary" id="submitBtn">Weiter »</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">${LOC:words.next} »</button>
           </form>
           ?}
         </div>
