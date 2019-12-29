@@ -77,7 +77,10 @@ module.exports = {
     return termArguments[strTerm];
   },
 
+  /**
+   * @param {String} langKey 
+   */
   isLanguageSupported(langKey) {
-    return !!localizations[langKey];
+    return langKey && typeof langKey == 'string' && langKey.length == 2 && localizations[langKey.toLowerCase()];
   }
 };
