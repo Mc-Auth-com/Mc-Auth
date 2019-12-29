@@ -405,7 +405,7 @@ module.exports = {
           let result = '';
           const template = str.substring('HasApps:'.length, str.lastIndexOf('?:'));
 
-          const replacer = function (str) {
+          const replacer = function (str, app) {
             try {
               switch (str) {
                 case 'APP_ID': return app.id;
@@ -423,7 +423,7 @@ module.exports = {
           };
 
           for (const app of apps) {
-            result += module.exports.replacer(template, '$?{', '}', replacer);
+            result += module.exports.replacer(template, '$?{', '}', replacer(str, app));
           }
 
           return result;
