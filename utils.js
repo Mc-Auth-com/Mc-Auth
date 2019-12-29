@@ -445,6 +445,14 @@ module.exports = {
           let index = str.lastIndexOf('?:');
 
           return index >= 0 ? str.substring(index + 2) : '';
+        } else if (str.startsWith('DarkTheme:')) {
+          if (req.cookies['darkTheme'] && req.cookies['darkTheme'] == 1) {
+            return str.substring('DarkTheme:'.length, str.lastIndexOf('?:'));
+          }
+
+          let index = str.lastIndexOf('?:');
+
+          return index >= 0 ? str.substring(index + 2) : '';
         } else if (customCallback) {
           return customCallback(str, customCallbackArgs) || '';
         }

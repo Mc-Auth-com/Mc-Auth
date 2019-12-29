@@ -74,3 +74,42 @@ function updateRemainingChars(elem) {
     }
   }
 }
+
+function toggleDarkMode(event) {
+  if (event) {
+    event.preventDefault();
+  }
+
+  const navMenu = document.getElementById('headerMenu'),
+    footer = document.getElementById('footer'),
+    body = document.getElementsByTagName('body').item(0);
+
+  const isCurrDarkMode = navMenu.classList.contains('bg-dark');
+
+  if (isCurrDarkMode) {
+    navMenu.classList.remove('navbar-dark', 'bg-dark');
+    navMenu.classList.add('navbar-light', 'bg-light');
+
+    footer.classList.remove('bg-dark');
+    footer.classList.add('bg-light');
+
+    body.classList.remove('dark-body', 'text-light');
+  } else {
+    navMenu.classList.remove('navbar-light', 'bg-light');
+    navMenu.classList.add('navbar-dark', 'bg-dark');
+
+    footer.classList.remove('bg-light');
+    footer.classList.add('bg-dark');
+
+    body.classList.add('dark-body', 'text-light');
+  }
+
+  setActiveTheme(!isCurrDarkMode);
+}
+
+/**
+ * @param {Boolean} darkTheme 
+ */
+function setActiveTheme(darkTheme) {
+  document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()};`;
+}

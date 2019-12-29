@@ -29,3 +29,35 @@
 .hidden {
   display: none;
 }
+
+/* Dark-theme */
+body {
+  transition: background-color .5s ease,
+    color .5s ease !important;
+}
+
+.dark-body {
+  background-color: #1f2326;
+}
+
+.dark-body .navbar .navbar-brand {
+  color: #f8f9fa !important;
+}
+
+.dark-body .dropdown-menu {
+  background-color: #343a40 !important;
+}
+
+.dark-body .dropdown-menu .dropdown-item {
+  color: #f8f9fa !important;
+}
+
+.dark-body .dropdown-item:focus,
+.dark-body .dropdown-item:hover {
+  background-color: #1f2326;
+}
+
+.dark-body hr {
+  border-color: #a0a2a4;
+  color: #a0a2a4;
+}

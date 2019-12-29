@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <nav class="navbar navbar-expand-md ?{DarkTheme:navbar-dark bg-dark?:navbar-light bg-light?}" id="headerMenu">
     <a class="navbar-brand" style="color: #7952B3" href="${URL_BASE}">
       <img src="https://mc-auth.com/assets/img/Logo.svg" style="height:2.5rem; width: auto" alt="${LOC:words.logo}">
       Minecraft Authentication
@@ -38,7 +38,7 @@
         ?}
 
         <li class="nav-item">
-          <a class="nav-link" href="#" aria-label="${LOC:html.header.toggle_dark_theme}">
+          <a class="nav-link" href="#" onclick="toggleDarkMode(event)" aria-label="${LOC:html.header.toggle_dark_theme}">
             <i class="far fa-moon fa-lg" aria-hidden="true"></i>
           </a>
         </li>
