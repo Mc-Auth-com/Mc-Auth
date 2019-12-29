@@ -11,7 +11,7 @@
   * Functional Language-Switcher
   * Cache localized HTML
   * ~~Create english translation~~
-  * Create german translation
+  * ~~Create german translation~~
 * Tell users that changes have been saved or that an upload failed/succeeded
 * Use reCAPTCHA when creating a new app
 * Rate-limit icon uploads
