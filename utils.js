@@ -405,23 +405,25 @@ module.exports = {
           let result = '';
           const template = str.substring('HasApps:'.length, str.lastIndexOf('?:'));
 
-          for (const app of apps) {
-            result += module.exports.replacer(template, '$?{', '}', (str) => {
-              try {
-                switch (str) {
-                  case 'APP_ID': return app.id;
-                  case 'APP_NAME': return htmlEscape(app.name);
-                  case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
-                  case 'APP_ICON_ID': return app.icon || 'default';
+          const replacer = function (str) {
+            try {
+              switch (str) {
+                case 'APP_ID': return app.id;
+                case 'APP_NAME': return htmlEscape(app.name);
+                case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
+                case 'APP_ICON_ID': return app.icon || 'default';
 
-                  default: break;
-                }
-              } catch (err) {
-                module.exports.logAndCreateError(err);
+                default: break;
               }
+            } catch (err) {
+              module.exports.logAndCreateError(err);
+            }
 
-              return '';
-            });
+            return '';
+          };
+
+          for (const app of apps) {
+            result += module.exports.replacer(template, '$?{', '}', replacer);
           }
 
           return result;
