@@ -40,15 +40,13 @@ initStorage(() => {
           ((cfg.listen.usePath || process.env.UNIX_PATH) ? `path ${process.env.UNIX_PATH || cfg.listen.path}` : `port ${process.env.PORT || cfg.listen.port}`) +
           ' requires elevated privileges'
         );
-        process.exit(1);
-        break;
+        return process.exit(1);
       case 'EADDRINUSE':
         console.error(
           ((cfg.listen.usePath || process.env.UNIX_PATH) ? `path ${process.env.UNIX_PATH || cfg.listen.path}` : `port ${process.env.PORT || cfg.listen.port}`) +
           ' is already in use'
         );
-        process.exit(1);
-        break;
+        return process.exit(1);
       default:
         throw err;
     }
