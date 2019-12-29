@@ -22,16 +22,16 @@ router.post('/:appID', (req, res, next) => {
 
   const appID = req.body.client_id,
     name = Utils.toNeutralString(req.body.name || ''),
-    desc = Utils.toNeutralString(req.body.desc || ''),
+    desc = (req.body.desc || '').trim().replace(/\r\n/g, '\n'),
     icon = Utils.toNeutralString(req.body.icon || '').toLowerCase(),
     redirectURIs = (req.body.redirect_uris || '').split(/\r?\n/).filter((el) => { return el; });
 
   if (!appID || !Utils.isNumber(appID)) return next(Utils.createError(404, 'ToDo: Invalid client_id'));
   if (!icon || (!Utils.isNumber(icon) && icon != 'default')) return next(Utils.createError(404, 'ToDo: Invalid icon'));
 
-  if (!req.body.name) return Utils.createError(400, 'Missing Application-Name');
-  if (req.body.name.length > 128) return Utils.createError(400, 'Application-Name exceed 128 characters');
-  if (req.body.desc && req.body.desc.length > 512) return Utils.createError(400, 'Application-Description exceed 512 characters');
+  if (!name) return Utils.createError(400, 'Missing Application-Name');
+  if (name.length > 128) return Utils.createError(400, 'Application-Name exceed 128 characters');
+  if (desc && desc.length > 512) return Utils.createError(400, 'Application-Description exceed 512 characters');
 
   let removedURIs = 0;
   const newRedirectURIs = redirectURIs.filter((el) => {
