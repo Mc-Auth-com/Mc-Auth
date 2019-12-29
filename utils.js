@@ -260,7 +260,11 @@ module.exports = {
   HTML: {
     /* Replace */
 
-    appVariableCallback(str = '', args) {
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    appVariableCallback(str, args) {
       const app = args[0],
         appOwnerName = args[1],
         reqByAppOwner = args[2];
@@ -288,7 +292,11 @@ module.exports = {
       return null;
     },
 
-    grantVariableCallback(str = '', args) {
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    grantVariableCallback(str, args) {
       const grant = args[0];
 
       try {
@@ -305,7 +313,11 @@ module.exports = {
       return null;
     },
 
-    localizationCallback(str = '', args) {
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    localizationCallback(str, args) {
       const req = args[0],
         mcUsername = args[1],
         customCallback = args[2],
