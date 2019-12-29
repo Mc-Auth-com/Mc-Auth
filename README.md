@@ -5,7 +5,6 @@
 **[@JonasAlpha](https://github.com/JonasAlpha)** for the Logo and Banner
 
 ## TODO
-* App-Settings: Description looses line-breaks
 * Settings: Show grants (accepted and denied ones)
 * Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough
 * Allow easy localization of HTML
@@ -18,6 +17,7 @@
 * Add possibilities to be an verified application
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
+* ~~App-Settings: Description looses line-breaks~~
 * ~~Publish Demo-Application~~ 
 * ~~When an application requests authorization and the user is not logged in, the user can't proceed as intended~~
 
