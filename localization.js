@@ -53,6 +53,10 @@ module.exports = {
   getString(strTerm, langKey = defaultLang, amount = 1) {
     let result = (localizations[langKey] || localizations[defaultLang])[strTerm];
 
+    if (!result) {
+      result = localizations[defaultLang][strTerm];
+    }
+
     if (typeof result == 'object') {
       if (amount == 1 && result['one']) {
         result = result['one'];
