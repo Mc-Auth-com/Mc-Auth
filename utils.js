@@ -18,8 +18,18 @@ errLogStream.on('error', (err) => {
 
 const mcUsernameCache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
 
+/* StackOverflow ftw: https://stackoverflow.com/a/4673436/9346616 */
+String.prototype.format = function () {
+  const args = arguments.length == 1 && Array.isArray(arguments[0]) ? arguments[0] : arguments;
+
+  return this.replace(/{(\d+)}/g, (match, number) => {
+    return typeof args[number - 1] != 'undefined' ? args[number - 1] : match;
+  });
+};
+
 module.exports = {
   Storage: require('./storage'),
+  Localization: require('./localization'),
 
   /**
    * @param {Number} HTTPStatusCode The HTTP-StatusCode
@@ -250,7 +260,11 @@ module.exports = {
   HTML: {
     /* Replace */
 
-    appVariableCallback(str = '', args) {
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    appVariableCallback(str, args) {
       const app = args[0],
         appOwnerName = args[1],
         reqByAppOwner = args[2];
@@ -278,7 +292,11 @@ module.exports = {
       return null;
     },
 
-    grantVariableCallback(str = '', args) {
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    grantVariableCallback(str, args) {
       const grant = args[0];
 
       try {
@@ -287,6 +305,44 @@ module.exports = {
           case 'GRANT_ID': return `${grant.id}`;
 
           default: break;
+        }
+      } catch (err) {
+        module.exports.logAndCreateError(err);
+      }
+
+      return null;
+    },
+
+    /**
+     * @param {String} str 
+     * @param {any[]} args 
+     */
+    localizationCallback(str, args) {
+      const req = args[0],
+        mcUsername = args[1],
+        customCallback = args[2],
+        customCallbackArgs = args[3];
+
+      try {
+        if (str.startsWith('LOC:')) {
+          const locTerm = str.split(':')[1];
+
+          let result = module.exports.Localization.getString(locTerm);
+
+          if (!result) console.error(`HTML requires unknow translation: ${locTerm}`);
+
+          const locArgs = module.exports.Localization.getArguments(locTerm);
+          if (locArgs && locArgs.length > 0) {
+            for (let i = 0; i < locArgs.length; i++) {
+              const arg = locArgs[i];
+
+              locArgs[i] = module.exports.HTML.replaceVariables(req, mcUsername, arg, customCallback, customCallbackArgs) || arg;
+            }
+
+            result = result.format(locArgs);
+          }
+
+          return result;
         }
       } catch (err) {
         module.exports.logAndCreateError(err);
@@ -308,6 +364,7 @@ module.exports = {
             case 'URL_STATIC_CONTENT': return module.exports.Storage.STATIC_CONTENT_URL;
             case 'URL_BASE': return module.exports.Storage.BASE_URL;
             case 'URL_DOCS': return module.exports.Storage.DOCS_URL;
+            case 'URL_DEMO': return module.exports.Storage.DEMO_URL;
             case 'MINECRAFT_HOST': return module.exports.Storage.MINECRAFT_HOST;
 
             /* Dynamic */
@@ -319,6 +376,11 @@ module.exports = {
             case 'Minecraft_UUID': return req.session['mc_UUID'] || '';
 
             default: break;
+          }
+
+          const localization = module.exports.HTML.localizationCallback(str, [req, mcUsername, customCallback, customCallbackArgs]);
+          if (localization) {
+            return localization;
           }
 
           if (customCallback) {

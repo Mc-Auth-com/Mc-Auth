@@ -7,7 +7,7 @@
 
   ${HTML_HEAD_TOP}
 
-  <title>Authorizing ${APP_NAME} | Mc-Auth.com</title>
+  <title>${LOC:html.authorize.authorizing_app} | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
 
@@ -37,7 +37,7 @@
           <div class="row">
             <div class="col-2">
               <img src="${APP_ICON}" class="img-fluid" style="max-height: 128px; max-width: 128px;"
-                alt="Application Logo">
+                alt="${LOC:html.authorize.app_logo}">
             </div>
 
             <div class="col-1"></div>
@@ -46,9 +46,9 @@
               <p class="text-center">${APP_DESCRIPTION}</p>
               <hr>
               <p>
-                <strong>Besitzer:</strong> ${APP_OWNER_NAME}
+                <strong>${LOC:html.authorize.app_owner}:</strong> ${APP_OWNER_NAME}
                 <br>
-                <strong>Erstellt:</strong> ${APP_PUBLISHED}
+                <strong>${LOC:html.authorize.app_created_on}:</strong> ${APP_PUBLISHED}
               </p>
             </div>
           </div>
@@ -64,20 +64,20 @@
           <div class="row">
             <div class="col-2">
               <img src="https://minotar.net/helm/${Minecraft_UUID}/128.png" class="img-fluid"
-                style="max-height: 128px; max-width: 128px;" alt="Your Minecraft-Skin">
+                style="max-height: 128px; max-width: 128px;" alt="${LOC:html.authorize.your_minecraft_skin}">
             </div>
 
             <div class="col-1"></div>
 
             <div class="col">
-              <p class="text-center"><strong>${APP_NAME} wants access to</strong></p>
+              <p class="text-center"><strong>${LOC:html.authorize.app_wants_access_to}</strong></p>
 
               <ul>
                 <li>
                   <p>
-                    Public account data
+                    ${LOC:html.authorize.scope.profile}
                     <br>
-                    <em class="text-muted">Current Username, Skin, ...</em>
+                    <em class="text-muted">${LOC:html.authorize.scope.profile.note}</em>
                   </p>
                 </li>
               </ul>
@@ -89,12 +89,13 @@
           <div class="row">
             <div class="col" style="padding-right: 6px">
               <a class="btn btn-danger float-right"
-                href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=0" role="button">Deny</a>
+                href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=0"
+                role="button">${LOC:words.deny}</a>
             </div>
 
             <div class="col" style="padding-left: 6px">
               <a class="btn btn-success" href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=1"
-                role="button">Agree</a>
+                role="button">${LOC:words.agree}</a>
             </div>
           </div>
         </div>

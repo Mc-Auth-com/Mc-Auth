@@ -1,0 +1,44 @@
+[
+  {
+    "term": "html.index.how.content1",
+    "args": [
+      "<a href=\"${URL_DOCS}\">${LOC:words.documentation}</a>"
+    ]
+  },
+  {
+    "term": "html.index.how.step1",
+    "args": [
+      "<a href=\"${URL_BASE}/login\">${URL_BASE}/login</a>"
+    ]
+  },
+  {
+    "term": "html.index.how.step3",
+    "args": [
+      "${MINECRAFT_HOST}"
+    ]
+  },
+  {
+    "term": "html.header.logged_in_as",
+    "args": [
+      "${Minecraft_Username}"
+    ]
+  },
+  {
+    "term": "html.authorize.authorizing_app",
+    "args": [
+      "${APP_NAME}"
+    ]
+  },
+  {
+    "term": "html.authorize.app_wants_access_to",
+    "args": [
+      "${APP_NAME}"
+    ]
+  },
+  {
+    "term": "html.login.start_minecraft_and_connect",
+    "args": [
+      "<code>${MINECRAFT_HOST}</code>"
+    ]
+  }
+]
