@@ -370,6 +370,8 @@ module.exports = {
             /* Dynamic */
             case 'GET_ReturnTo_ENCODED': return encodeURIComponent(req.query['returnTo'] || '');
             case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') > 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
+            case 'URL_CURRENT_ENCODED': return encodeURIComponent(module.exports.Storage.BASE_URL +
+              (req.originalUrl.indexOf('?') > 0 ? req.originalUrl.substring(0, req.originalUrl.indexOf('?')) : req.originalUrl));
 
             /* Session */
             case 'Minecraft_Username': return (mcUsername || req.session['mc_Name']) || '';

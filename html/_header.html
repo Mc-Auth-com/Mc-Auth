@@ -24,14 +24,14 @@
             <a class="dropdown-item" href="${URL_BASE}/settings">
               <i class="fas fa-cog" aria-hidden="true"></i> ${LOC:words.settings}
             </a>
-            <a class="dropdown-item" href="${URL_BASE}/logout">
+            <a class="dropdown-item" href="${URL_BASE}/logout?returnTo=${URL_CURRENT_ENCODED}">
               <i class="fas fa-sign-out-alt" aria-hidden="true"></i> ${LOC:words.logout}
             </a>
           </div>
         </li>
         ?:
         <li class="nav-item">
-          <a class="nav-link" href="${URL_BASE}/login">
+          <a class="nav-link" href="${URL_BASE}/login?returnTo=${URL_CURRENT_ENCODED}">
             ${LOC:words.login}
           </a>
         </li>

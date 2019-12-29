@@ -98,7 +98,7 @@ app.use(require('express-session')({
   cookie: { secure: require('./storage/config.json')['secureCookies'], httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
 }));
 
-// Set language when first visit
+// Set language on first visit
 app.use((req, res, next) => {
   if (!req.cookies['lang']) {
     let newLang;
@@ -132,11 +132,11 @@ app.use('/legal', Utils.Express.staticDynamicRouter(Utils.Storage.LEGAL));
 app.use('/privacy', Utils.Express.staticDynamicRouter(Utils.Storage.PRIVACY));
 
 /** dynamic **/
-app.use('/uploads', require('./routes/uploads'));
 app.use('/login', require('./routes/login'));
 app.use('/logout', require('./routes/logout'));
 app.use('/oauth2', require('./routes/oAuth2'));
 app.use('/settings', require('./routes/settings'));
+app.use('/uploads', require('./routes/uploads'));
 
 // Prepare 404
 app.use((_req, _res, next) => {
