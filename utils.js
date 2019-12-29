@@ -319,15 +319,15 @@ module.exports = {
 
           if (!result) console.error(`HTML requires unknow translation: ${locTerm}`);
 
-          const args = module.exports.Localization.getArguments(locTerm);
-          if (args && args.length > 0) {
-            for (let i = 0; i < args.length; i++) {
-              const arg = args[i];
+          const locArgs = module.exports.Localization.getArguments(locTerm);
+          if (locArgs && locArgs.length > 0) {
+            for (let i = 0; i < locArgs.length; i++) {
+              const arg = locArgs[i];
 
-              args[i] = module.exports.HTML.replaceVariables(req, mcUsername, arg, customCallback, customCallbackArgs) || arg;
+              locArgs[i] = module.exports.HTML.replaceVariables(req, mcUsername, arg, customCallback, customCallbackArgs) || arg;
             }
 
-            result = result.format(args);
+            result = result.format(locArgs);
           }
 
           return result;
