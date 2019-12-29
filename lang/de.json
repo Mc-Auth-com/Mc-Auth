@@ -478,5 +478,15 @@
     "term_plural": "",
     "reference": "",
     "comment": ""
+  },
+ 
+
+  {
+    "term": "html.index.usedBy",
+    "definition": "Mc-Auth.com wird bereits genutzt von:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
   }
 ]
