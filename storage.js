@@ -1,5 +1,6 @@
 const BASE_URL = 'http://localhost:8091',  // lowercase and no trailing '/' !
   STATIC_CONTENT_URL = 'https://mc-auth.com',
+  DEMO_URL = 'http://localhost:8092',
   DOCS_URL = 'https://github.com/Mc-Auth-com/Mc-Auth-Web/wiki',
   MINECRAFT_HOST = 'mc-auth.com';
 
@@ -22,7 +23,7 @@ const ERR = require('fs').readFileSync('./html/err.html', { encoding: 'UTF-8' })
   PRIVACY = require('fs').readFileSync('./html/privacy.html', { encoding: 'UTF-8' });
 
 module.exports = {
-  BASE_URL, STATIC_CONTENT_URL, DOCS_URL, MINECRAFT_HOST,
+  BASE_URL, STATIC_CONTENT_URL, DEMO_URL, DOCS_URL, MINECRAFT_HOST,
 
   ERR,
 

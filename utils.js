@@ -308,6 +308,7 @@ module.exports = {
             case 'URL_STATIC_CONTENT': return module.exports.Storage.STATIC_CONTENT_URL;
             case 'URL_BASE': return module.exports.Storage.BASE_URL;
             case 'URL_DOCS': return module.exports.Storage.DOCS_URL;
+            case 'URL_DEMO': return module.exports.Storage.DEMO_URL;
             case 'MINECRAFT_HOST': return module.exports.Storage.MINECRAFT_HOST;
 
             /* Dynamic */

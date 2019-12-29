@@ -102,7 +102,6 @@ app.use(require('express-session')({
 app.use('/', Utils.Express.staticDynamicRouter(Utils.Storage.INDEX));
 app.use('/legal', Utils.Express.staticDynamicRouter(Utils.Storage.LEGAL));
 app.use('/privacy', Utils.Express.staticDynamicRouter(Utils.Storage.PRIVACY));
-app.use('/demo', (_req, res, _next) => { res.send('Work In Progress!'); });
 
 /** dynamic **/
 app.use('/uploads', require('./routes/uploads'));
