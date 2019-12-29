@@ -43,22 +43,7 @@ if (!localizations[defaultLang]) {
 }
 
 module.exports = {
-  /**
-   * @param {String} strTerm 
-   * @param {String} langKey The language key like 'en' or 'de'
-   * @param {Boolean} returnFallback If no string is found for langKey, the string for the default language is returned - DEFAULT IS FALSE
-   */
-  // getRaw(strTerm, langKey = defaultLang, returnFallback = false) {
-  //   if (localizations[langKey] || !returnFallback) {
-  //     if (localizations[langKey][strTerm] || !returnFallback) {
-  //       return localizations[langKey][strTerm];
-  //     } else {
-  //       return localizations[defaultLang][strTerm];
-  //     }
-  //   }
-
-  //   return localizations[defaultLang][strTerm];
-  // },
+  defaultLang,
 
   /**
    * @param {String} strTerm 
@@ -81,7 +66,14 @@ module.exports = {
     return typeof result == 'string' ? result : JSON.stringify(result);
   },
 
+  /**
+   * @param {String} strTerm 
+   */
   getArguments(strTerm) {
     return termArguments[strTerm];
+  },
+
+  isLanguageSupported(langKey) {
+    return !!localizations[langKey];
   }
 };

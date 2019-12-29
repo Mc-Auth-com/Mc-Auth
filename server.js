@@ -83,6 +83,7 @@ app.use((_req, res, next) => {
 app.use('/oauth2', require('./routes/oAuth2_post'));
 
 /* Cookie Routes */
+app.use(require('cookie-parser')());
 app.use(require('express-session')({
   name: 'sessID',
   store: new (require('connect-pg-simple')(require('express-session')))({
@@ -96,6 +97,33 @@ app.use(require('express-session')({
   unset: 'destroy',
   cookie: { secure: require('./storage/config.json')['secureCookies'], httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 /* 30d */ }
 }));
+
+// Set language when first visit
+app.use((req, res, next) => {
+  if (!req.cookies['lang']) {
+    let newLang;
+
+    if (req.header('Accept-Language')) {
+      for (const arg of req.header('Accept-Language').split(',')) {
+        const langKey = arg.split(';')[0].substring(0, 2).toLowerCase();
+
+        if (Utils.Localization.isLanguageSupported(langKey)) {
+          newLang = langKey;
+          break;
+        }
+      }
+    } else {
+      newLang = Utils.Localization.defaultLang;
+    }
+
+    if (newLang) {
+      res.cookie('lang', newLang, { secure: require('./storage/config.json')['secureCookies'], httpOnly: true, maxAge: 90 * 24 * 60 * 60 * 1000 /* 90d */ });
+      req.cookies['lang'] = newLang;
+    }
+  }
+
+  next();
+});
 
 // ToDo Set caching headers on routes
 /** static **/

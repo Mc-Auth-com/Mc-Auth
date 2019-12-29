@@ -327,7 +327,7 @@ module.exports = {
         if (str.startsWith('LOC:')) {
           const locTerm = str.split(':')[1];
 
-          let result = module.exports.Localization.getString(locTerm);
+          let result = module.exports.Localization.getString(locTerm, req.cookies['lang']);
 
           if (!result) console.error(`HTML requires unknow translation: ${locTerm}`);
 
