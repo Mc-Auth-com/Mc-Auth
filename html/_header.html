@@ -50,8 +50,13 @@
           </a>
 
           <div class="dropdown-menu dropdown-menu-right langDropdown" aria-labelledby="langDropdown">
-            <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de"></span> Deutsch</a>
-            <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-us"></span> English</a>
+            <a class="dropdown-item" href="${URL_BASE}/language?lang=de&returnTo=${URL_CURRENT_ENCODED}">
+              <span class="flag-icon flag-icon-de"></span> Deutsch
+            </a>
+
+            <a class="dropdown-item" href="${URL_BASE}/language?lang=en&returnTo=${URL_CURRENT_ENCODED}">
+              <span class="flag-icon flag-icon-us"></span> English
+            </a>
           </div>
         </li>
       </ul>
