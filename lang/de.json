@@ -129,7 +129,7 @@
   },
   {
     "term": "html.index.how.content1",
-    "definition": "Du bist ein Entwickler? Wirf einen Blick auf unsere {1}",
+    "definition": "Du bist ein Entwickler? Wirf einen Blick auf unsere {1}.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -186,6 +186,14 @@
   {
     "term": "html.index.how.title",
     "definition": "Wie funktioniert es?",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.used_by",
+    "definition": "Mc-Auth.com wird bereits genutzt von:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -474,16 +482,6 @@
   {
     "term": "words.settings",
     "definition": "Einstellungen",
-    "context": "",
-    "term_plural": "",
-    "reference": "",
-    "comment": ""
-  },
- 
-
-  {
-    "term": "html.index.usedBy",
-    "definition": "Mc-Auth.com wird bereits genutzt von:",
     "context": "",
     "term_plural": "",
     "reference": "",

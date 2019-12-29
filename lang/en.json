@@ -192,6 +192,14 @@
     "comment": ""
   },
   {
+    "term": "html.index.used_by",
+    "definition": "Mc-Auth.com is already used by:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.index.what_is.content1",
     "definition": "Mc-Auth.com allows users to login with their minecraft account without requiring the account password.<br>Other websites and developers can then request verification that you have access to that minecraft account.",
     "context": "",
@@ -474,16 +482,6 @@
   {
     "term": "words.settings",
     "definition": "Settings",
-    "context": "",
-    "term_plural": "",
-    "reference": "",
-    "comment": ""
-  },
-
-
-  {
-    "term": "html.index.usedBy",
-    "definition": "Mc-Auth.com is already used by:",
     "context": "",
     "term_plural": "",
     "reference": "",
