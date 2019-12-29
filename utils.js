@@ -369,7 +369,9 @@ module.exports = {
 
             /* Dynamic */
             case 'GET_ReturnTo_ENCODED': return encodeURIComponent(req.query['returnTo'] || '');
-            case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') > 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
+            case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') >= 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
+            case 'URL_CURRENT_ENCODED': return encodeURIComponent(module.exports.Storage.BASE_URL +
+              (req.originalUrl.indexOf('?') >= 0 ? req.originalUrl.substring(0, req.originalUrl.indexOf('?')) : req.originalUrl));
 
             /* Session */
             case 'Minecraft_Username': return (mcUsername || req.session['mc_Name']) || '';
@@ -403,23 +405,25 @@ module.exports = {
           let result = '';
           const template = str.substring('HasApps:'.length, str.lastIndexOf('?:'));
 
-          for (const app of apps) {
-            result += module.exports.replacer(template, '$?{', '}', (str) => {
-              try {
-                switch (str) {
-                  case 'APP_ID': return app.id;
-                  case 'APP_NAME': return htmlEscape(app.name);
-                  case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
-                  case 'APP_ICON_ID': return app.icon || 'default';
+          const replacer = function (str, app) {
+            try {
+              switch (str) {
+                case 'APP_ID': return app.id;
+                case 'APP_NAME': return htmlEscape(app.name);
+                case 'APP_ICON': return `${module.exports.Storage.BASE_URL}/uploads/${app.icon || 'default'}.png`;
+                case 'APP_ICON_ID': return app.icon || 'default';
 
-                  default: break;
-                }
-              } catch (err) {
-                module.exports.logAndCreateError(err);
+                default: break;
               }
+            } catch (err) {
+              module.exports.logAndCreateError(err);
+            }
 
-              return '';
-            });
+            return '';
+          };
+
+          for (const app of apps) {
+            result += module.exports.replacer(template, '$?{', '}', replacer(str, app));
           }
 
           return result;

@@ -7,9 +7,11 @@
 ## TODO
 * Settings: Show grants (accepted and denied ones)
 * Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough
-* Allow easy localization of HTML
-  * Create english translation
-  * Create german translation
+* ~~Allow easy localization of HTML~~
+  * Functional Language-Switcher
+  * Cache localized HTML
+  * ~~Create english translation~~
+  * ~~Create german translation~~
 * Tell users that changes have been saved or that an upload failed/succeeded
 * Use reCAPTCHA when creating a new app
 * Rate-limit icon uploads

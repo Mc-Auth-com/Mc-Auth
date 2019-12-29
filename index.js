@@ -83,7 +83,7 @@ initStorage(() => {
 
     fs.writeFileSync(unixSocketPIDPath, process.pid);
     server.listen(unixSocketPath);
-    fs.chmodSync(unixSocketPath, 0777);
+    fs.chmodSync(unixSocketPath, '0777');
   } else {
     server.listen(process.env.PORT || cfg.listen.port, process.env.HOST || cfg.listen.host);
   }

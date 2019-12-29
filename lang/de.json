@@ -1,7 +1,7 @@
 [
   {
     "term": "html.authorize.app_created_on",
-    "definition": "Created",
+    "definition": "Erstellt",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -9,7 +9,7 @@
   },
   {
     "term": "html.authorize.app_logo",
-    "definition": "Application Logo",
+    "definition": "Logo der Anwendung",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -17,7 +17,7 @@
   },
   {
     "term": "html.authorize.app_owner",
-    "definition": "Owner",
+    "definition": "Besitzer",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -25,7 +25,7 @@
   },
   {
     "term": "html.authorize.app_wants_access_to",
-    "definition": "{1} wants access to",
+    "definition": "{1} fordert Zugriff auf",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -33,7 +33,7 @@
   },
   {
     "term": "html.authorize.authorizing_app",
-    "definition": "Authorizing {1}",
+    "definition": "Zugriffsanfrage von {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -41,7 +41,7 @@
   },
   {
     "term": "html.authorize.scope.profile",
-    "definition": "Public account data",
+    "definition": "\u00d6ffentliche Account-Daten",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -49,7 +49,7 @@
   },
   {
     "term": "html.authorize.scope.profile.note",
-    "definition": "Current Username, Skin, ...",
+    "definition": "Aktueller Username, Skin, ...",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -57,7 +57,7 @@
   },
   {
     "term": "html.authorize.your_minecraft_skin",
-    "definition": "Your Minecraft-Skin",
+    "definition": "Dein Minecraft-Skin",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -65,7 +65,7 @@
   },
   {
     "term": "html.footer.become_patron",
-    "definition": "Become a Patron!",
+    "definition": "Werde ein Patron!",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -73,7 +73,7 @@
   },
   {
     "term": "html.footer.legal_data_protection",
-    "definition": "Privacy",
+    "definition": "Datenschutzerkl\u00e4rung",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -81,7 +81,7 @@
   },
   {
     "term": "html.footer.legal_info",
-    "definition": "Legal",
+    "definition": "Impressum",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -89,7 +89,7 @@
   },
   {
     "term": "html.footer.support_on_discord",
-    "definition": "Get Support on our Discord",
+    "definition": "Hilfe findest du auf unserem Discord",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -97,7 +97,7 @@
   },
   {
     "term": "html.header.logged_in_as",
-    "definition": "Logged in as {1}",
+    "definition": "Eingeloggt als {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -105,7 +105,7 @@
   },
   {
     "term": "html.header.open_language_selection",
-    "definition": "Open language selection menu",
+    "definition": "\u00d6ffne das Men\u00fc zur Sprachwahl",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -113,7 +113,7 @@
   },
   {
     "term": "html.header.toggle_dark_theme",
-    "definition": "Switch between dark and light mode",
+    "definition": "Wechsle zwischen dem dunklen und hellen Design",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -121,7 +121,7 @@
   },
   {
     "term": "html.header.your_minecraft_face",
-    "definition": "Your Minecraft-Face",
+    "definition": "Dein Minecraft-Gesicht",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -129,7 +129,7 @@
   },
   {
     "term": "html.index.how.content1",
-    "definition": "You are a developer? Have a look at the {1}.",
+    "definition": "Du bist ein Entwickler? Wirf einen Blick auf unsere {1}.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -137,7 +137,7 @@
   },
   {
     "term": "html.index.how.content2",
-    "definition": "Try our Demo",
+    "definition": "Probiere die Demo",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -145,7 +145,7 @@
   },
   {
     "term": "html.index.how.step1",
-    "definition": "Visit {1}",
+    "definition": "Besuche {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -153,7 +153,7 @@
   },
   {
     "term": "html.index.how.step2",
-    "definition": "Enter your Minecraft-Username",
+    "definition": "Gib deinen Minecraft-Namen ein",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -161,7 +161,7 @@
   },
   {
     "term": "html.index.how.step3",
-    "definition": "Start Minecraft and try connecting to {1}",
+    "definition": "Starte Minecraft und verbinde dich mit {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -169,7 +169,7 @@
   },
   {
     "term": "html.index.how.step4",
-    "definition": "Enter the 6-digit code you see in Minecraft, to complete your login",
+    "definition": "Gib einen 6-stelligen Code ein, den du in Minecraft siehst, und schlie\u00dfe so den Login ab",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -177,7 +177,7 @@
   },
   {
     "term": "html.index.how.step5",
-    "definition": "Confirm or Dismiss the shown message to verify your account",
+    "definition": "Best\u00e4tige die angezeigte Anfrage oder verneine sie",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -185,7 +185,7 @@
   },
   {
     "term": "html.index.how.title",
-    "definition": "How does it work?",
+    "definition": "Wie funktioniert es?",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -193,7 +193,7 @@
   },
   {
     "term": "html.index.used_by",
-    "definition": "Mc-Auth.com is already used by:",
+    "definition": "Mc-Auth.com wird bereits genutzt von:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -201,15 +201,15 @@
   },
   {
     "term": "html.index.what_is.content1",
-    "definition": "Mc-Auth.com allows users to login with their minecraft account without requiring the account password.<br>Other websites and developers can then request verification that you have access to that minecraft account.",
+    "definition": "Mc-Auth.com erm\u00f6glicht es Spielern, sich mit ihren Minecraft-Account einzuloggen, ohne dessen Passwort angeben zu m\u00fcssen.<br>Andere Webseiten und Entwickler k\u00f6nnen diese Funktion nutzen, um eine Best\u00e4tigung anzufordern, dass du Zugriff auf einen bestimmten Account hast.",
     "context": "",
     "term_plural": "",
     "reference": "",
-    "comment": ""
+    "comment": "Muss in 2 einzelne Nachrichten aufgeteilt werden, damit <br> nicht in der \u00dcbersetzung vorkommt."
   },
   {
     "term": "html.index.what_is.content2",
-    "definition": "Thanks to Mc-Auth.com, all kinds of websites can provide a secure way of a 'Minecraft-Login' feature.",
+    "definition": "Dank Mc-Auth.com ist es jeder Webseite und jedem Programm eine Login-Anfrage mittels Minecraft-Account anzufragen und durchzuf\u00fchren.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -217,7 +217,7 @@
   },
   {
     "term": "html.index.what_is.title",
-    "definition": "What is Mc-Auth.com?",
+    "definition": "Was ist Mc-Auth.com?",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -225,7 +225,7 @@
   },
   {
     "term": "html.login.already_logged_in",
-    "definition": "You are already logged in",
+    "definition": "Du bist bereits eingeloggt",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -233,7 +233,7 @@
   },
   {
     "term": "html.login.click_to_copy_minecraft_host_to_clipboard",
-    "definition": "Click to copy the minecraft-server address to your clipboard",
+    "definition": "Klicke, um die Server-Adresse in die Zwischenablage zu legen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -241,7 +241,7 @@
   },
   {
     "term": "html.login.kicked_with_code",
-    "definition": "You'll get kicked from the server and provided with an code",
+    "definition": "Du wirst automatisch vom Server gekickt und erh\u00e4lst einen Code",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -249,7 +249,7 @@
   },
   {
     "term": "html.login.six_digit_code",
-    "definition": "6-digit code",
+    "definition": "6-stelligen Code",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -257,7 +257,7 @@
   },
   {
     "term": "html.login.start_minecraft_and_connect",
-    "definition": "Start Minecraft and connect to {1}",
+    "definition": "Starte Minecraft und verbinde dich mit dem Server {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -265,7 +265,7 @@
   },
   {
     "term": "html.login.stay_logged_in",
-    "definition": "Stay logged in",
+    "definition": "Eingeloggt bleiben",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -273,7 +273,7 @@
   },
   {
     "term": "html.login.your_minecraft_name",
-    "definition": "Your Minecraft-Username",
+    "definition": "Dein Minecraft-Username",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -281,7 +281,7 @@
   },
   {
     "term": "html.settings.click_image_above_to_upload",
-    "definition": "Click the image above to upload another one",
+    "definition": "Klicke auf das Bild oben, um ein neues hochzuladen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -289,7 +289,7 @@
   },
   {
     "term": "html.settings.click_to_show",
-    "definition": "Click to show",
+    "definition": "Zum Anzeigen klicken",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -297,7 +297,7 @@
   },
   {
     "term": "html.settings.create_app",
-    "definition": "Create a new Application",
+    "definition": "Eine neue Anwendung erstellen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -305,7 +305,7 @@
   },
   {
     "term": "html.settings.manage_app",
-    "definition": "Manage Application",
+    "definition": "Anwendung Verwalten",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -313,7 +313,7 @@
   },
   {
     "term": "html.settings.max_length_128_characters",
-    "definition": "128 characters maximum",
+    "definition": "Maximal 128 Zeichen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -321,7 +321,7 @@
   },
   {
     "term": "html.settings.max_length_512_characters",
-    "definition": "512 characters maximum",
+    "definition": "Maximal 512 Zeichen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -329,7 +329,7 @@
   },
   {
     "term": "html.settings.please_provide_exact_info",
-    "definition": "Please try to choose your details as precisely as possible, as they are publicly visible.",
+    "definition": "Bitte versuche die Angaben so genau wie m\u00f6glich zu w\u00e4hlen, da sie \u00f6ffentlich sichtbar sind.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -337,7 +337,7 @@
   },
   {
     "term": "html.settings.redirect_uris",
-    "definition": "Redirect URIs (one per line)",
+    "definition": "Redirect URIs (eine pro Zeile)",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -345,7 +345,7 @@
   },
   {
     "term": "html.settings.return_to_settings",
-    "definition": "Return to Settings",
+    "definition": "Zur\u00fcck zu den Einstellungen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -353,7 +353,7 @@
   },
   {
     "term": "html.settings.you_can_edit_at_any_time",
-    "definition": "All information can be edited at any time.",
+    "definition": "Alle Informationen k\u00f6nnen nachtr\u00e4glich bearbeitet werden.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -361,7 +361,7 @@
   },
   {
     "term": "html.settings.you_do_not_have_any_apps",
-    "definition": "You have not created any applications, yet",
+    "definition": "Du hast noch keine Anwendungen erstellt",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -369,7 +369,7 @@
   },
   {
     "term": "html.settings.your_applications_title",
-    "definition": "Your applications (for programmers)",
+    "definition": "Deine Anwendungen (f\u00fcr Programmierer)",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -377,7 +377,7 @@
   },
   {
     "term": "words.agree",
-    "definition": "Agree",
+    "definition": "Zustimmen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -385,7 +385,7 @@
   },
   {
     "term": "words.create",
-    "definition": "Create",
+    "definition": "Erstellen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -393,7 +393,7 @@
   },
   {
     "term": "words.deny",
-    "definition": "Deny",
+    "definition": "Ablehnen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -401,7 +401,7 @@
   },
   {
     "term": "words.description",
-    "definition": "Description",
+    "definition": "Beschreibung",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -409,7 +409,7 @@
   },
   {
     "term": "words.documentation",
-    "definition": "Documentation",
+    "definition": "Dokumentation",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -417,7 +417,7 @@
   },
   {
     "term": "words.frontpage",
-    "definition": "Frontpage",
+    "definition": "Startseite",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -449,7 +449,7 @@
   },
   {
     "term": "words.manage",
-    "definition": "Manage",
+    "definition": "Verwalten",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -465,7 +465,7 @@
   },
   {
     "term": "words.next",
-    "definition": "Next",
+    "definition": "Weiter",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -473,7 +473,7 @@
   },
   {
     "term": "words.save_changes",
-    "definition": "Save Changes",
+    "definition": "\u00c4nderungen Speichern",
     "context": "Text should be placed on a button",
     "term_plural": "",
     "reference": "",
@@ -481,7 +481,7 @@
   },
   {
     "term": "words.settings",
-    "definition": "Settings",
+    "definition": "Einstellungen",
     "context": "",
     "term_plural": "",
     "reference": "",
