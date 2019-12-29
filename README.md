@@ -14,6 +14,10 @@
 * Tell users that changes have been saved or that an upload failed/succeeded
 * Use reCAPTCHA when creating a new app
 * Rate-limit icon uploads
+* Allow users to report applications (On grant-request)
+* Add possibilities to be an verified application
+* Allow 2FA for Settings-Page (Applications)
+  * Force for verified applications
 * ~~Publish Demo-Application~~ 
 * ~~When an application requests authorization and the user is not logged in, the user can't proceed as intended~~
 
