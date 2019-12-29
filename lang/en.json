@@ -316,7 +316,7 @@
   },
   {
     "term": "html.login.six_digit_code",
-    "definition": "6-digit Code",
+    "definition": "6-digit code",
     "context": "",
     "reference": "",
     "comment": ""
@@ -415,16 +415,6 @@
   {
     "term": "html.settings.max_length_512_characters",
     "definition": "512 characters maximum",
-    "context": "",
-    "reference": "",
-    "comment": ""
-  },
-  {
-    "term": "do_not_translate.is_just_reminder_of_syntax",
-    "definition": {
-      "one": "Just one user online",
-      "other": "There are %d users online"
-    },
     "context": "",
     "reference": "",
     "comment": ""
