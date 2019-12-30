@@ -83,6 +83,7 @@ function toggleDarkMode(event) {
   const navMenu = document.getElementById('headerMenu'),
     footer = document.getElementById('footer'),
     body = document.getElementsByTagName('body').item(0);
+  const tables = document.getElementsByClassName('table');
 
   const isCurrDarkMode = navMenu.classList.contains('bg-dark');
 
@@ -94,6 +95,10 @@ function toggleDarkMode(event) {
     footer.classList.add('bg-light');
 
     body.classList.remove('dark-body', 'text-light');
+
+    for (const table of tables) {
+      table.classList.remove('table-dark');
+    }
   } else {
     navMenu.classList.remove('navbar-light', 'bg-light');
     navMenu.classList.add('navbar-dark', 'bg-dark');
@@ -102,6 +107,10 @@ function toggleDarkMode(event) {
     footer.classList.add('bg-dark');
 
     body.classList.add('dark-body', 'text-light');
+
+    for (const table of tables) {
+      table.classList.add('table-dark');
+    }
   }
 
   setActiveTheme(!isCurrDarkMode);

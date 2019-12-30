@@ -61,3 +61,7 @@ body {
   border-color: #a0a2a4;
   color: #a0a2a4;
 }
+
+.dark-body .table-dark {
+  background-color: transparent;
+}
