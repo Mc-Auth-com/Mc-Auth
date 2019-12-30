@@ -22,73 +22,79 @@
   ${HTML_HEADER}
 
   <main style="margin-bottom: 2rem">
-    <div class="container">
-      <div class="card centeredCard">
-        <div class="card-header">
-          <h3 class="text-center">${LOC:words.login}</h3>
-        </div>
+    <div class="container text-center">
+      <h2>
+        <u>${LOC:words.login}</u>
+      </h2>
 
-        <div class="card-body">
-          ?{LoggedIn:
-          <p>${LOC:html.login.already_logged_in}</p>
+      <div class="row">
+        <div class="col"></div>
 
-          <ul>
-            <li><a href="${URL_BASE}">${LOC:words.frontpage}</a><br><br></li>
-            <li><a href="${URL_BASE}/settings">${LOC:words.settings}</a></li>
-            <li><a href="${URL_BASE}/logout">${LOC:words.logout}</a></li>
-          </ul>
-          ?:
-          <form onsubmit="submitUsername(event)" data-returnTo="${GET_ReturnTo_ENCODED}" method="GET">
-            <div class="form-group" id="form1">
-              <label for="mcName">${LOC:html.login.your_minecraft_name}</label>
+        <div class="col">
+          <div class="appCard">
+            ?{LoggedIn:
+            <p>${LOC:html.login.already_logged_in}</p>
 
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
+            <ul>
+              <li><a href="${URL_BASE}">${LOC:words.frontpage}</a><br><br></li>
+              <li><a href="${URL_BASE}/settings">${LOC:words.settings}</a></li>
+              <li><a href="${URL_BASE}/logout">${LOC:words.logout}</a></li>
+            </ul>
+            ?:
+            <form onsubmit="submitUsername(event)" data-returnTo="${GET_ReturnTo_ENCODED}" method="GET">
+              <div class="form-group" id="form1">
+                <label for="mcName">${LOC:html.login.your_minecraft_name}</label>
+
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
+                  </div>
+
+                  <input type="text" class="form-control" id="mcName" name="mcName" placeholder="Username" required>
                 </div>
-
-                <input type="text" class="form-control" id="mcName" name="mcName" placeholder="Username" required>
               </div>
-            </div>
 
-            <div class="form-group animated slideInUp hidden" id="form2">
+              <div class="form-group animated slideInUp hidden" id="form2">
+                <hr>
+
+                <p>
+                  ${LOC:html.login.start_minecraft_and_connect}
+
+                  <button type="button" class="btn btn-sm btn-outline-info"
+                    onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"
+                    aria-label="${LOC:html.login.click_to_copy_minecraft_host_to_clipboard}"><i class="far fa-clipboard"
+                      aria-hidden="true"></i></button>
+
+                  <br>
+                  ${LOC:html.login.kicked_with_code}
+                </p>
+
+                <label for="otp">${LOC:html.login.six_digit_code}</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
+                  </div>
+
+                  <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
+                    maxlength="7">
+                </div>
+              </div>
+
               <hr>
+              <br>
 
-              <p>
-                ${LOC:html.login.start_minecraft_and_connect}
-
-                <button type="button" class="btn btn-sm btn-outline-info"
-                  onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"
-                  aria-label="${LOC:html.login.click_to_copy_minecraft_host_to_clipboard}"><i class="far fa-clipboard"
-                    aria-hidden="true"></i></button>
-
-                <br>
-                ${LOC:html.login.kicked_with_code}
-              </p>
-
-              <label for="otp">${LOC:html.login.six_digit_code}</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
-                </div>
-
-                <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
-                  maxlength="7">
+              <div class="form-group form-check">
+                <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
+                <label class="form-check-label" for="keepLogin">${LOC:html.login.stay_logged_in}</label>
               </div>
-            </div>
 
-            <hr>
-            <br>
-
-            <div class="form-group form-check">
-              <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
-              <label class="form-check-label" for="keepLogin">${LOC:html.login.stay_logged_in}</label>
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="submitBtn">${LOC:words.next} »</button>
-          </form>
-          ?}
+              <button type="submit" class="btn btn-primary" id="submitBtn">${LOC:words.next} »</button>
+            </form>
+            ?}
+          </div>
         </div>
+
+        <div class="col"></div>
       </div>
     </div>
   </main>

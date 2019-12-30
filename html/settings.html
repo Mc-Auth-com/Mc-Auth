@@ -16,30 +16,43 @@
   ${HTML_HEADER}
 
   <main style="margin-bottom: 2rem">
-    <div class="container">
-      <div class="card centeredCard">
-        <div class="card-header">
-          <h5 class="text-center">${LOC:html.settings.your_applications_title}</h5>
+    <div class="container text-center">
+      <h2>
+        <u>${LOC:html.settings.your_applications_title}</u>
+      </h2>
+
+      <div class="row display-flex">
+        ?{HasApps:
+        <div class="col"></div>
+
+        <div class="col">
+          <div class="appCard">
+            <a href="${BASE_URL}/settings/$?{APP_ID}">
+              <div class="row">
+                <div class="col">
+                  <img src="$?{APP_ICON}" class="img-fluid" style="max-width: 128px; max-height: 128px;"
+                    alt="${LOC:html.authorize.app_logo}">
+                </div>
+
+                <div class="w-100"></div>
+
+                <div class="col">
+                  $?{APP_NAME}
+                </div>
+              </div>
+            </a>
+          </div>
         </div>
 
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            ?{HasApps:
-            <li class="list-group-item">
-              <img src="$?{APP_ICON}" class="img-fluid" style="max-width: 128px; max-height: 128px;"
-                alt="${LOC:html.authorize.app_logo}">
-              $?{APP_NAME}
-              <a href="${BASE_URL}/settings/$?{APP_ID}" class="btn btn-outline-primary float-right"
-                style="margin-left: 25px;" role="button">${LOC:words.manage}</a>
-            </li>
-            ?:
-            <strong>${LOC:html.settings.you_do_not_have_any_apps}</strong>
-            ?}
-          </ul>
-        </div>
+        <div class="col"></div>
 
-        <div class="card-footer">
-          <a href="${BASE_URL}/settings/create" class="btn btn-primary float-right" role="button">
+        <div class="w-100"></div>
+        ?:
+        <strong>${LOC:html.settings.you_do_not_have_any_apps}</strong>
+        ?}
+
+        <div class="col">
+          <a href="${BASE_URL}/settings/create" class="btn btn-primary" role="button">
             ${LOC:html.settings.create_app}
           </a>
         </div>
