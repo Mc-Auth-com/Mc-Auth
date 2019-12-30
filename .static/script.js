@@ -69,7 +69,7 @@ function updateRemainingChars(elem) {
       if (elem.value.length == 0 && target.hasAttribute('data-orgHTML')) {
         target.innerHTML = target.getAttribute('data-orgHTML');
       } else {
-        target.innerText = elem.value.length + "/" + elem.getAttribute('maxlength');
+        target.innerText = `${elem.value.length}/${elem.getAttribute('maxlength')} characters`;
       }
     }
   }
@@ -122,3 +122,10 @@ function toggleDarkMode(event) {
 function setActiveTheme(darkTheme) {
   document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/`;
 }
+
+/* run when DOM is ready */
+window.addEventListener('load', () => {
+  for (const elem of document.querySelectorAll('[data-remaining]')) {
+    updateRemainingChars(elem);
+  }
+});
