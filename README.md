@@ -2,7 +2,8 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=alert_status)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=security_rating)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web)
 
 ## Special Thanks To
-**[@JonasAlpha](https://github.com/JonasAlpha)** for the Logo and Banner
+**[@JonasAlpha](https://github.com/JonasAlpha)** Logo
+**[@Songoda](https://github.com/Songoda)** English translation
 
 ## TODO
 * Settings: Show grants (accepted and denied ones)
