@@ -1,6 +1,6 @@
 const BASE_URL = 'https://mc-auth.com',  // lowercase and no trailing '/' !
   STATIC_CONTENT_URL = 'https://mc-auth.com',
-  DEMO_URL = 'http://localhost:8092',
+  DEMO_URL = 'https://demo.mc-auth.com',
   DOCS_URL = 'https://github.com/Mc-Auth-com/Mc-Auth-Web/wiki',
   MINECRAFT_HOST = 'mc-auth.com';
 
