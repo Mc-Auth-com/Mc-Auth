@@ -6,6 +6,7 @@
 
 ## TODO
 * Settings: Show grants (accepted and denied ones)
+* Notify about cookies
 * ~~Allow easy localization of HTML~~
   * Functional Language-Switcher
   * Cache localized HTML
@@ -17,6 +18,7 @@
 * Add possibilities to be an verified application
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
+* './.static/script-login.js' should not hold it's own `BASE_URL`
 * ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
 * ~~App-Settings: Description looses line-breaks~~
