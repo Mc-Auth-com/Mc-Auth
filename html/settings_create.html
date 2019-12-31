@@ -10,6 +10,8 @@
   <title>${LOC:html.settings.create_app} | Mc-Auth.com</title>
 
   ${HTML_HEAD_BOTTOM}
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body class="d-flex flex-column h-100 ?{DarkTheme:dark-body text-light?:?}">
@@ -30,6 +32,7 @@
             <p>${LOC:html.settings.you_can_edit_at_any_time}</p>
 
             <form method="POST">
+
               <div class="form-group">
                 <label for="name">${LOC:words.name}<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="name" name="name" maxlength="128"
@@ -46,6 +49,8 @@
                   class="form-text text-muted text-left">${LOC:html.settings.max_length_512_characters}</small>
               </div>
 
+              <hr>
+              <div class="g-recaptcha" data-sitekey="6LeGK8sUAAAAANchvy7d6uhv7OcWc2Piw5v4TZmj"></div>
               <hr>
 
               <button type="submit" class="btn btn-primary" id="submitBtn">${LOC:words.create}</button>

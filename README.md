@@ -12,12 +12,12 @@
   * ~~Create english translation~~
   * ~~Create german translation~~
 * Tell users that changes have been saved or that an upload failed/succeeded
-* Use reCAPTCHA when creating a new app
 * Rate-limit icon uploads
 * Allow users to report applications (On grant-request)
 * Add possibilities to be an verified application
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
+* ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
 * ~~App-Settings: Description looses line-breaks~~
 * ~~Publish Demo-Application~~ 

@@ -1,19 +1,35 @@
 const Utils = require('../utils'),
   db = require('../db/DB');
 
+const request = require('request');
+
 const router = require('express').Router();
 
 router.post('/create', (req, res, next) => {
   if (!req.session['loggedIn']) return next(Utils.createError(401, 'You are not logged in!'));
 
-  if (!req.body.name) return Utils.createError(400, 'Missing Application-Name');
-  if (req.body.name.length > 128) return Utils.createError(400, 'Application-Name exceed 128 characters');
-  if (req.body.desc && req.body.desc.length > 512) return Utils.createError(400, 'Application-Description exceed 512 characters');
+  if (!req.body.name) return next(Utils.createError(400, 'Missing Application-Name', false));
+  if (req.body.name.length > 128) return next(Utils.createError(400, 'Application-Name exceed 128 characters', false));
+  if (req.body.desc && req.body.desc.length > 512) return next(Utils.createError(400, 'Application-Description exceed 512 characters', false));
+  if (!req.body['g-recaptcha-response']) return next(Utils.createError(400, 'reCAPTCHA failed', false));
 
-  db.createApplication(Utils.toNeutralString(req.body.name), Utils.toNeutralString(req.body.desc), req.session['mc_UUID'], (err, app) => {
+  request('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    formData: {
+      secret: '6LeGK8sUAAAAABddbcMoU-iydeF7qMuGtAimA7XO',
+      response: req.body['g-recaptcha-response']
+    }
+  }, (err, _httpRes, httpBody) => {
     if (err) return next(Utils.logAndCreateError(err));
 
-    res.redirect(`${Utils.Storage.BASE_URL}/settings/${app.id}`);
+    httpBody = JSON.parse(httpBody);
+    if (!httpBody['success']) return next(Utils.createError(400, 'reCAPTCHA failed', false));
+
+    db.createApplication(Utils.toNeutralString(req.body.name), Utils.toNeutralString(req.body.desc), req.session['mc_UUID'], (err, app) => {
+      if (err) return next(Utils.logAndCreateError(err));
+
+      res.redirect(`${Utils.Storage.BASE_URL}/settings/${app.id}`);
+    });
   });
 });
 
