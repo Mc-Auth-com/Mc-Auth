@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8091';
+const BASE_URL = 'https://mc-auth.com';
 
 async function submitUsername(event) {
   event.preventDefault();
