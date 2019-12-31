@@ -19,6 +19,7 @@
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
 * './.static/script-login.js' should not hold it's own `BASE_URL`
+* ~~Resize and crop uploaded images to fit inside 128px x 128px~~
 * ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
 * ~~App-Settings: Description looses line-breaks~~
