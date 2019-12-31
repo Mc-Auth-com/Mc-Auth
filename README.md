@@ -5,12 +5,21 @@
 **[@JonasAlpha](https://github.com/JonasAlpha)** Logo
 **[@Songoda](https://github.com/Songoda)** English translation
 
+## Setup
+**You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) on your machine and a PostgreSQL instance**
+
+1. Prepare your PostgreSQL server by running the commands inside `./tables.sql`
+2. `npm install`
+3. `npm start`
+4. Configure all files inside `./storage` (automatically generated)
+5. Edit the first variables of the files `./storage.js` and `./.static/script-login.js`
+6. Type `rs` into the console or restart the process
+
 ## TODO
 * Settings: Show grants (accepted and denied ones)
 * Create documentation/wiki
   * Create Brand/Press Kit with images
   * Create HTML-Button examples
-* Notify about cookies
 * ~~Allow easy localization of HTML~~
   * Functional Language-Switcher
   * Cache localized HTML
@@ -27,6 +36,7 @@
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
 * './.static/script-login.js' should not hold it's own `BASE_URL`
+* ~~Notify about cookies~~
 * ~~Resize and crop uploaded images to fit inside 128px x 128px~~
 * ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~

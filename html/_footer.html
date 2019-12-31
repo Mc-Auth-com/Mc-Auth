@@ -2,7 +2,9 @@
   <div class="container-fluid" style="font-size: 80%;font-weight: 400">
     <div class="row" style="align-items: center; text-align: center">
       <div class="col-sm">
-        <a href="${URL_BASE}/legal">${LOC:html.footer.legal_info}</a> | <a href="${URL_BASE}/privacy">${LOC:html.footer.legal_data_protection}</a>
+        <a href="${URL_BASE}/legal">${LOC:html.footer.legal_info}</a>
+        |
+        <a href="${URL_BASE}/privacy">${LOC:html.footer.legal_data_protection}</a>
       </div>
 
       <div class="col-sm">
@@ -10,7 +12,9 @@
       </div>
 
       <div class="col-sm">
-        <a href="https://sprax.me/discord"><i class="fab fa-discord" aria-hidden="true"></i> ${LOC:html.footer.support_on_discord}</a>
+        <a href="https://sprax.me/discord">
+          <i class="fab fa-discord" aria-hidden="true"></i> ${LOC:html.footer.support_on_discord}
+        </a>
       </div>
 
       <div class="col-sm">
@@ -34,3 +38,50 @@
   integrity="sha256-x3YZWtRjM8bJqf48dFAv/qmgL68SI4jqNWeSLMZaMGA=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
   integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155179426-1"></script>
+<script>
+  const gtagId = 'UA-155179426-1';
+
+  window['ga-disable-' + gtagId] = true;
+
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() { dataLayer.push(arguments); }
+
+  gtag('js', new Date());
+</script>
+
+<script src="https://cookiehub.net/cc/b745eb9c.js"></script>
+<script>
+  window.addEventListener("load", function () {
+    window.cookieconsent.initialise({
+      onInitialise: function (status) {
+        if (this.hasConsented('required')) { }
+        if (this.hasConsented('analytics')) {
+          window['ga-disable-UA-155179426-1'] = false;
+
+          gtag('config', gtagId, { anonymize_ip: true });
+        }
+      },
+
+      onAllow: function (category) {
+        if (category == 'required') { }
+
+        if (category == 'analytics') {
+          window['ga-disable-UA-155179426-1'] = false;
+
+          gtag('config', gtagId, { anonymize_ip: true });
+        }
+      },
+
+      onRevoke: function (category) {
+        if (category == 'required') { }
+
+        if (category == 'analytics') {
+          window['ga-disable-UA-155179426-1'] = true;
+        }
+      }
+    });
+  });
+</script>
