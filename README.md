@@ -2,22 +2,33 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=alert_status)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=security_rating)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web)
 
 ## Special Thanks To
-**[@JonasAlpha](https://github.com/JonasAlpha)** for the Logo and Banner
+**[@JonasAlpha](https://github.com/JonasAlpha)** Logo
+**[@Songoda](https://github.com/Songoda)** English translation
 
 ## TODO
 * Settings: Show grants (accepted and denied ones)
+* Create documentation/wiki
+  * Create Brand/Press Kit with images
+  * Create HTML-Button examples
+* Notify about cookies
 * ~~Allow easy localization of HTML~~
   * Functional Language-Switcher
   * Cache localized HTML
   * ~~Create english translation~~
   * ~~Create german translation~~
 * Tell users that changes have been saved or that an upload failed/succeeded
-* Use reCAPTCHA when creating a new app
 * Rate-limit icon uploads
 * Allow users to report applications (On grant-request)
 * Add possibilities to be an verified application
+* App-Settings
+  * Allow deletion
+  * Allow regenerating client_secret
+  * fix text position
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
+* './.static/script-login.js' should not hold it's own `BASE_URL`
+* ~~Resize and crop uploaded images to fit inside 128px x 128px~~
+* ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
 * ~~App-Settings: Description looses line-breaks~~
 * ~~Publish Demo-Application~~ 

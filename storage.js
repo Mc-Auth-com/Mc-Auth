@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8091',  // lowercase and no trailing '/' !
+const BASE_URL = 'https://mc-auth.com',  // lowercase and no trailing '/' !
   STATIC_CONTENT_URL = 'https://mc-auth.com',
   DEMO_URL = 'http://localhost:8092',
   DOCS_URL = 'https://github.com/Mc-Auth-com/Mc-Auth-Web/wiki',

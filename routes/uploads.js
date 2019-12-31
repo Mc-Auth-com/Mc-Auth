@@ -36,7 +36,7 @@ router.post('/new', (req, res, next) => {
 
   if (!req.body || !(req.body instanceof Buffer) || req.body.length == 0) return next(Utils.createError(400, 'Missing or invalid image'));
 
-  sharp(req.body).png().resize(128, 128, { kernel: 'nearest' }).toBuffer((err, buffer, info) => {
+  sharp(req.body).png().resize(128, 128, { fit: 'contain', kernel: 'nearest', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toBuffer((err, buffer, info) => {
     if (err) return next(Utils.createError(400, 'Invalid image', true));
     if (info.width < 64 || info.height < 64) return next(Utils.createError(400, 'Invalid image dimensions', true));
 

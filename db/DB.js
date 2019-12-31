@@ -74,7 +74,7 @@ module.exports = {
    * @param {Function} callback 
    */
   getActiveApplications(mcUUID, callback) {
-    pool.query(`SELECT * FROM applications WHERE owner =$1::UUID AND deleted =FALSE;`,
+    pool.query(`SELECT * FROM applications WHERE owner =$1::UUID AND deleted =FALSE ORDER BY created DESC;`,
       [mcUUID], (err, res) => {
         if (err) return callback(err);
 
