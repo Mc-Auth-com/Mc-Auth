@@ -16,6 +16,10 @@
 * Rate-limit icon uploads
 * Allow users to report applications (On grant-request)
 * Add possibilities to be an verified application
+* App-Settings
+  * Allow deletion
+  * Allow regenerating client_secret
+  * fix text position
 * Allow 2FA for Settings-Page (Applications)
   * Force for verified applications
 * './.static/script-login.js' should not hold it's own `BASE_URL`
