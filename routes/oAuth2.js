@@ -37,25 +37,23 @@ router.get('/authorize/:grantID', (req, res, next) => {
         }
       }
 
-      if (agreed) {
-        if (responseType == 'token') {
-          db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
-            if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
+      if (responseType == 'token') {
+        db.generateAccessToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
+          if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
 
-            return res.redirect(redirectURI + `${uriParamPrefix}access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${stateSuffix}`);
-          });
-        } else {
+          return res.redirect(redirectURI + `${uriParamPrefix}access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}&expires_in=${3600}&scope=${encodeURIComponent(scope.sort().join(' '))}${stateSuffix}`);
+        });
+      } else {
+        db.setGrantResult(grant.id, agreed, (err) => {
+          if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
+
+          if (!agreed) return res.redirect(redirectURI + `${uriParamPrefix}error=access_denied&error_description=resource_owner_denied_request${stateSuffix}`);
+
           db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
             if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
 
             return res.redirect(redirectURI + `${uriParamPrefix}code=${encodeURIComponent(token)}&expires_in=${300}${stateSuffix}`);
           });
-        }
-      } else {
-        db.denyGrant(grant.id, (err) => {
-          if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
-
-          return res.redirect(redirectURI + `${uriParamPrefix}error=access_denied&error_description=resource_owner_denied_request${stateSuffix}`);
         });
       }
     });

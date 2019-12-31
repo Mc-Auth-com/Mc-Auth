@@ -138,7 +138,7 @@ module.exports = {
    * @param {Function} callback 
    */
   getUnusedGrant(grantID, mcUUID, callback) {
-    pool.query(`SELECT * FROM grants WHERE id =$1 AND invalid =FALSE AND mc_uuid =$2 AND issued >= CURRENT_TIMESTAMP - INTERVAL '24 HOUR';`,
+    pool.query(`SELECT * FROM grants WHERE id =$1 AND invalid =FALSE AND result ='NONE'::"GrantResult" AND mc_uuid =$2 AND issued >= CURRENT_TIMESTAMP - INTERVAL '24 HOUR';`,
       [grantID, mcUUID], (err, res) => {
         if (err) return callback(err);
 
@@ -172,7 +172,7 @@ module.exports = {
    * @param {Function} callback 
    */
   generateAccessToken(clientID, mcUUID, redirectURI, state, scope, callback) {
-    pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token) VALUES ($1,$2,$3,$4,$5,random_string(32)) RETURNING access_token;`,
+    pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope,access_token,result) VALUES ($1,$2,$3,$4,$5,random_string(32),'GRANTED'::"GrantResult") RETURNING access_token;`,
       [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
         if (err) return callback(err);
 
@@ -203,7 +203,7 @@ module.exports = {
    * @param {Function} callback err (Error), success (Boolean)
    */
   invalidateExchangeToken(clientID, exchangeToken, redirectURI, callback) {
-    pool.query(`UPDATE grants SET access_token =random_string(32), issued =CURRENT_TIMESTAMP WHERE application =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
+    pool.query(`UPDATE grants SET access_token =random_string(32) WHERE application =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND result ='GRANTED'::"GrantResult" AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
       [clientID, exchangeToken, redirectURI.toLowerCase()], (err, res) => {
         if (err) return callback(err);
 
@@ -213,10 +213,11 @@ module.exports = {
 
   /**
    * @param {String} grantID 
-   * @param {Function} callback err (Error), success (Boolean)
+   * @param {Boolean} granted
+   * @param {Function} callback err (Error)
    */
-  denyGrant(grantID, callback) {
-    pool.query(`UPDATE grants SET invalid =TRUE WHERE id =$1;`, [grantID], (err, _res) => {
+  setGrantResult(grantID, granted, callback) {
+    pool.query(`UPDATE grants SET result ='${granted ? 'GRANTED' : 'DENIED'}'::"GrantResult" WHERE id =$1;`, [grantID], (err, _res) => {
       callback(err || null);
     });
   },
@@ -295,7 +296,7 @@ module.exports = {
 
 /* Maintenance */
 
-setInterval(async () => {
+// setInterval(async () => {
   // pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
   //   [], (err, res) => {
   //     if (err) return Utils.logAndCreateError(err);
@@ -303,10 +304,10 @@ setInterval(async () => {
   //     console.log(`Deleted ${res.rowCount} stale grants`);
   //   });
 
-  pool.query(`DELETE FROM otp WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
-    [], (err, res) => {
-      if (err) return Utils.logAndCreateError(err);
+  // pool.query(`DELETE FROM otp WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
+  //   [], (err, res) => {
+  //     if (err) return Utils.logAndCreateError(err);
 
-      console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
-    });
-}, 3 * 24 * 60 * 60 * 1000 /* 3d */);
+  //     console.log(`Deleted ${res.rowCount} stale one-time-passwords`);
+  //   });
+// }, 3 * 24 * 60 * 60 * 1000 /* 3d */);
