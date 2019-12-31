@@ -40,6 +40,14 @@
     "comment": ""
   },
   {
+    "term": "html.authorize.login_request_from_app",
+    "definition": "Login request from {1}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.authorize.scope.profile",
     "definition": "Public account data",
     "context": "",
@@ -169,7 +177,7 @@
   },
   {
     "term": "html.index.how.step4",
-    "definition": "Enter the 6-digit code provided, to complete your login",
+    "definition": "Enter the 6-digit code provided in the Minecraft chat, to complete your login",
     "context": "",
     "term_plural": "",
     "reference": "",

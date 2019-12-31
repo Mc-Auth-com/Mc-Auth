@@ -40,5 +40,11 @@
     "args": [
       "<code>${MINECRAFT_HOST}</code>"
     ]
+  },
+  {
+    "term": "html.authorize.login_request_from_app",
+    "args": [
+      "${APP_NAME}"
+    ]
   }
 ]

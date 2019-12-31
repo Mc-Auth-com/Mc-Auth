@@ -40,6 +40,14 @@
     "comment": ""
   },
   {
+    "term": "html.authorize.login_request_from_app",
+    "definition": "Loginanfrage von {1}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.authorize.scope.profile",
     "definition": "\u00d6ffentliche Account-Daten",
     "context": "",
@@ -137,7 +145,7 @@
   },
   {
     "term": "html.index.how.content2",
-    "definition": "Probiere die Demo",
+    "definition": "Zur Demo",
     "context": "",
     "term_plural": "",
     "reference": "",
