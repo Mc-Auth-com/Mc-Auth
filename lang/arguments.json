@@ -32,13 +32,19 @@
   {
     "term": "html.authorize.app_wants_access_to",
     "args": [
-      "${APP_NAME}"
+      "<em>${APP_NAME}</em>"
     ]
   },
   {
     "term": "html.login.start_minecraft_and_connect",
     "args": [
       "<code>${MINECRAFT_HOST}</code>"
+    ]
+  },
+  {
+    "term": "html.authorize.login_request_from_app",
+    "args": [
+      "${APP_NAME}"
     ]
   }
 ]

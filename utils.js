@@ -276,7 +276,7 @@ module.exports = {
           case 'APP_NAME': return htmlEscape(app.name);
           case 'APP_SECRET': return app.secret;
           case 'APP_DESCRIPTION_RAW': return app.description || '';
-          case 'APP_DESCRIPTION': return htmlEscape(app.description).replace(/\n/g, '<br>\n') || (reqByAppOwner ? '<i>Der Besitzer dieser Anwendung hat keine Beschreibung angegeben</i>' : '<i>Du hast keine Beschreibung verfasst</i>');
+          case 'APP_DESCRIPTION': return htmlEscape(app.description).replace(/\n/g, '<br>\n') || (reqByAppOwner ? '<i>Du hast keine Beschreibung verfasst</i>' : '<i>Der Besitzer dieser Anwendung hat keine Beschreibung angegeben</i>');
           case 'APP_OWNER_NAME': return appOwnerName;
           case 'APP_PUBLISHED': return new Date(app.created).toDateString().substring(4);
           case 'APP_REDIRECT_URIs': return (app.redirect_uris || []).join('\r\n');
