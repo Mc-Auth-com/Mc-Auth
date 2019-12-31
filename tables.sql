@@ -1,6 +1,28 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE EXTENSION IF NOT EXISTS "plpgsql";
 
+/* Sequences */
+CREATE SEQUENCE "public"."application_id_sequence" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+CREATE SEQUENCE "public"."secret_id_sequence" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
+CREATE SEQUENCE "public"."grant_id_sequence" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
+
 /* Function: id_generator_apps */
 CREATE OR REPLACE FUNCTION "public"."id_generator_apps"(OUT "result" int8)
   RETURNS "pg_catalog"."int8" AS $BODY$
