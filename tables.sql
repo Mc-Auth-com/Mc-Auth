@@ -158,14 +158,14 @@ CREATE TYPE "public"."GrantResult" AS ENUM (
 );
 
 CREATE TABLE "public"."grants" (
-  "id" int8 NOT NULL,
+  "id" int8 NOT NULL DEFAULT id_generator_grants(),
   "application" int8 NOT NULL,
   "mc_uuid" uuid NOT NULL,
   "result" "public"."GrantResult" NOT NULL DEFAULT 'NONE'::"GrantResult",
   "scope" json,
   "state" varchar(128) COLLATE "pg_catalog"."default",
   "access_token" varchar(32) COLLATE "pg_catalog"."default",
-  "exchange_token" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
+  "exchange_token" varchar(32) COLLATE "pg_catalog"."default" NOT NULL DEFAULT random_string(32),
   "redirect_uri" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "issued" timestamptz(0) DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT "grants_pkey" PRIMARY KEY ("exchange_token"),
