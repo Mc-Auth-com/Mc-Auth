@@ -129,7 +129,7 @@
   },
   {
     "term": "html.index.how.content1",
-    "definition": "You are a developer? Have a look at the {1}.",
+    "definition": "Are you a developer? Have a look at the {1}.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -161,7 +161,7 @@
   },
   {
     "term": "html.index.how.step3",
-    "definition": "Start Minecraft and try connecting to {1}",
+    "definition": "Start Minecraft and connect to {1}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -169,11 +169,11 @@
   },
   {
     "term": "html.index.how.step4",
-    "definition": "Enter the 6-digit code you see in Minecraft, to complete your login",
+    "definition": "Enter the 6-digit code provided, to complete your login",
     "context": "",
     "term_plural": "",
     "reference": "",
-    "comment": ""
+    "comment": "You are kicked from the server. So you won't see the code in the chat"
   },
   {
     "term": "html.index.how.step5",
@@ -193,7 +193,7 @@
   },
   {
     "term": "html.index.used_by",
-    "definition": "Mc-Auth.com is already used by:",
+    "definition": "Mc-Auth.com is actively used by:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -201,7 +201,7 @@
   },
   {
     "term": "html.index.what_is.content1",
-    "definition": "Mc-Auth.com allows users to login with their minecraft account without requiring the account password.<br>Other websites and developers can then request verification that you have access to that minecraft account.",
+    "definition": "Mc-Auth.com allows users to securely login with their Minecraft accounts without ever needing to enter their account password.<br>Other websites and developers can then request to verify that the user has access to that provided account.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -209,7 +209,7 @@
   },
   {
     "term": "html.index.what_is.content2",
-    "definition": "Thanks to Mc-Auth.com, all kinds of websites can provide a secure way of a 'Minecraft-Login' feature.",
+    "definition": "Thanks to Mc-Auth.com, third party sites of any kind can provide \u2018Minecraft-Login\u2019 as a safe and secure authentication method.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -281,7 +281,7 @@
   },
   {
     "term": "html.settings.click_image_above_to_upload",
-    "definition": "Click the image above to upload another one",
+    "definition": "Click the image above to change it",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -329,7 +329,7 @@
   },
   {
     "term": "html.settings.please_provide_exact_info",
-    "definition": "Please try to choose your details as precisely as possible, as they are publicly visible.",
+    "definition": "Please understand that this information is publicly available and should not contain any sensitive details.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -353,7 +353,7 @@
   },
   {
     "term": "html.settings.you_can_edit_at_any_time",
-    "definition": "All information can be edited at any time.",
+    "definition": "You may return and edit this information at any time",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -369,7 +369,7 @@
   },
   {
     "term": "html.settings.your_applications_title",
-    "definition": "Your applications (for programmers)",
+    "definition": "Your applications (for developers)",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -417,7 +417,7 @@
   },
   {
     "term": "words.frontpage",
-    "definition": "Frontpage",
+    "definition": "Front Page",
     "context": "",
     "term_plural": "",
     "reference": "",

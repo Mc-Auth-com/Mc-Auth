@@ -26,27 +26,27 @@ router.get('/verify', (req, res, next) => {
     if (err) return next(Utils.logAndCreateError(err));
 
     if (success) {
-      req.session['loggedIn'] = true;
-      req.session['mc_UUID'] = uuid;
+      Utils.Minecraft.getUsername(uuid, (err, username) => {
+        if (err) return next(Utils.logAndCreateError(err));
 
-      if (!Utils.toBoolean(req.query.keepLogin) && req.query.keepLogin != 'on') {
-        req.session.cookie.expires = false; // Make the cookie a session-cookie (duration)
-      }
-    }
+        req.session['loggedIn'] = true;
+        req.session['mc_UUID'] = uuid;
+        req.session['mc_Name'] = username;
 
-    Utils.Minecraft.getUsername(uuid, (err, username) => {
-      if (err) return next(Utils.logAndCreateError(err));
+        const keepLogin = !Utils.toBoolean(req.query.keepLogin) && req.query.keepLogin != 'on';
+        if (!keepLogin) {
+          req.session.cookie.expires = false; // Make the cookie a session-cookie (duration)
+        }
 
-      req.session['mc_Name'] = username;
+        const returnTo = (req.query['returnTo'] || '').toLowerCase();
+        let returnURL = returnTo.startsWith(Utils.Storage.BASE_URL) ? returnTo : Utils.Storage.BASE_URL;
 
-      const returnTo = (req.query['returnTo'] || '').toLowerCase();
-      let returnURL = returnTo.startsWith(Utils.Storage.BASE_URL) ? returnTo : Utils.Storage.BASE_URL;
-
-      res.json({
-        verified: success,
-        url: returnURL
+        res.json({
+          verified: success,
+          url: returnURL
+        });
       });
-    });
+    }
   });
 });
 

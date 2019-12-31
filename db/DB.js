@@ -245,7 +245,7 @@ module.exports = {
 
           module.exports.getImageID(original, callback);
         } else {
-          client.query(`INSERT INTO images(optimized,original) VALUES ($1,$2) DO NOTHING RETURNING id;`,
+          client.query(`INSERT INTO images(optimized,original) VALUES ($1,$2) ON CONFLICT DO NOTHING RETURNING id;`,
             [png, original], (err, res) => {
               if (err) {
                 done();

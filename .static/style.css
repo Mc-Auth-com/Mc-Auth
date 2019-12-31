@@ -30,6 +30,30 @@
   display: none;
 }
 
+.appCard {
+  padding: 2vh;
+  word-wrap: break-word;
+  border-radius: .25rem;
+  border: 1px solid rgba(0, 0, 0, .125);
+  background-clip: border-box;
+  background-color: #f8f9fa;
+}
+
+.row .w-100 {
+  margin-top: 2vh;
+}
+
+/* stretch .col-elements inside .row to equal the largest one */
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row.display-flex>[class*='col-'] {
+  /* display: flex; */
+  flex-direction: column;
+}
+
 /* Dark-theme */
 body {
   transition: background-color .5s ease,
@@ -60,4 +84,12 @@ body {
 .dark-body hr {
   border-color: #a0a2a4;
   color: #a0a2a4;
+}
+
+.dark-body .table-dark {
+  background-color: transparent;
+}
+
+.dark-body .appCard {
+  background-color: #343a40;
 }

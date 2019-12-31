@@ -69,7 +69,7 @@ function updateRemainingChars(elem) {
       if (elem.value.length == 0 && target.hasAttribute('data-orgHTML')) {
         target.innerHTML = target.getAttribute('data-orgHTML');
       } else {
-        target.innerText = elem.value.length + "/" + elem.getAttribute('maxlength');
+        target.innerText = `${elem.value.length}/${elem.getAttribute('maxlength')} characters`;
       }
     }
   }
@@ -83,6 +83,7 @@ function toggleDarkMode(event) {
   const navMenu = document.getElementById('headerMenu'),
     footer = document.getElementById('footer'),
     body = document.getElementsByTagName('body').item(0);
+  const tables = document.getElementsByClassName('table');
 
   const isCurrDarkMode = navMenu.classList.contains('bg-dark');
 
@@ -94,6 +95,10 @@ function toggleDarkMode(event) {
     footer.classList.add('bg-light');
 
     body.classList.remove('dark-body', 'text-light');
+
+    for (const table of tables) {
+      table.classList.remove('table-dark');
+    }
   } else {
     navMenu.classList.remove('navbar-light', 'bg-light');
     navMenu.classList.add('navbar-dark', 'bg-dark');
@@ -102,6 +107,10 @@ function toggleDarkMode(event) {
     footer.classList.add('bg-dark');
 
     body.classList.add('dark-body', 'text-light');
+
+    for (const table of tables) {
+      table.classList.add('table-dark');
+    }
   }
 
   setActiveTheme(!isCurrDarkMode);
@@ -111,5 +120,12 @@ function toggleDarkMode(event) {
  * @param {Boolean} darkTheme 
  */
 function setActiveTheme(darkTheme) {
-  document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()};`;
+  document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/`;
 }
+
+/* run when DOM is ready */
+window.addEventListener('load', () => {
+  for (const elem of document.querySelectorAll('[data-remaining]')) {
+    updateRemainingChars(elem);
+  }
+});
