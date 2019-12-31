@@ -7,6 +7,9 @@
 
 ## TODO
 * Settings: Show grants (accepted and denied ones)
+* Create documentation/wiki
+  * Create Brand/Press Kit with images
+  * Create HTML-Button examples
 * Notify about cookies
 * ~~Allow easy localization of HTML~~
   * Functional Language-Switcher
