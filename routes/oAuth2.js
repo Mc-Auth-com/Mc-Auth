@@ -49,11 +49,7 @@ router.get('/authorize/:grantID', (req, res, next) => {
 
           if (!agreed) return res.redirect(redirectURI + `${uriParamPrefix}error=access_denied&error_description=resource_owner_denied_request${stateSuffix}`);
 
-          db.generateExchangeToken(clientID, req.session['mc_UUID'], redirectURI, state, scope, (err, token) => {
-            if (err) return res.redirect(redirectURI + `${uriParamPrefix}error=server_error&error_description=${Utils.logAndCreateError(err).message}${stateSuffix}`);
-
-            return res.redirect(redirectURI + `${uriParamPrefix}code=${encodeURIComponent(token)}&expires_in=${300}${stateSuffix}`);
-          });
+          return res.redirect(redirectURI + `${uriParamPrefix}code=${encodeURIComponent(grant.exchange_token)}&expires_in=${300}${stateSuffix}`);
         });
       }
     });

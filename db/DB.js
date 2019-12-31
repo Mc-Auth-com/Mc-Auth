@@ -138,7 +138,7 @@ module.exports = {
    * @param {Function} callback 
    */
   getUnusedGrant(grantID, mcUUID, callback) {
-    pool.query(`SELECT * FROM grants WHERE id =$1 AND invalid =FALSE AND result ='NONE'::"GrantResult" AND mc_uuid =$2 AND issued >= CURRENT_TIMESTAMP - INTERVAL '24 HOUR';`,
+    pool.query(`SELECT * FROM grants WHERE id =$1 AND result ='NONE'::"GrantResult" AND mc_uuid =$2 AND issued >= CURRENT_TIMESTAMP - INTERVAL '24 HOUR';`,
       [grantID, mcUUID], (err, res) => {
         if (err) return callback(err);
 
@@ -177,23 +177,6 @@ module.exports = {
         if (err) return callback(err);
 
         callback(null, firstRow(res, 'access_token'));
-      });
-  },
-
-  /**
-   * @param {String} clientID 
-   * @param {String} mcUUID
-   * @param {String} redirectURI
-   * @param {String} state
-   * @param {String[]} scope
-   * @param {Function} callback 
-   */
-  generateExchangeToken(clientID, mcUUID, redirectURI, state, scope, callback) {
-    pool.query(`INSERT INTO grants(application,mc_uuid,redirect_uri,state,scope) VALUES ($1,$2,$3,$4,$5) RETURNING exchange_token;`,
-      [clientID, mcUUID, redirectURI.toLowerCase(), state, JSON.stringify(scope)], (err, res) => {
-        if (err) return callback(err);
-
-        callback(null, firstRow(res, 'exchange_token'));
       });
   },
 
