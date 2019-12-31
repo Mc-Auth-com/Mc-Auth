@@ -16,7 +16,7 @@ router.post('/create', (req, res, next) => {
   request('https://www.google.com/recaptcha/api/siteverify', {
     method: 'POST',
     formData: {
-      secret: '6LeGK8sUAAAAABddbcMoU-iydeF7qMuGtAimA7XO',
+      secret: require('.././storage/config')['reCAPTCHA']['private'],
       response: req.body['g-recaptcha-response']
     }
   }, (err, _httpRes, httpBody) => {

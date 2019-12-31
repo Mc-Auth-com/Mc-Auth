@@ -107,7 +107,11 @@ async function initStorage(callback) {
           port: 8091
         },
         trustProxy: false,
-        secureCookies: 'auto'
+        secureCookies: 'auto',
+        reCAPTCHA: {
+          public: '',
+          private: ''
+        }
       }
       , null, 4));
 

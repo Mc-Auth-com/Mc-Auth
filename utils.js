@@ -367,6 +367,8 @@ module.exports = {
             case 'URL_DEMO': return module.exports.Storage.DEMO_URL;
             case 'MINECRAFT_HOST': return module.exports.Storage.MINECRAFT_HOST;
 
+            case 'reCAPTCHA_public': return require('./storage/config')['reCAPTCHA']['public'];
+
             /* Dynamic */
             case 'GET_ReturnTo_ENCODED': return encodeURIComponent(req.query['returnTo'] || '');
             case 'QUERY_PARAMS': return req.originalUrl.indexOf('?') >= 0 ? req.originalUrl.substring(req.originalUrl.indexOf('?')) : '';
