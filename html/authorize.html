@@ -27,78 +27,84 @@
   ${HTML_HEADER}
 
   <main style="margin-bottom: 2rem">
-    <div class="container">
-      <div class="card centeredCard">
-        <div class="card-body">
-          <h3 class="card-title text-center"><u>Login Anfrage von <em>${APP_NAME}</em></u></h3>
+    <div class="container-fluid text-center">
+      <h2>
+        <u>${LOC:html.authorize.login_request_from_app}</u>
+      </h2>
 
-          <br>
+      <div class="row">
+        <div class="col"></div>
 
-          <div class="row">
-            <div class="col-2">
-              <img src="${APP_ICON}" class="img-fluid" style="max-height: 128px; max-width: 128px;"
-                alt="${LOC:html.authorize.app_logo}">
+        <div class="col-auto">
+          <div class="appCard">
+            <div class="row">
+              <div class="col-2">
+                <img src="${APP_ICON}" class="img-fluid" style="max-height: 128px; max-width: 128px;"
+                  alt="${LOC:html.authorize.app_logo}">
+              </div>
+
+              <div class="col-1"></div>
+
+              <div class="col">
+                <p class="text-center">${APP_DESCRIPTION}</p>
+                <hr>
+                <p>
+                  <strong>${LOC:html.authorize.app_owner}:</strong> ${APP_OWNER_NAME}
+                  <br>
+                  <strong>${LOC:html.authorize.app_created_on}:</strong> ${APP_PUBLISHED}
+                </p>
+              </div>
             </div>
 
-            <div class="col-1"></div>
+            <div class="row">
+              <div class="col-3"></div>
 
-            <div class="col">
-              <p class="text-center">${APP_DESCRIPTION}</p>
-              <hr>
-              <p>
-                <strong>${LOC:html.authorize.app_owner}:</strong> ${APP_OWNER_NAME}
-                <br>
-                <strong>${LOC:html.authorize.app_created_on}:</strong> ${APP_PUBLISHED}
-              </p>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-3"></div>
-
-            <div class="col">
-              <hr>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-2">
-              <img src="https://minotar.net/helm/${Minecraft_UUID}/128.png" class="img-fluid"
-                style="max-height: 128px; max-width: 128px;" alt="${LOC:html.authorize.your_minecraft_skin}">
+              <div class="col">
+                <hr>
+              </div>
             </div>
 
-            <div class="col-1"></div>
+            <div class="row">
+              <div class="col-2">
+                <img src="https://minotar.net/helm/${Minecraft_UUID}/128.png" class="img-fluid"
+                  style="max-height: 128px; max-width: 128px;" alt="${LOC:html.authorize.your_minecraft_skin}">
+              </div>
 
-            <div class="col">
-              <p class="text-center"><strong>${LOC:html.authorize.app_wants_access_to}</strong></p>
+              <div class="col-1"></div>
 
-              <ul>
-                <li>
-                  <p>
-                    ${LOC:html.authorize.scope.profile}
-                    <br>
-                    <em class="text-muted">${LOC:html.authorize.scope.profile.note}</em>
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
+              <div class="col">
+                <p class="text-center"><strong>${LOC:html.authorize.app_wants_access_to}</strong></p>
 
-          <hr>
-
-          <div class="row">
-            <div class="col" style="padding-right: 6px">
-              <a class="btn btn-danger float-right"
-                href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=0"
-                role="button">${LOC:words.deny}</a>
+                <ul>
+                  <li>
+                    <p class="text-left">
+                      ${LOC:html.authorize.scope.profile}
+                      <br>
+                      <em class="text-muted">${LOC:html.authorize.scope.profile.note}</em>
+                    </p>
+                  </li>
+                </ul>
+              </div>
             </div>
 
-            <div class="col" style="padding-left: 6px">
-              <a class="btn btn-success" href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=1"
-                role="button">${LOC:words.agree}</a>
+            <hr>
+
+            <div class="row">
+              <div class="col" style="padding-right: 6px">
+                <a class="btn btn-danger float-right"
+                  href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=0"
+                  role="button">${LOC:words.deny}</a>
+              </div>
+
+              <div class="col" style="padding-left: 6px">
+                <a class="btn btn-success" href="${URL_BASE}/oauth2/authorize/${GRANT_ID}${QUERY_PARAMS}&agreed=1"
+                  role="button">${LOC:words.agree}</a>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="col"></div>
       </div>
     </div>
   </main>

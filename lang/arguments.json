@@ -32,7 +32,7 @@
   {
     "term": "html.authorize.app_wants_access_to",
     "args": [
-      "${APP_NAME}"
+      "<em>${APP_NAME}</em>"
     ]
   },
   {
