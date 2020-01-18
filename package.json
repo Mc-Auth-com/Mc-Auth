@@ -30,7 +30,7 @@
     "pg": "^7.17.1",
     "request": "^2.88.0",
     "rotating-file-stream": "^2.0.1",
-    "sharp": "^0.23.4",
+    "sharp": "^0.24.0",
     "uuid": "^3.3.3"
   },
   "nodemonConfig": {
