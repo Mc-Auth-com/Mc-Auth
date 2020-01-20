@@ -3,6 +3,7 @@
 
 ## Special Thanks To
 **[@JonasAlpha](https://github.com/JonasAlpha)** Logo
+
 **[@Songoda](https://github.com/Songoda)** English translation
 
 ## Setup
