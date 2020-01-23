@@ -14,7 +14,7 @@ async function submitUsername(event) {
   try {
     const res = await fetch(`https://api.sprax2013.de/mojang/profile/${nameInput.value}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Accept': 'application/json' }
     });
 
     if (res.status === 200) {

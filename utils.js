@@ -197,7 +197,7 @@ module.exports = {
 
   Minecraft: {
     getUsername(uuid, callback) {
-      if (!uuid) return callback(null, null);
+      if (!uuid || typeof uuid != 'string') return callback(null, null);
 
       uuid = uuid.toLowerCase().replace(/-/g, '');
 

@@ -35,19 +35,19 @@ router.get('/verify', (req, res, next) => {
 
         const keepLogin = !Utils.toBoolean(req.query.keepLogin) && req.query.keepLogin != 'on';
         if (!keepLogin) {
-          req.session.cookie.expires = false; // Make the cookie a session-cookie (duration)
+          req.session.cookie.expires = false; // false makes it a session-cookie (duration or user-agent)
         }
 
         const returnTo = (req.query['returnTo'] || '').toLowerCase();
         let returnURL = returnTo.startsWith(Utils.Storage.BASE_URL) ? returnTo : Utils.Storage.BASE_URL;
 
-        res.json({
+        return res.send({
           verified: success,
           url: returnURL
         });
       });
     } else {
-      res.json({
+      return res.send({
         verified: false
       });
     }
