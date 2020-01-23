@@ -40,10 +40,19 @@ async function submitUsername(event) {
       nameInput.removeAttribute('disabled');
     }
   } catch (err) {
-    console.error('Request failed - Sending form to server instead!', err);
+    console.error('Request failed!');
+    console.error(err);
 
-    event.target.onsubmit = undefined;
-    event.target.submit();
+    submitBtn.classList.remove('disabled');
+    submitBtn.removeAttribute('disabled');
+
+    nameInput.classList.remove('disabled');
+    nameInput.removeAttribute('disabled');
+
+    // console.error('Request failed - Sending form to server instead!', err);
+
+    // event.target.onsubmit = undefined;
+    // event.target.submit();
   }
 }
 
@@ -62,12 +71,12 @@ async function submitCode(event) {
   try {
     const res = await fetch(`${BASE_URL}/login/verify?uuid=${mcUUID}&otp=${codeInput.value}&keepLogin=${document.getElementById('keepLogin').checked}&returnTo=${event.target.getAttribute('data-returnTo')}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Accept': 'application/json' }
     });
 
-    if (res.status == 200) {
-      const json = await res.json();
+    const json = await res.json();
 
+    if (res.status == 200 && json.verified) {
       console.log('Login was successful!');
       window.location.href = json.url || BASE_URL;
     } else {
@@ -80,9 +89,17 @@ async function submitCode(event) {
       codeInput.removeAttribute('disabled');
     }
   } catch (err) {
-    console.error('Request failed - Sending form to server instead!', err);
+    console.error('Request failed!');
+    console.error(err);
+    submitBtn.classList.remove('disabled');
+    submitBtn.removeAttribute('disabled');
 
-    event.target.onsubmit = undefined;
-    event.target.submit();
+    codeInput.classList.remove('disabled');
+    codeInput.removeAttribute('disabled');
+
+    // console.error('Request failed - Sending form to server instead!', err);
+
+    // event.target.onsubmit = undefined;
+    // event.target.submit();
   }
 }
