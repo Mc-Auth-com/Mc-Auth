@@ -13,11 +13,6 @@ Another problem would be that I wanted full oAuth2 implementation. What normally
 
 So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started writeing down what [mc-auth.com](https://mc-auth.com) should be able to do and what the user should be able to do.
 
-## Special Thanks To
-**[@JonasAlpha](https://github.com/JonasAlpha)** Logo
-
-**[@Songoda](https://github.com/Songoda)** English translation
-
 ## Setup
 **You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) on your machine and a PostgreSQL instance**
 
@@ -57,6 +52,14 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 * ~~App-Settings: Description looses line-breaks~~
 * ~~Publish Demo-Application~~ 
 * ~~When an application requests authorization and the user is not logged in, the user can't proceed as intended~~
+
+## Contributors ✨
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/JonasAlpha"><img src="https://avatars1.githubusercontent.com/u/35976079?s=460&v=4" width="100px" alt=""><br><sub><b>Jonas</b></sub></a><br>🎨 Logo and Banner</td>
+    <td align="center"><a href="https://github.com/Songoda"><img src="https://avatars3.githubusercontent.com/u/26376600?s=460&v=4" width="100px" alt=""><br><sub><b>Brianna O'Keefe</b></sub></a><br>🌍 English Translations</td>
+  </tr>
+</table>
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web?ref=badge_large)
