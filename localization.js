@@ -22,7 +22,10 @@ for (const fileName of fs.readdirSync('./lang')) {
       }
 
       lang[obj.term] = obj.definition;
+      Object.freeze(obj.definition);  // Protect from accidental modification
     }
+
+    Object.freeze(lang);  // Protect from accidental modification
   } else {
     console.error(`Invalid file extension for './lang/${fileName}'`);
   }
@@ -35,7 +38,12 @@ for (const obj of JSON.parse(fs.readFileSync('./lang/arguments.json', 'utf-8')))
   }
 
   termArguments[obj.term] = obj.args;
+  Object.freeze(obj.args);  // Protect from accidental modification
 }
+
+// Protect from accidental modification
+Object.freeze(localizations);
+Object.freeze(termArguments);
 
 if (!localizations[defaultLang]) {
   console.error(`Could not find default localization './lang/${defaultLang}.json'`);
@@ -49,6 +57,8 @@ module.exports = {
    * @param {String} strTerm 
    * @param {String} langKey 
    * @param {Number} amount 
+   * 
+   * @returns {String}
    */
   getString(strTerm, langKey = defaultLang, amount = 1) {
     let result = (localizations[langKey] || localizations[defaultLang])[strTerm];
@@ -72,13 +82,17 @@ module.exports = {
 
   /**
    * @param {String} strTerm 
+   * 
+   * @returns {any[]}
    */
   getArguments(strTerm) {
-    return termArguments[strTerm];
+    return Array.from(termArguments[strTerm] || []);
   },
 
   /**
    * @param {String} langKey 
+   * 
+   * @returns {Boolean}
    */
   isLanguageSupported(langKey) {
     return langKey && typeof langKey == 'string' && langKey.length == 2 && localizations[langKey.toLowerCase()];
