@@ -4,27 +4,27 @@ const defaultLang = 'en',
   localizations = {},
   termArguments = {};
 
-for (const file of fs.readdirSync('./lang')) {
-  if (file.endsWith('.json')) {
-    if (file == 'arguments.json') continue;
+for (const fileName of fs.readdirSync('./lang')) {
+  if (fileName.endsWith('.json')) {
+    if (fileName == 'arguments.json') continue;
 
-    const lang = (localizations[file.substring(0, file.length - 5)] = {});
+    const lang = (localizations[fileName.substring(0, fileName.length - 5)] = {});
 
-    for (const obj of JSON.parse(fs.readFileSync(`./lang/${file}`, 'utf-8'))) {
+    for (const obj of JSON.parse(fs.readFileSync(`./lang/${fileName}`, 'utf-8'))) {
       if (!/^\+?([a-z0-9_\.]*)$/.test(obj.term)) {
-        console.error(`Term (${obj.term}) in './lang/${file}' contains invalid characters (allowed: a-z0-9_.)`);
+        console.error(`Term (${obj.term}) in './lang/${fileName}' contains invalid characters (allowed: a-z0-9_.)`);
         continue;
       }
 
       if (lang[obj.term]) {
-        console.error(`Duplicate term (${obj.term}) in './lang/${file}'`);
+        console.error(`Duplicate term (${obj.term}) in './lang/${fileName}'`);
         continue;
       }
 
       lang[obj.term] = obj.definition;
     }
   } else {
-    console.error(`Invalid file extension for './lang/${file}'`);
+    console.error(`Invalid file extension for './lang/${fileName}'`);
   }
 }
 
