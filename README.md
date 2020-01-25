@@ -22,7 +22,7 @@
   * Create Brand/Press Kit with images
   * Create HTML-Button examples
 * ~~Allow easy localization of HTML~~
-  * Functional Language-Switcher
+  * ~~Functional Language-Switcher~~
   * Cache localized HTML
   * ~~Create english translation~~
   * ~~Create german translation~~
