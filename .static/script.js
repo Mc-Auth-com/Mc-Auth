@@ -128,4 +128,8 @@ window.addEventListener('load', () => {
   for (const elem of document.querySelectorAll('[data-remaining]')) {
     updateRemainingChars(elem);
   }
+
+  if (document.cookie.indexOf('darkTheme') < 0 && matchMedia('(prefers-color-scheme: dark)').matches) {
+    toggleDarkMode(null);
+  }
 });
