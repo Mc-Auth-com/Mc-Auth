@@ -34,7 +34,7 @@ module.exports = {
   /**
    * @param {Number} HTTPStatusCode The HTTP-StatusCode
    * @param {String} message A short description (or message)
-   * 
+   *
    * @returns {Error}
    */
   createError(HTTPStatusCode = 500, message = 'An unknown error has occurred', hideFromConsole = false) {
@@ -47,7 +47,7 @@ module.exports = {
 
   /**
    * @param {Error} error
-   * 
+   *
    * @returns {Error}
    */
   logAndCreateError(error) {
@@ -68,9 +68,9 @@ module.exports = {
   },
 
   /**
-   * @param {String[]} arr 
+   * @param {String[]} arr
    * @param {String} str
-   * 
+   *
    * @returns {Boolean}
    */
   includesIgnoreCase(arr, str) {
@@ -88,8 +88,8 @@ module.exports = {
   },
 
   /**
-   * @param {String} input 
-   * 
+   * @param {String} input
+   *
    * @returns {Boolean}
    */
   toBoolean(input) {
@@ -103,8 +103,8 @@ module.exports = {
   },
 
   /**
-   * @param {String} str 
-   * 
+   * @param {String} str
+   *
    * @returns {Boolean}
    */
   isUUID(str) {
@@ -117,11 +117,11 @@ module.exports = {
 
   /**
    * Acording to RFC3986 (https://tools.ietf.org/html/rfc3986#section-4.3)
-   * 
+   *
    * This function only checks for the layout. Not the actual content (illegal characters etc.)
-   * 
-   * @param {String} str 
-   * 
+   *
+   * @param {String} str
+   *
    * @returns {Boolean}
    */
   isAbsoluteURL(str) {
@@ -129,8 +129,8 @@ module.exports = {
   },
 
   /**
-   * @param {String} str 
-   * 
+   * @param {String} str
+   *
    * @returns {Boolean}
    */
   isNumber(str) {
@@ -138,8 +138,8 @@ module.exports = {
   },
 
   /**
-   * @param {String|Number} str 
-   * 
+   * @param {String|Number} str
+   *
    * @returns {Number} A finite integer or NaN
    */
   toInteger(str) {
@@ -154,9 +154,9 @@ module.exports = {
 
   /**
    * Replaces all multiple spaces, tabs, etc. with a single space
-   * 
-   * @param {string} str 
-   * 
+   *
+   * @param {string} str
+   *
    * @returns {string}
    */
   toNeutralString(str) {
@@ -170,12 +170,12 @@ module.exports = {
    * @param {String} str
    */
   /**
-   * 
-   * @param {String} text 
-   * @param {String} startToken 
-   * @param {String} endToken 
-   * @param {ReplacerCallback} callback 
-   * 
+   *
+   * @param {String} text
+   * @param {String} startToken
+   * @param {String} endToken
+   * @param {ReplacerCallback} callback
+   *
    * @author NudelErde
    */
   replacer(text, startToken, endToken, callback) {
@@ -261,8 +261,8 @@ module.exports = {
     /* Replace */
 
     /**
-     * @param {String} str 
-     * @param {any[]} args 
+     * @param {String} str
+     * @param {any[]} args
      */
     appVariableCallback(str, args) {
       const app = args[0],
@@ -293,8 +293,8 @@ module.exports = {
     },
 
     /**
-     * @param {String} str 
-     * @param {any[]} args 
+     * @param {String} str
+     * @param {any[]} args
      */
     grantVariableCallback(str, args) {
       const grant = args[0];
@@ -314,8 +314,8 @@ module.exports = {
     },
 
     /**
-     * @param {String} str 
-     * @param {any[]} args 
+     * @param {String} str
+     * @param {any[]} args
      */
     localizationCallback(str, args) {
       const req = args[0],
