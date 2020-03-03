@@ -12,7 +12,7 @@ async function submitUsername(event) {
   nameInput.setAttribute('disabled', 'disabled');
 
   try {
-    const res = await fetch(`https://api.sprax2013.de/mojang/profile/${nameInput.value}`, {
+    const res = await fetch(`https://api.sprax2013.de/mc/profile/${nameInput.value}`, {
       method: 'GET',
       headers: { 'Accept': 'application/json' }
     });

@@ -210,7 +210,7 @@ module.exports = {
           callback(null, cached);
         }
       } else {
-        request('https://api.sprax2013.de/mojang/profile/' + uuid, (err, res, body) => {
+        request('https://api.sprax2013.de/mc/profile/' + uuid, (err, res, body) => {
           if (err) {
             mcUsernameCache.set(uuid, err);
             return callback(err);
@@ -241,7 +241,7 @@ module.exports = {
 
       uuid = uuid.toLowerCase().replace(/-/g, '');
 
-      request('https://api.sprax2013.de/mojang/profile/' + uuid, (err, res, body) => {
+      request('https://api.sprax2013.de/mc/profile/' + uuid, (err, res, body) => {
         if (err) {
           return callback(err);
         }
