@@ -62,6 +62,6 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 </table>
 
 ## License
-[MIT License](https://github.com/Mc-Auth-com/Mc-Auth-Web/blob/master/LICENSE)
+[MIT License](./LICENSE)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web?ref=badge_large)
