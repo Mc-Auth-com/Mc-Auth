@@ -137,7 +137,7 @@ async function initStorage(callback) {
   if (!fs.existsSync('./storage/misc.json')) {
     fs.writeFileSync('./storage/misc.json', JSON.stringify(
       {
-        CookieSecret: require('crypto').createHash('sha256').update(require('uuid/v4')()).update(require('crypto').randomBytes(256)).digest('hex')
+        CookieSecret: require('crypto').createHash('sha256').update(require('uuid').v4()).update(require('crypto').randomBytes(256)).digest('hex')
       }
       , null, 4));
 
