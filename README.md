@@ -45,6 +45,7 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
   * Force for verified applications
 * './.static/script-login.js' should not hold it's own `BASE_URL`
 * Don't use Google Analytics (Something on webserver level is enough with a good dashboard)
+* Recode in TypeScript
 * ~~Notify about cookies~~
 * ~~Resize and crop uploaded images to fit inside 128px x 128px~~
 * ~~Use reCAPTCHA when creating a new app~~
