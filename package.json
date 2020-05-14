@@ -29,7 +29,7 @@
     "nodemon": "^2.0.3",
     "pg": "^8.1.0",
     "request": "^2.88.2",
-    "rotating-file-stream": "^2.1.0",
+    "rotating-file-stream": "^2.1.1",
     "sharp": "^0.25.2",
     "uuid": "^8.0.0"
   },
