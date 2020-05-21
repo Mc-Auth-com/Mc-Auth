@@ -31,7 +31,7 @@
     "request": "^2.88.2",
     "rotating-file-stream": "^2.1.1",
     "sharp": "^0.25.3",
-    "uuid": "^8.0.0"
+    "uuid": "^8.1.0"
   },
   "nodemonConfig": {
     "ignore": [
