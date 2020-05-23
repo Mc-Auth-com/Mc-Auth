@@ -53,19 +53,6 @@ app.use((req, _res, next) => {
   next();
 });
 
-const pool = new (require('pg').Pool)({
-  host: require('./storage/db.json')['host'],
-  port: require('./storage/db.json')['port'],
-  user: require('./storage/db.json')['user'],
-  password: require('./storage/db.json')['password'],
-  database: require('./storage/db.json')['database'],
-  ssl: require('./storage/db.json')['ssl'],
-  max: 8
-});
-pool.on('error', (err, _client) => {
-  console.error('Unexpected error on idle client:', err);
-});
-
 // Default response headers
 app.use((_req, res, next) => {
   res.set({
