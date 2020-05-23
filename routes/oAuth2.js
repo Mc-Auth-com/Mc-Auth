@@ -25,10 +25,12 @@ router.get('/authorize/:grantID', (req, res, next) => {
       if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
       if (!app) return next(Utils.createError(400, 'ToDo: Invalid or Missing ClientID (notify user - do not redirect)'));
 
-      const uriParamPrefix = responseType == 'token' ? '#' : '?',
+      const uriParamPrefix = responseType == 'token' ? '#' : redirectURI.indexOf('?') == -1 && !redirectURI.trimRight().endsWith('?') ? '?' : '&',
         stateSuffix = state ? '&state=' + encodeURIComponent(state) : '';
 
-      if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'ToDo: Invalid redirect_uri (notify user - do not redirect)'));
+      const compareableRedirectURI = redirectURI && redirectURI.indexOf('?') != -1 ? redirectURI.substring(0, redirectURI.indexOf('?')) : redirectURI;
+
+      if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, compareableRedirectURI)) return next(Utils.createError(400, 'ToDo: Invalid redirect_uri (notify user - do not redirect)'));
       if (responseType != 'code' && responseType != 'token') return res.redirect(redirectURI + `${uriParamPrefix}error=unsupported_response_type${stateSuffix}`);
 
       for (const elem of scope) {
@@ -71,7 +73,9 @@ router.get('/authorize', (req, res, next) => {
     if (err && err.code != 22003 /* numeric_value_out_of_range */) return next(Utils.logAndCreateError(err));
     if (!app || app.deleted) return next(Utils.createError(404, 'client_id is invalid'));
 
-    if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, redirectURI)) return next(Utils.createError(400, 'redirect_uri is not listed for client_id'));
+    const compareableRedirectURI = redirectURI && redirectURI.indexOf('?') != -1 ? redirectURI.substring(0, redirectURI.indexOf('?')) : redirectURI;
+
+    if (!redirectURI || !Utils.includesIgnoreCase(app.redirect_uris, compareableRedirectURI)) return next(Utils.createError(400, 'redirect_uri is not listed for client_id'));
     if (responseType != 'code' && responseType != 'token') return next(Utils.createError(400, 'ToDo: unsupported_response_type'));
 
     for (const elem of scope) {
