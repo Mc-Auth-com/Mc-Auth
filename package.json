@@ -2,28 +2,40 @@
   "name": "mc-auth-web",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "keywords": [],
+  "homepage": "https://mc-auth.com",
+  "main": "build/index.js",
+  "private": false,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "build": "tsc",
+    "start": "cross-env NODE_ENV=production nodemon --enable-source-maps build/index.js",
+    "devStart": "cross-env NODE_ENV=development ts-node src/index.ts",
+    "dev": "nodemon --ext ts --watch ./src --exec \"npm run devStart\""
   },
-  "author": "Sprax2013",
+  "author": {
+    "name": "Christian Koop",
+    "url": "https://Sprax2013.de",
+    "email": "developer@sprax2013.de"
+  },
   "license": "MIT",
-  "homepage": "https://mc-auth.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mc-Auth-com/Mc-Auth-Web.git"
+    "url": "https://github.com/Mc-Auth-com/Mc-Auth-Web.git"
   },
   "bugs": {
     "url": "https://github.com/Mc-Auth-com/Mc-Auth-Web/issues"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "connect-pg-simple": "^6.2.0",
     "cookie-parser": "^1.4.5",
     "escape-html": "^1.0.3",
-    "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "express": "^4.17.1",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
     "nodemon": "^2.0.4",
@@ -33,11 +45,19 @@
     "sharp": "^0.25.4",
     "uuid": "^8.3.0"
   },
+  "devDependencies": {
+    "@types/express": "^4.17.7",
+    "@types/morgan": "^1.9.1",
+    "@types/pg": "^7.14.4",
+    "@types/request": "^2.48.5",
+    "@types/sharp": "^0.25.1",
+    "cross-env": "^7.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
   "nodemonConfig": {
-    "ignore": [
-      "./storage",
-      "./logs"
-    ],
-    "ext": "js,json,html"
+    "watch": [
+      "build"
+    ]
   }
 }
