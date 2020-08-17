@@ -345,7 +345,7 @@
   },
   {
     "term": "html.settings.redirect_uris",
-    "definition": "Redirect URIs (eine pro Zeile)",
+    "definition": "Redirect URIs (eine pro Zeile, Groß-/Kleinschreibung beachten)",
     "context": "",
     "term_plural": "",
     "reference": "",

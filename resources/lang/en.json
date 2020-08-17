@@ -345,7 +345,7 @@
   },
   {
     "term": "html.settings.redirect_uris",
-    "definition": "Redirect URIs (one per line)",
+    "definition": "Redirect URIs (one per line, case sensitive)",
     "context": "",
     "term_plural": "",
     "reference": "",
