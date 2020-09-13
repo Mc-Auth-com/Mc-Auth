@@ -25,7 +25,7 @@ router.all('/', (req, res, next) => {
           httpOnly: cookie.httpOnly,
           maxAge: 0,
           path: cookie.path,
-          sameSite: cookie.sameSite as any,
+          sameSite: cookie.sameSite,
           secure: cookie.secure
         });
 

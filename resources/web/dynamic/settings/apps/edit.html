@@ -44,7 +44,7 @@
     }
 
     async function regenerateSecret() {
-      if (confirm('Do you really want to generate a new client_secret?')) {
+      if (confirm("<%1= loc.getString(langKey, 'html.settings.confirm_regenerate_secret') -%1>")) {
         const res = await fetch(window.location.href, {
           method: 'POST',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -139,7 +139,7 @@
 
               <div class="form-group">
                 <label for="name"><%1- loc.getString(langKey, 'words.name') -%1><span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="name" name="name" value="<%2- page.apps[0].name -%2>" maxlength="128"
+                <input type="text" class="form-control" id="name" name="name" value="<%2= page.apps[0].name -%2>" maxlength="128"
                   data-remaining="nameRemain" oninput="updateRemainingChars(this)" required>
                 <small id="nameRemain"
                   class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_128_characters') -%1></small>
@@ -147,7 +147,7 @@
 
               <div class="form-group">
                 <label for="website"><%1- loc.getString(langKey, 'words.website') /* TODO: use text 'The full URL to your application homepage.' */ -%1><span class="text-danger">*</span></label>
-                <input type="url" class="form-control" id="website" name="website" value="<%2- page.apps[0].website -%2>" maxlength="512" data-remaining="websiteRemain"
+                <input type="url" class="form-control" id="website" name="website" value="<%2= page.apps[0].website -%2>" maxlength="512" data-remaining="websiteRemain"
                   oninput="updateRemainingChars(this)" required>
                 <small id="websiteRemain" class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
               </div>

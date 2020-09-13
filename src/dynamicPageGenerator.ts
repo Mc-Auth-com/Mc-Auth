@@ -44,7 +44,7 @@ export const PageParts = {
   SETTINGS_APPS: renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/apps/apps.html'), 'utf-8'), 0),
   SETTINGS_APPS_APP: renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/apps/edit.html'), 'utf-8'), 0),
   SETTINGS_APPS_CREATE: renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/apps/create.html'), 'utf-8'), 0)
-}
+};
 
 // Apply level 0 and 1 rendering to localization
 for (const langKey in getLocalization().languages) {
@@ -59,7 +59,7 @@ interface PageData {
   apps?: OAuthApp[],
   appOwner?: object, // rename or move into apps
   grant?: Grant
-};
+}
 
 export function renderPage(html: string, req: express.Request, res: express.Response, pageData: PageData = {}): string {
   const data: { page: PageData, con: { query: { [key: string]: string }, isDarkTheme: boolean, lang: string, isLoggedIn: boolean, mcProfile: object /* FIXME type */, /*isAdmin: boolean, session: object, url: string, urlEncoded: string*/ currPath: string }, currLocalizedURL: { [key: string]: string }, currNonLocalizedURL: string, moment: Moment } = {

@@ -26,10 +26,6 @@ main {
   cursor: pointer;
 }
 
-.langDropdown .flag-icon {
-  border-radius: 3px;
-}
-
 .hidden {
   display: none;
 }

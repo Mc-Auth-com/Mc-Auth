@@ -32,7 +32,7 @@
   {
     "term": "html.authorize.app_created_by",
     "args": [
-      "<%2- page.appOwner ? page.appOwner.name : page.apps[0].owner -%2>"
+      "<%2= page.appOwner ? page.appOwner.name : page.apps[0].owner -%2>"
     ]
   },
   {
