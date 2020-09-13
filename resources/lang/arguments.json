@@ -2,49 +2,79 @@
   {
     "term": "html.index.how.content1",
     "args": [
-      "<a href=\"${URL_DOCS}\">${LOC:words.documentation}</a>"
+      "<a href=\"<%0- global.url.docs -%0>\"><%1- loc.getString(langKey, 'words.documentation') -%1></a>"
     ]
   },
   {
     "term": "html.index.how.step1",
     "args": [
-      "<a href=\"${URL_BASE}/login\">${URL_BASE}/login</a>"
+      "<a href=\"<%0- global.url.base -%0>/login\"><%0- global.url.base -%0>/login</a>"
     ]
   },
   {
     "term": "html.index.how.step3",
     "args": [
-      "${MINECRAFT_HOST}"
+      "<code><%0- global.url.mcServer -%0></code>"
     ]
   },
   {
     "term": "html.header.logged_in_as",
     "args": [
-      "${Minecraft_Username}"
+      "<%2- con.mcProfile.name -%2>"
     ]
   },
   {
     "term": "html.authorize.authorizing_app",
     "args": [
-      "${APP_NAME}"
+      "<%2= page.apps[0].name -%2>"
+    ]
+  },
+  {
+    "term": "html.authorize.app_created_by",
+    "args": [
+      "<%2- page.appOwner ? page.appOwner.name : page.apps[0].owner -%2>"
+    ]
+  },
+  {
+    "term": "html.authorize.app_creation_time",
+    "args": [
+      "<%2- moment.to(page.apps[0].created) -%2>"
     ]
   },
   {
     "term": "html.authorize.app_wants_access_to",
     "args": [
-      "<em>${APP_NAME}</em>"
+      "<%2= page.apps[0].name -%2>"
     ]
   },
   {
     "term": "html.login.start_minecraft_and_connect",
     "args": [
-      "<code>${MINECRAFT_HOST}</code>"
+      "<code><%0- global.url.mcServer -%0></code>"
     ]
   },
   {
     "term": "html.authorize.login_request_from_app",
     "args": [
-      "${APP_NAME}"
+      "<%2= page.apps[0].name -%2>"
+    ]
+  },
+  {
+    "term": "html.settings.editing_app",
+    "args": [
+      "<em><%2= page.apps[0].name -%2></em>"
+    ]
+  },
+  {
+    "term": "html.settings.form.name_info",
+    "args": [
+      "<a href=\"https://help.minecraft.net/hc/en-us/articles/360034636712-Minecraft-Usernames\" target=\"_blank\"><em>help.minecraft.net</em></a>"
+    ]
+  },
+  {
+    "term": "html.settings.form.email_info",
+    "args": [
+      "<a href=\"<%1- global.url.baseLocalized -%1>/settings/notifications\"><%1- loc.getString(langKey, 'words.notifications') -%1></a>"
     ]
   }
 ]

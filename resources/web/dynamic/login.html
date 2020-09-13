@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="<%1- langKey -%1>" class="h-100">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%0- _HEAD -%0>
 
-  <link rel="canonical" href="${URL_BASE}/login">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css"
-    integrity="sha256-PHcOkPmOshsMBC+vtJdVr5Mwb7r0LkSVJPlPrp/IMpU=" crossorigin="anonymous">
-  ${HTML_HEAD_TOP}
+  <link rel="canonical" href="<%1- global.url.baseLocalized -%1>/login">
 
   <title>Login | Mc-Auth.com</title>
 
-  ${HTML_HEAD_BOTTOM}
+  <%0- /* -%0>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
+    integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg=="
+    crossorigin="anonymous">
+  <%0- */ -%0>
 
-  ?{LoggedIn:?:
-  <script src="${URL_STATIC_CONTENT}/script-login.js"></script>
-  ?}
+  <%2 if(con.isLoggedIn) { %2>
+    <script src="<%0- global.url.static -%0>/script-login.js"></script>
+  <%2 } %2>
 </head>
 
-<body class="d-flex flex-column h-100 ?{DarkTheme:dark-body text-light?:?}">
-  ${HTML_HEADER}
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
 
-  <main style="margin-bottom: 2rem">
+  <main>
     <div class="container text-center">
       <h2>
-        <u>${LOC:words.login}</u>
+        <u><%1- loc.getString(langKey, 'words.login') -%1></u>
       </h2>
 
       <div class="row">
@@ -34,65 +33,66 @@
 
         <div class="col">
           <div class="appCard">
-            ?{LoggedIn:
-            <p>${LOC:html.login.already_logged_in}</p>
+            <%2 if(con.isLoggedIn) { %2>
+              <p><%1- loc.getString(langKey, 'html.login.already_logged_in') -%1></p>
 
-            <ul>
-              <li><a href="${URL_BASE}">${LOC:words.frontpage}</a><br><br></li>
-              <li><a href="${URL_BASE}/settings">${LOC:words.settings}</a></li>
-              <li><a href="${URL_BASE}/logout">${LOC:words.logout}</a></li>
-            </ul>
-            ?:
-            <form onsubmit="submitUsername(event)" data-returnTo="${GET_ReturnTo_ENCODED}" method="GET">
-              <div class="form-group" id="form1">
-                <label for="mcName">${LOC:html.login.your_minecraft_name}</label>
+              <ul>
+                <li><a href="<%1- global.url.baseLocalized -%1>"><%1- loc.getString(langKey, 'words.frontpage') -%1></a><br><br></li>
+                <li><a href="<%1- global.url.baseLocalized -%1>/settings"><%1- loc.getString(langKey, 'words.settings') -%1></a></li>
+                <li><a href="<%1- global.url.baseLocalized -%1>/logout"><%1- loc.getString(langKey, 'words.logout') -%1></a></li>
+              </ul>
+            <%2 } else { %2>
+              <!-- TODO: show minecraft head of entered username -->
+              <form method="POST">
+                <div class="form-group" id="form1">
+                  <label for="username"><%1- loc.getString(langKey, 'html.login.your_minecraft_name') -%1></label>
 
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
+                    </div>
+
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                   </div>
-
-                  <input type="text" class="form-control" id="mcName" name="mcName" placeholder="Username" required>
                 </div>
-              </div>
 
-              <div class="form-group animated slideInUp hidden" id="form2">
+                <div class="form-group <%0- // animated slideInUp hidden -%0>" id="form2">
+                  <hr>
+
+                  <p>
+                    <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
+
+                    <button type="button" class="btn btn-sm btn-outline-info"
+                      onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"
+                      aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"><i class="far fa-clipboard"
+                        aria-hidden="true"></i></button>
+
+                    <br>
+                    <%1- loc.getString(langKey, 'html.login.kicked_with_code') -%1>
+                  </p>
+
+                  <label for="otp"><%1- loc.getString(langKey, 'html.login.six_digit_code') -%1></label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
+                    </div>
+
+                    <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
+                      maxlength="7" autocomplete="off" required>
+                  </div>
+                </div>
+
                 <hr>
+                <br>
 
-                <p>
-                  ${LOC:html.login.start_minecraft_and_connect}
-
-                  <button type="button" class="btn btn-sm btn-outline-info"
-                    onclick="copyToClipboard(this, '${MINECRAFT_HOST}')"
-                    aria-label="${LOC:html.login.click_to_copy_minecraft_host_to_clipboard}"><i class="far fa-clipboard"
-                      aria-hidden="true"></i></button>
-
-                  <br>
-                  ${LOC:html.login.kicked_with_code}
-                </p>
-
-                <label for="otp">${LOC:html.login.six_digit_code}</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key" aria-hidden="true"></i></span>
-                  </div>
-
-                  <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
-                    maxlength="7" autocomplete="off">
+                <div class="form-group form-check">
+                  <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
+                  <label class="form-check-label" for="keepLogin"><%1- loc.getString(langKey, 'html.login.stay_logged_in') -%1></label>
                 </div>
-              </div>
 
-              <hr>
-              <br>
-
-              <div class="form-group form-check">
-                <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
-                <label class="form-check-label" for="keepLogin">${LOC:html.login.stay_logged_in}</label>
-              </div>
-
-              <button type="submit" class="btn btn-primary" id="submitBtn">${LOC:words.next} »</button>
-            </form>
-            ?}
+                <button type="submit" class="btn btn-primary" id="submitBtn"><%1- loc.getString(langKey, 'words.next') -%1> »</button>
+              </form>
+            <%2 } %2>
           </div>
         </div>
 
@@ -101,7 +101,7 @@
     </div>
   </main>
 
-  ${HTML_FOOTER}
+  <%0- _FOOTER -%0>
 </body>
 
 </html>

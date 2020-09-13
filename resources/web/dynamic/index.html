@@ -1,64 +1,60 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="<%1- langKey -%1>" class="h-100">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  ${HTML_HEAD_TOP}
+  <%0- _HEAD -%0>
 
   <title>Mc-Auth.com — Easy Minecraft Authentication</title>
-
-  ${HTML_HEAD_BOTTOM}
 </head>
 
-<body class="d-flex flex-column h-100 ?{DarkTheme:dark-body text-light?:?}">
-  ${HTML_HEADER}
 
-  <main style="margin-bottom: 2rem">
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
     <div class="container">
-      <h2>${LOC:html.index.what_is.title}</h2>
+      <h2><%1- loc.getString(langKey, 'html.index.what_is.title') -%1></h2>
       <p>
-        ${LOC:html.index.what_is.content1}
+        <%1- loc.getString(langKey, 'html.index.what_is.content1') -%1>
       </p>
       <p>
-        ${LOC:html.index.what_is.content2}
+        <%1- loc.getString(langKey, 'html.index.what_is.content2') -%1>
       </p>
 
-      <h2>${LOC:html.index.how.title}</h2>
+      <h2><%1- loc.getString(langKey, 'html.index.how.title') -%1></h2>
       <p>
-        <em>${LOC:html.index.how.content1}</em>
+        <em><%1- loc.getString(langKey, 'html.index.how.content1') -%1></em>
       </p>
 
       <ol>
-        <li>${LOC:html.index.how.step1}</li>
-        <li>${LOC:html.index.how.step2}</li>
-        <li>${LOC:html.index.how.step3}</li>
-        <li>${LOC:html.index.how.step4}<br><br></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step1') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step2') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step3') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step4') -%1><br><br></li>
 
-        <li>${LOC:html.index.how.step5}</li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step5') -%1></li>
       </ol>
 
-      <h2><a href="${URL_DEMO}"><u>${LOC:html.index.how.content2}</u></a></h2>
+      <h2><a href="<%1- global.url.baseLocalized -%1>/demo"><u><%1- loc.getString(langKey, 'html.index.how.content2') -%1></u></a></h2>
     </div>
 
     <hr>
 
     <h2 style="text-align: center">
-      ${LOC:html.index.used_by}
+      <%1- loc.getString(langKey, 'html.index.used_by') -%1>
     </h2>
     <br>
 
     <div class="text-center">
-      <img src="${URL_STATIC_CONTENT}/assets/img/SkinDB.svg" style="max-height: 150px; max-width: 150px"
+      <img src="<%0- global.url.static -%0>/assets/img/SkinDB.svg" style="max-height: 150px; max-width: 150px"
         class="img-fluid rounded" alt="SkinDB.net Logo">
 
-      <img src="${URL_STATIC_CONTENT}/assets/img/CherryBread_Network.jpg" style="max-height: 150px; max-width: 150px"
+      <img src="<%0- global.url.static -%0>/assets/img/CherryBread_Network.jpg" style="max-height: 150px; max-width: 150px"
         class="img-fluid rounded" alt="CherryBread-Network Logo">
     </div>
   </main>
 
-  ${HTML_FOOTER}
+  <%0- _FOOTER -%0>
 </body>
 
 </html>

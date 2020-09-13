@@ -2,6 +2,8 @@ function reveal(elem, str) {
   if (elem.innerText != str) {
     elem.classList.remove('text-unrevealed');
     elem.innerText = str;
+
+    elem.onclick = undefined;
   }
 }
 
@@ -117,7 +119,7 @@ function toggleDarkMode(event) {
 }
 
 /**
- * @param {Boolean} darkTheme 
+ * @param {Boolean} darkTheme
  */
 function setActiveTheme(darkTheme) {
   document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/`;

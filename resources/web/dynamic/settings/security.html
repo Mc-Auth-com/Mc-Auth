@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.account_security') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <!-- TODO: use some css for fancy full-width buttons (sidebar) -->
+        <div class="col-2">
+          <b><u><%1- loc.getString(langKey, 'words.settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/account"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/security"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/notifications"><%1- loc.getString(langKey, 'words.notifications') -%1></a>
+
+          <br>
+          <br>
+
+          <b><u><%1- loc.getString(langKey, 'html.settings.developer_settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/apps"><%1- loc.getString(langKey, 'html.settings.oauth_apps') -%1></a>
+        </div>
+
+        <div class="col-1"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <h4><b>Work In Progress</b></h4>
+
+          <b>You'll soon be able to:</b>
+          <ul>
+            <li>Setup 2FA (e.g. on your phone) to protect your <i>oAuth Apps (edit and delete)</i> (forced for verified apps)</li>
+            <li>See all your active sessions you are logged into [+ IP/Location] (e.g. different devices)</li>
+            <li>All the apps you've granted permission with filtering/sorting functions [+Scope/User-Agent/IP/Location]</li>
+          </ul>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

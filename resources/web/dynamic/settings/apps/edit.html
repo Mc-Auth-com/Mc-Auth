@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.manage_app') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <script>
+    async function startAppIconUpload(elem) {
+      const input = document.createElement('input');
+      input.type = 'file';
+
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+          const res = await fetch('<%0- global.url.base -%0>/uploads', {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': file.type },
+            body: file
+          });
+
+          const json = await res.json();
+
+          if (res.status == 200 || res.status == 201) {
+            document.getElementById('icon').value = json.id;
+            elem.src = res.headers.get('Location') ?? json.url;
+
+            console.log(`Stored at ${elem.src}`);
+
+            console.log('Upload succeeded:', json); // TODO: Automatically save icon (but not form data)
+          } else {
+            console.error('Upload failed:', json);
+          }
+        }
+      };
+
+      input.click();
+    }
+
+    async function regenerateSecret() {
+      if (confirm('Do you really want to generate a new client_secret?')) {
+        const res = await fetch(window.location.href, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ regenerateSecret: true })
+        });
+
+        const json = await res.json();
+
+        if (res.status == 200) {
+          console.log('A new client_secret has been generated');
+
+          reveal(document.getElementById('clientSecret'), json.secret);
+        } else {
+          console.error('Upload failed:', json);
+        }
+      }
+    }
+  </script>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <!-- TODO: use some css for fancy full-width buttons (sidebar) -->
+        <div class="col-2">
+          <b><u><%1- loc.getString(langKey, 'words.settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/account"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/security"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/notifications"><%1- loc.getString(langKey, 'words.notifications') -%1></a>
+
+          <br>
+          <br>
+
+          <b><u><%1- loc.getString(langKey, 'html.settings.developer_settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/apps"><%1- loc.getString(langKey, 'html.settings.oauth_apps') -%1></a>
+        </div>
+
+        <div class="col-1"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.editing_app') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <div class="appCard">
+            <div class="row">
+              <div class="col-auto">
+                <p>
+                  client_id
+                  <button type="button" class="btn btn-sm btn-outline-info" onclick="copyToClipboard(this, '<%2- page.apps[0].id -%2>')">
+                    <i class="far fa-clipboard" aria-hidden="true"></i>
+                  </button>
+                </p>
+
+                <p class="text-muted"><%2- page.apps[0].id -%2></p>
+
+              </div>
+
+              <div class="col">
+                <p>
+                  client_secret
+                  <button type="button" class="btn btn-sm btn-outline-info" onclick="copyToClipboard(this, '<%2- page.apps[0].secret -%2>')">
+                    <i class="far fa-clipboard" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" onclick="regenerateSecret()">
+                    <i class="fas fa-sync" aria-hidden="true"></i>
+                  </button>
+                </p>
+
+                <p class="text-muted text-unrevealed" id="clientSecret" onclick="reveal(this, '<%2- page.apps[0].secret -%2>')">
+                  <%1- loc.getString(langKey, 'html.settings.click_to_show') -%1>
+                </p>
+              </div>
+            </div>
+
+            <hr>
+
+            <p class="text-center"><%1- loc.getString(langKey, 'html.settings.please_provide_exact_info') -%1></p>
+
+            <form method="POST">
+              <div class="form-group">
+                <img src="<%2- page.apps[0].iconID ? `<%0- global.url.base -%0>/uploads/${page.apps[0].iconID}.png` : `<%0- global.url.static -%0>/uploads/default.png` -%2>"
+                  onclick="startAppIconUpload(this)"class="rounded mx-auto d-block" style="max-height: 128px; max-width: 128px;"
+                  alt="<%1- loc.getString(langKey, 'html.authorize.app_logo') -%1>">
+                <input type="text" class="form-control hidden" id="icon" name="icon" value="<%2- page.apps[0].iconID -%2>">
+                <p class="text-muted text-center"><%1- loc.getString(langKey, 'html.settings.click_image_above_to_upload') -%1></p>
+              </div>
+
+              <div class="form-group">
+                <label for="name"><%1- loc.getString(langKey, 'words.name') -%1><span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" value="<%2- page.apps[0].name -%2>" maxlength="128"
+                  data-remaining="nameRemain" oninput="updateRemainingChars(this)" required>
+                <small id="nameRemain"
+                  class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_128_characters') -%1></small>
+              </div>
+
+              <div class="form-group">
+                <label for="website"><%1- loc.getString(langKey, 'words.website') /* TODO: use text 'The full URL to your application homepage.' */ -%1><span class="text-danger">*</span></label>
+                <input type="url" class="form-control" id="website" name="website" value="<%2- page.apps[0].website -%2>" maxlength="512" data-remaining="websiteRemain"
+                  oninput="updateRemainingChars(this)" required>
+                <small id="websiteRemain" class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
+              </div>
+
+              <div class="form-group">
+                <label for="description"><%1- loc.getString(langKey, 'words.description') -%1></label>
+                <textarea rows="3" class="form-control" id="description" name="description" maxlength="512"
+                  data-remaining="descRemain" oninput="updateRemainingChars(this)"><%2- (page.apps[0].description ?? '').replace(/\n/g,'\r\n') -%2></textarea>
+                <small id="descRemain"
+                  class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
+              </div>
+
+              <div class="form-group">
+                <label for="redirect_uris"><%1- loc.getString(langKey, 'html.settings.redirect_uris') -%1></label>
+                <textarea rows="3" class="form-control" id="redirect_uris"
+                  name="redirect_uris"><%2- page.apps[0].redirectURIs.join('\r\n') -%2></textarea>
+              </div>
+
+              <hr>
+
+              <div class="row">
+                <div class="col" style="padding-right: 6px">
+                  <a class="btn btn-danger float-right" href="<%1- global.url.baseLocalized -%1>/settings/apps#app_<%2- page.apps[0].id -%2>"
+                    role="button"><%1- loc.getString(langKey, 'html.settings.return_to_settings') -%1></a>
+                </div>
+
+                <div class="col" style="padding-left: 6px">
+                  <button type="submit" class="btn btn-success"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

@@ -1,10 +1,10 @@
-<footer class="footer mt-auto py-3 ?{DarkTheme:bg-dark?:bg-light?}" id="footer">
+<footer class="footer mt-auto py-3 <%2- con.isDarkTheme ? 'bg-dark' : 'bg-light' -%2>" id="footer">
   <div class="container-fluid" style="font-size: 80%;font-weight: 400">
     <div class="row" style="align-items: center; text-align: center">
       <div class="col-sm">
-        <a href="${URL_BASE}/legal">${LOC:html.footer.legal_info}</a>
+        <a href="<%1- global.url.baseLocalized -%1>/legal"><%1- loc.getString(langKey, 'html.footer.legal_info') -%1></a>
         |
-        <a href="${URL_BASE}/privacy">${LOC:html.footer.legal_data_protection}</a>
+        <a href="<%1- global.url.baseLocalized -%1>/privacy"><%1- loc.getString(langKey, 'html.footer.legal_data_protection') -%1></a>
       </div>
 
       <div class="col-sm">
@@ -13,19 +13,19 @@
 
       <div class="col-sm">
         <a href="https://sprax.me/discord">
-          <i class="fab fa-discord" aria-hidden="true"></i> ${LOC:html.footer.support_on_discord}
+          <i class="fab fa-discord" aria-hidden="true"></i> <%1- loc.getString(langKey, 'html.footer.support_on_discord') -%1>
         </a>
       </div>
 
       <div class="col-sm">
-        <a href="${URL_DOCS}"><i class="fas fa-book" aria-hidden="true"></i> ${LOC:words.documentation}</a>
+        <a href="<%0- global.url.docs -%0>"><i class="fas fa-book" aria-hidden="true"></i> <%1- loc.getString(langKey, 'words.documentation') -%1></a>
       </div>
 
       <div class="col-sm">
         <a class="btn btn-primary"
           style="font-size: 90%;background-color: #e85b46; border: 1px solid rgb(232, 91, 70);border-radius: 25px;width: 11rem"
           href="https://www.patreon.com/bePatron?u=11714503&redirect_uri=https%3A%2F%2Fmc-auth.com%2F" role="button">
-          <i class="fab fa-patreon" aria-hidden="true"></i> ${LOC:html.footer.become_patron}
+          <i class="fab fa-patreon" aria-hidden="true"></i> <%1- loc.getString(langKey, 'html.footer.become_patron') -%1>
         </a>
       </div>
     </div>

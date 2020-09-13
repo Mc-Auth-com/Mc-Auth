@@ -24,6 +24,7 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 6. Type `rs` into the console or restart the process
 
 ## TODO
+* ~~[WIP] Recode in TypeScript~~
 * Settings: Show grants (accepted and denied ones)
 * Create documentation/wiki
   * Create Brand/Press Kit with images
@@ -45,13 +46,12 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
   * Force for verified applications
 * './.static/script-login.js' should not hold it's own `BASE_URL`
 * Don't use Google Analytics (Something on webserver level is enough with a good dashboard)
-* Recode in TypeScript
 * ~~Notify about cookies~~
 * ~~Resize and crop uploaded images to fit inside 128px x 128px~~
 * ~~Use reCAPTCHA when creating a new app~~
 * ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
 * ~~App-Settings: Description looses line-breaks~~
-* ~~Publish Demo-Application~~ 
+* ~~Publish Demo-Application~~
 * ~~When an application requests authorization and the user is not logged in, the user can't proceed as intended~~
 
 ## Contributors ✨

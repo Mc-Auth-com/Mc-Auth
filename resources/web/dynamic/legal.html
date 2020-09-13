@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-<html lang="de" class="h-100">
+<html lang="<%1- 'de' || langKey /* currently only in german */ -%1>" class="h-100">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  ${HTML_HEAD_TOP}
+  <%0- _HEAD -%0>
 
   <title>Impressum | Mc-Auth.com</title>
-
-  ${HTML_HEAD_BOTTOM}
 </head>
 
-<body class="d-flex flex-column h-100 ?{DarkTheme:dark-body text-light?:?}">
-  ${HTML_HEADER}
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
 
-  <main style="margin-bottom: 2rem">
+  <main>
     <div class="container text-center">
       <h2>
         <u>Impressum</u>
       </h2>
       <br>
+
       <h3>Angaben gemäß § 5 TMG:</h3>
       Christian Koop<br>
-      Moltkestraße, 24<br>
-      64295 Darmstadt<br>
+      Neuer Weg, 10<br>
+      63853 Mömlingen<br>
       <br>
+
       E-Mail: <a href="mailto:developer@sprax2013.de">developer@sprax2013.de</a><br>
       <br><br>
+
       <h2>
         <u>Disclaimer</u>
       </h2>
       <br>
+
       <h3>Haftung für Inhalte</h3>
       Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen
       Gesetzen verantwortlich. Nach § 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet,
@@ -43,6 +42,7 @@
       möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend
       entfernen.
       <br><br>
+
       <h3>Haftung für Links</h3>
       Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben.
       Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten
@@ -53,6 +53,7 @@
       der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei
       Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.
       <br><br>
+
       <h3>Urheberrecht</h3>
       Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
       Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
@@ -65,13 +66,14 @@
       Bekanntwerden von
       Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.
       <br><br>
-      <em>Quelle: <a href="https://www.erecht24.de/impressum-generator.html" target="_blank"
+      <em>
+        Quelle: <a href="https://www.erecht24.de/impressum-generator.html" target="_blank"
           rel="noopener noreferrer">https://www.e-recht24.de/impressum-generator.html</a>
       </em>
     </div>
   </main>
 
-  ${HTML_FOOTER}
+  <%0- _FOOTER -%0>
 </body>
 
 </html>

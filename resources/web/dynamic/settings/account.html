@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.account_settings') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <!-- TODO: use some css for fancy full-width buttons (sidebar) -->
+        <div class="col-2">
+          <b><u><%1- loc.getString(langKey, 'words.settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/account"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/security"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></a>
+          <hr>
+          <a href="<%1- global.url.baseLocalized -%1>/settings/notifications"><%1- loc.getString(langKey, 'words.notifications') -%1></a>
+
+          <br>
+          <br>
+
+          <b><u><%1- loc.getString(langKey, 'html.settings.developer_settings') -%1></u></b>
+          <br>
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/apps"><%1- loc.getString(langKey, 'html.settings.oauth_apps') -%1></a>
+        </div>
+
+        <div class="col-1"></div>
+
+        <!-- TODO: Public Profile Information (fetched from Mojang, link to SkinDB), Export Account Data -->
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <h4><b>Work In Progress</b></h4>
+
+          <b>You'll soon be able to:</b>
+          <ul>
+            <li>Add a mail address</li>
+            <li>Delete your account without contacting me via mail</li>
+          </ul>
+
+          <!-- Username & Mail -->
+          <form method="POST">
+            <div class="form-group">
+              <label for="mcName"><u><%1- loc.getString(langKey, 'words.username') -%1></u></label>
+              <input id="mcName" type="text" class="form-control" value="<%2= con.mcProfile.name -%2>" aria-describedby="mcNameInfo" readonly>
+              <small id="mcNameInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.settings.form.name_info') -%1>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="mailAddr"><u><%1- loc.getString(langKey, 'words.email_address') -%1></u></label>
+
+              <div class="input-group">
+                <!-- TODO: Insert current -->
+                <input id="mailAddr" name="mailAddr" type="email" class="form-control" value="Coming soon" aria-describedby="mailAddrInfo" readonly>
+
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <!-- TODO: Color icons -->
+                    <!-- TODO: Only show one of them at a time (confirmed/not confirmed or hide when no mail given) -->
+                    <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/check.svg">
+                    <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/alert-triangle.svg">
+                  </div>
+                </div>
+              </div>
+
+              <small id="mailAddrInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.settings.form.email_info') -%1>
+              </small>
+            </div>
+
+            <button type="submit" name="updateMail" value="1" class="btn btn-success"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
+          </form>
+
+          <br>
+          <hr>
+          <br>
+
+          <!-- Delete Account -->
+          <form method="POST">
+            <b class="text-danger"><u><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></u></b>
+
+            <p class="small text-danger"><%1- loc.getString(langKey, 'html.settings.delete_account_warning') -%1></p>
+
+            <div class="form-group">
+              <label for="deleteAccountOTP"><%1- loc.getString(langKey, 'html.login.six_digit_code') -%1></label>
+
+              <input id="deleteAccountOTP" type="text" class="form-control" placeholder="123 456" minlength="6" maxlength="7"
+                autocomplete="off" aria-describedby="deleteAccountOTPInfo">
+              <small id="deleteAccountOTPInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
+
+                <button type="button" class="btn btn-sm btn-outline-info" onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"
+                  aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"><i class="far fa-clipboard"
+                  aria-hidden="true"></i></button>
+
+                <br>
+                <%1- loc.getString(langKey, 'html.login.kicked_with_code') -%1>
+              </small>
+            </div>
+
+            <!-- TODO: Backend needs to notify me (or automatically delete account) -->
+            <button type="submit" name="deleteAccount" value="1" class="btn btn-danger"><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></button>
+          </form>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

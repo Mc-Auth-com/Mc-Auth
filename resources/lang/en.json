@@ -16,8 +16,16 @@
     "comment": ""
   },
   {
-    "term": "html.authorize.app_owner",
-    "definition": "Owner",
+    "term": "html.authorize.app_created_by",
+    "definition": "Created by {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_creation_time",
+    "definition": "Created {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -25,7 +33,7 @@
   },
   {
     "term": "html.authorize.app_wants_access_to",
-    "definition": "{1} wants access to",
+    "definition": "Information that will be shared with <b>{0}</b>:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -33,7 +41,7 @@
   },
   {
     "term": "html.authorize.authorizing_app",
-    "definition": "Authorizing {1}",
+    "definition": "Authorizing {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -41,7 +49,15 @@
   },
   {
     "term": "html.authorize.login_request_from_app",
-    "definition": "Login request from {1}",
+    "definition": "<b>{0}</b> would like to verify your Minecraft identity",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.no_app_description",
+    "definition": "<em>The application owner did not provide any description</em>",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -105,7 +121,7 @@
   },
   {
     "term": "html.header.logged_in_as",
-    "definition": "Logged in as {1}",
+    "definition": "Logged in as {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -137,7 +153,7 @@
   },
   {
     "term": "html.index.how.content1",
-    "definition": "Are you a developer? Have a look at the {1}.",
+    "definition": "Are you a developer? Have a look at the {0}.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -153,7 +169,7 @@
   },
   {
     "term": "html.index.how.step1",
-    "definition": "Visit {1}",
+    "definition": "Visit {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -169,7 +185,7 @@
   },
   {
     "term": "html.index.how.step3",
-    "definition": "Start Minecraft and connect to {1}",
+    "definition": "Start Minecraft and connect to {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -217,7 +233,7 @@
   },
   {
     "term": "html.index.what_is.content2",
-    "definition": "Thanks to Mc-Auth.com, third party sites of any kind can provide \u2018Minecraft-Login\u2019 as a safe and secure authentication method.",
+    "definition": "Thanks to Mc-Auth.com, third party sites of any kind can provide ‘Minecraft-Login’ as a safe and secure authentication method.",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -265,7 +281,7 @@
   },
   {
     "term": "html.login.start_minecraft_and_connect",
-    "definition": "Start Minecraft and connect to {1}",
+    "definition": "Start Minecraft and connect to {0}",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -360,14 +376,6 @@
     "comment": ""
   },
   {
-    "term": "html.settings.you_can_edit_at_any_time",
-    "definition": "You may return and edit this information at any time",
-    "context": "",
-    "term_plural": "",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "html.settings.you_do_not_have_any_apps",
     "definition": "You have not created any applications, yet",
     "context": "",
@@ -377,7 +385,7 @@
   },
   {
     "term": "html.settings.your_applications_title",
-    "definition": "Your applications (for developers)",
+    "definition": "Your applications",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -386,6 +394,14 @@
   {
     "term": "words.agree",
     "definition": "Agree",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.website",
+    "definition": "Website",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -490,6 +506,110 @@
   {
     "term": "words.settings",
     "definition": "Settings",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_settings",
+    "definition": "Account",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.notifications",
+    "definition": "Notifications",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_security",
+    "definition": "Account Security",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.developer_settings",
+    "definition": "Developer Settings",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.oauth_apps",
+    "definition": "oAuth Apps",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.your_oauth_apps",
+    "definition": "Your oAuth Apps",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.editing_app",
+    "definition": "Editing {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.username",
+    "definition": "Username",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.email_address",
+    "definition": "email address",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.name_info",
+    "definition": "This name is the same as your name in Minecraft.\n<br>\nMore information at {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_info",
+    "definition": "Entering an email increases the account security on <em>Mc-Auth.com</em>.\n<br>\nFurther options at {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account",
+    "definition": "Delete account",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account_warning",
+    "definition": "<b>This deletes your account on <em>Mc-Auth.com</em> — Your Minecraft account stays unaffacted.</b>\n<br>\n<br>\n\nThis process is done manually and may require up to <em>7 days</em>.\n<br>\nIf you've provided an email address, you'll be notified about the successfull deletion.",
     "context": "",
     "term_plural": "",
     "reference": "",
