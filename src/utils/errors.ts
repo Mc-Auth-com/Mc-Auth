@@ -1,5 +1,5 @@
 import { post as httpPost } from 'superagent';
-import { cfg, appVersion, errorLogStream } from '..';
+import { cfg, appVersion } from '..';
 
 import { type as osType } from 'os';
 
