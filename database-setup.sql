@@ -7,7 +7,50 @@
 -- ----------------------------
 -- Extension pgcrypto
 -- ----------------------------
-CREATE EXTENSION pgcrypto;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- ----------------------------
+-- Function structure for generate_snowflake
+-- ----------------------------
+CREATE OR REPLACE FUNCTION "public"."generate_snowflake"(IN "seq" text, OUT "snowflake" int8)
+  RETURNS "pg_catalog"."int8" AS $BODY$
+DECLARE
+    our_epoch bigint := 1314220021721;
+    seq_id bigint;
+    now_millis bigint;
+    -- the id of this DB shard, must be set for each
+    -- schema shard you have - you could pass this as a parameter too
+    shard_id int := 1;
+BEGIN
+    SELECT nextval(seq) % 1024 INTO seq_id;
+
+    SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
+    snowflake := (now_millis - our_epoch) << 23;
+    snowflake := snowflake | (shard_id << 10);
+    snowflake := snowflake | (seq_id);
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+
+-- ----------------------------
+-- Function structure for random_string
+-- ----------------------------
+CREATE OR REPLACE FUNCTION "public"."random_string"("length" int4)
+  RETURNS "pg_catalog"."varchar" AS $BODY$
+declare
+  chars text[] := '{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z}';
+  result varchar := '';
+  i integer := 0;
+begin
+  for i in 1..length loop
+    result := result || chars[1+random()*(array_length(chars, 1)-1)];
+  end loop;
+  return result;
+end;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
 
 -- ----------------------------
 -- Type structure for GrantResult
@@ -144,65 +187,16 @@ CREATE TABLE "public"."sessions" (
 );
 
 -- ----------------------------
--- Function structure for generate_snowflake
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."generate_snowflake"(IN "seq" text, OUT "snowflake" int8);
-CREATE OR REPLACE FUNCTION "public"."generate_snowflake"(IN "seq" text, OUT "snowflake" int8)
-  RETURNS "pg_catalog"."int8" AS $BODY$
-DECLARE
-    our_epoch bigint := 1314220021721;
-    seq_id bigint;
-    now_millis bigint;
-    -- the id of this DB shard, must be set for each
-    -- schema shard you have - you could pass this as a parameter too
-    shard_id int := 1;
-BEGIN
-    SELECT nextval(seq) % 1024 INTO seq_id;
-
-    SELECT FLOOR(EXTRACT(EPOCH FROM clock_timestamp()) * 1000) INTO now_millis;
-    snowflake := (now_millis - our_epoch) << 23;
-    snowflake := snowflake | (shard_id << 10);
-    snowflake := snowflake | (seq_id);
-END;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-
--- ----------------------------
--- Function structure for random_string
--- ----------------------------
-DROP FUNCTION IF EXISTS "public"."random_string"("length" int4);
-CREATE OR REPLACE FUNCTION "public"."random_string"("length" int4)
-  RETURNS "pg_catalog"."varchar" AS $BODY$
-declare
-  chars text[] := '{0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z}';
-  result varchar := '';
-  i integer := 0;
-begin
-  for i in 1..length loop
-    result := result || chars[1+random()*(array_length(chars, 1)-1)];
-  end loop;
-  return result;
-end;
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-
--- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."apps_id_sequence"
 OWNED BY "public"."apps"."id";
-SELECT setval('"public"."apps_id_sequence"', 8, true);
 ALTER SEQUENCE "public"."apps_secret_sequence"
 OWNED BY "public"."apps"."secret";
-SELECT setval('"public"."apps_secret_sequence"', 7, true);
 ALTER SEQUENCE "public"."grants_id_sequence"
 OWNED BY "public"."grants"."id";
-SELECT setval('"public"."grants_id_sequence"', 87, true);
 ALTER SEQUENCE "public"."icons_id_sequence"
 OWNED BY "public"."icons"."id";
-SELECT setval('"public"."icons_id_sequence"', 6, true);
 
 -- ----------------------------
 -- Primary Key structure for table accounts
