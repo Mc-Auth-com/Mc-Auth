@@ -25,7 +25,7 @@
   },
   {
     "term": "html.authorize.app_wants_access_to",
-    "definition": "Folgende Informationen werden mit <b>{0}</b> geteilt:",
+    "definition": "Folgende Informationen werden mit <strong>{0}</strong> geteilt:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -73,7 +73,7 @@
   },
   {
     "term": "html.authorize.login_request_from_app",
-    "definition": "<b>{0}</b> möchte deine Minecraft-Identität bestätigen",
+    "definition": "<strong>{0}</strong> möchte deine Minecraft-Identität bestätigen",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -625,7 +625,7 @@
   },
   {
     "term": "html.settings.delete_account_warning",
-    "definition": "<b>Dieser Vorgang löscht deinen Account auf <em>Mc-Auth.com</em> — Dein Minecraft-Account ist von dieser Aktion nicht betroffen.</b>\n<br>\n<br>\n\nDieser Vorgang wird manuell innerhalb von <em>7 Tagen</em> durchgeführt.\n<br>\nWenn eine E-Mail hinterlegt ist, wirst du über die Löschung informiert.",
+    "definition": "<strong>Dieser Vorgang löscht deinen Account auf <em>Mc-Auth.com</em> — Dein Minecraft-Account ist von dieser Aktion nicht betroffen.</strong>\n<br>\n<br>\n\nDieser Vorgang wird manuell innerhalb von <em>7 Tagen</em> durchgeführt.\n<br>\nWenn eine E-Mail hinterlegt ist, wirst du über die Löschung informiert.",
     "context": "",
     "term_plural": "",
     "reference": "",

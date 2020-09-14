@@ -33,7 +33,7 @@
   },
   {
     "term": "html.authorize.app_wants_access_to",
-    "definition": "Information that will be shared with <b>{0}</b>:",
+    "definition": "Information that will be shared with <strong>{0}</strong>:",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -49,7 +49,7 @@
   },
   {
     "term": "html.authorize.login_request_from_app",
-    "definition": "<b>{0}</b> would like to verify your Minecraft identity",
+    "definition": "<strong>{0}</strong> would like to verify your Minecraft identity",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -625,7 +625,7 @@
   },
   {
     "term": "html.settings.delete_account_warning",
-    "definition": "<b>This deletes your account on <em>Mc-Auth.com</em> — Your Minecraft account stays unaffacted.</b>\n<br>\n<br>\n\nThis process is done manually and may require up to <em>7 days</em>.\n<br>\nIf you've provided an email address, you'll be notified about the successfull deletion.",
+    "definition": "<strong>This deletes your account on <em>Mc-Auth.com</em> — Your Minecraft account stays unaffacted.</strong>\n<br>\n<br>\n\nThis process is done manually and may require up to <em>7 days</em>.\n<br>\nIf you've provided an email address, you'll be notified about the successfull deletion.",
     "context": "",
     "term_plural": "",
     "reference": "",
