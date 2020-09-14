@@ -42,7 +42,7 @@ export class dbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
 
-      this.pool.query(`INSERT INTO apps(owner,name,website,description) VALUES($1,$2,$3,$4) RETURNING *;`, [mcUUID, name, website, description], (err, res) => {
+      this.pool.query('INSERT INTO apps(owner,name,website,description) VALUES($1,$2,$3,$4) RETURNING *;', [mcUUID, name, website, description], (err, res) => {
         if (err) return reject(err);
 
         resolve(RowUtils.toApp(res.rows[0]));
@@ -54,7 +54,7 @@ export class dbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
 
-      this.pool.query(`UPDATE apps SET name =$2,website =$3,redirect_uris =$4,description =$5,icon =$6 WHERE id=$1;`,
+      this.pool.query('UPDATE apps SET name =$2,website =$3,redirect_uris =$4,description =$5,icon =$6 WHERE id=$1;',
         [id, name, website, JSON.stringify(redirectURIs), description, iconID], (err, _res) => {
           if (err) return reject(err);
 
@@ -384,25 +384,7 @@ class RowUtils {
 }
 
 
-// // original code below
-// module.exports = {
-//   /* Applications */
-
-//   /**
-//    * @param {String} clientID
-//    * @param {Function} callback
-//    */
-//   regenerateApplicationSecret(clientID, callback) {
-//     pool.query(`UPDATE applications SET secret =DEFAULT WHERE id =$1 RETURNING secret;`,
-//       [clientID], (err, res) => {
-//         if (err) return callback(err);
-
-//         callback(null, firstRow(res));
-//       });
-//   },
-
-/* Maintenance */
-
+// original code below
 // setInterval(async () => {
   // pool.query(`DELETE FROM grants WHERE issued < CURRENT_TIMESTAMP - INTERVAL '24 HOUR' RETURNING *;`,
   //   [], (err, res) => {
