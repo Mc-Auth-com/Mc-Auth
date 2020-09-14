@@ -123,7 +123,8 @@ function toggleDarkMode(event) {
  * @param {Boolean} darkTheme
  */
 function setActiveTheme(darkTheme) {
-  document.cookie = `darkTheme=${darkTheme ? 1 : 0}; expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/`;
+  document.cookie = `darkTheme=${darkTheme ? 1 : 0}; ` +
+    `expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/; SameSite=Strict${location.protocol == 'https:' ? '; Secure' : ''}`;
 }
 
 /* run when DOM is ready */
