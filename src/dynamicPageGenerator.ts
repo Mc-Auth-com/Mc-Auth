@@ -28,7 +28,7 @@ export const global = {
 const _HEAD = renderEjs(readFileSync(joinPath(dynamicWebPath, '_head.html'), 'utf-8'), 0, { global }),
   _HEADER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_header.html'), 'utf-8'), 0, { global }),
   _FOOTER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, { global }),
-  _SETTINGS_SIDEBAR = renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/apps/_sidebar.html'), 'utf-8'), 0, { global });
+  _SETTINGS_SIDEBAR = renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/_sidebar.html'), 'utf-8'), 0, { global });
 
 export const PageParts = {
   INDEX: renderEjs(readFileSync(joinPath(dynamicWebPath, 'index.html'), 'utf-8'), 0),
