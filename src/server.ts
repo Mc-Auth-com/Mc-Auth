@@ -134,6 +134,8 @@ app.use((req, res, next) => {
         const langKey = arg.split(';')[0].substring(0, 2).toLowerCase();
 
         if (getLocalization().isAvailable(langKey)) {
+          if (getLocalization().defaultLanguage == langKey) break;
+
           return redirect ? res.redirect(global.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
         }
       }
