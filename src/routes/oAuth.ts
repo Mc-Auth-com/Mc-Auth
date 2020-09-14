@@ -45,7 +45,7 @@ routerNoCookie.all('/token', (req, res, next) => {
                 access_token: grant.accessToken,
                 token_type: 'Bearer',
                 expires_in: 3600, /* 1h */
-                scope: grant.scopes.sort().join(' '),
+                scope: grant.scopes.join(' '),
                 state: grant.state || undefined,
                 data: {
                   uuid: grant.mcAccountId,
@@ -170,7 +170,8 @@ router.all('/authorize', (req, res, next) => {
                   const token = await db.generateExchangeToken(grant.id);
 
                   if (!token) {
-                    new ApiError(500, 'Error generating exchange_token', true, { grantID: grant.id });  // log error
+                    ApiError.log(500, 'Error generating exchange_token', true, { grantID: grant.id });  // log error
+
                     return res.redirect(303,
                       appendParamsToURL(grant.redirectUri,
                         [{ key: 'error', value: 'server_error' },
@@ -186,14 +187,15 @@ router.all('/authorize', (req, res, next) => {
                   const token = await db.generateAccessToken(grant.id);
 
                   if (!token) {
-                    new ApiError(500, 'Error generating exchange_token', true, { grantID: grant.id });  // log error
+                    ApiError.log(500, 'Error generating exchange_token', true, { grantID: grant.id });  // log error
+
                     return res.redirect(303, `${grant.redirectUri}#error=server_error&state=${encodeURIComponent(state ?? '')}`);
                   }
 
                   return res.redirect(303, `${grant.redirectUri}#access_token=${encodeURIComponent(token)}&token_type=${'Bearer'}` +
                     `&expires_in=${3600}&scope=${encodeURIComponent(grant.scopes.join(' '))}&state=${encodeURIComponent(state ?? '')}`);
                 } else {
-                  new ApiError(500, 'Could not handle response_type', true, { grantID: grant.id, response_type: grant.responseType });  // Log error
+                  ApiError.log(500, 'Could not handle response_type', true, { grantID: grant.id, response_type: grant.responseType });  // Log error
 
                   return res.redirect(303,
                     grant.responseType == 'token' ?

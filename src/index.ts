@@ -99,10 +99,10 @@ export const webAccessLogStream = rfs.createStream('access.log', { interval: '1d
   errorLogStream = rfs.createStream('error.log', { interval: '1d', maxFiles: 90, path: joinPath(process.cwd(), 'logs', 'error') });
 
 webAccessLogStream.on('error', (err) => {
-  new ApiError(500, 'webAccessLogStream called error-event', true, { err });
+  ApiError.log(500, 'webAccessLogStream called error-event', true, { err });
 });
 errorLogStream.on('error', (err) => {
-  new ApiError(500, 'webAccessLogStream called error-event', true, { err });
+  ApiError.log(500, 'errorLogStream called error-event', true, { err });
 });
 
 (async () => {

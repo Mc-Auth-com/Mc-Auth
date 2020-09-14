@@ -46,13 +46,12 @@ export class Localization {
       result = '<i>[missing translation]</i>';
 
       // Log error
-      new ApiError(500, 'Could not find a matching localization', true,
-        {
-          langKey,
-          strKey,
-          defaultLanguage: this.defaultLanguage,
-          languages: Object.keys(this.languages)
-        });
+      ApiError.log(500, 'Could not find a matching localization', true, {
+        langKey,
+        strKey,
+        defaultLanguage: this.defaultLanguage,
+        languages: Object.keys(this.languages)
+      });
     }
 
     return result;
@@ -81,10 +80,10 @@ export function getLocalization(): Localization {
           lang = JSON.parse(readFileSync(filePath, 'utf-8'));
 
         if (langKey.length != 2) {
-          new ApiError(500, 'Language key needs to be 2 characters long (e.g. en.json)', true, { file: filePath });  // log error
+          ApiError.log(500, 'Language key needs to be 2 characters long (e.g. en.json)', true, { file: filePath });  // log error
           continue;
         } else if (tempLoc[langKey]) {
-          new ApiError(500, 'Duplicate language file for the same language', true, { langKey, file: filePath });  // log error
+          ApiError.log(500, 'Duplicate language file for the same language', true, { langKey, file: filePath });  // log error
           continue;
         }
 
@@ -110,7 +109,7 @@ export function getLocalization(): Localization {
         }
 
         if (duplicateTerms.length > 0) {
-          new ApiError(500, 'Duplicate localization terms', true, { file: filePath, duplicates: duplicateTerms });  // log error
+          ApiError.log(500, 'Duplicate localization terms', true, { file: filePath, duplicates: duplicateTerms });  // log error
         }
       }
     }

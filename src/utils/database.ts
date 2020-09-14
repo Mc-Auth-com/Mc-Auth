@@ -127,14 +127,14 @@ export class dbUtils {
                 }
 
                 if (insertQuery != null && queryArgs != null) {
-                  client.query(insertQuery, queryArgs, (err, res) => {
+                  client.query(insertQuery, queryArgs, (err, insertRes) => {
                     if (this.shouldAbortTransaction(client, done, err)) return reject(err);
 
                     client.query('COMMIT', (err) => {
                       done();
                       if (err) return reject(err);
 
-                      resolve({ found: false, iconID: res.rows[0].id });
+                      resolve({ found: false, iconID: insertRes.rows[0].id });
                     });
                   });
                 } else {  // image already exists
@@ -314,7 +314,7 @@ export class dbUtils {
         done();
 
         if (rollbackErr) {
-          new ApiError(500, 'Error rolling back pg-client', true, { rollbackErr, lastQueryErr: err });  // log error
+          ApiError.log(500, 'Error rolling back pg-client', true, { rollbackErr, lastQueryErr: err });  // log error
         }
       });
     }

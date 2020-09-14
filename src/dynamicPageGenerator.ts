@@ -27,7 +27,8 @@ export const global = {
 
 const _HEAD = renderEjs(readFileSync(joinPath(dynamicWebPath, '_head.html'), 'utf-8'), 0, { global }),
   _HEADER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_header.html'), 'utf-8'), 0, { global }),
-  _FOOTER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, { global });
+  _FOOTER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, { global }),
+  _SETTINGS_SIDEBAR = renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/apps/_sidebar.html'), 'utf-8'), 0, { global });
 
 export const PageParts = {
   INDEX: renderEjs(readFileSync(joinPath(dynamicWebPath, 'index.html'), 'utf-8'), 0),
@@ -103,7 +104,7 @@ export function renderPage(html: string, req: express.Request, res: express.Resp
  */
 function renderEjs(str: string, level: 0 | 1 | 2, data?: ejs.Data): string {
   if (level == 0 && data == undefined) {
-    data = { global, _HEAD, _HEADER, _FOOTER };
+    data = { global, _HEAD, _HEADER, _FOOTER, _SETTINGS_SIDEBAR };
   }
 
   return ejs.render(str, data, { delimiter: `%${level}` }) as string;

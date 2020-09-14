@@ -13,25 +13,7 @@
   <main>
     <div class="container">
       <div class="row">
-        <!-- TODO: use some css for fancy full-width buttons (sidebar) -->
-        <div class="col-2">
-          <b><u><%1- loc.getString(langKey, 'words.settings') -%1></u></b>
-          <br>
-
-          <a href="<%1- global.url.baseLocalized -%1>/settings/account"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></a>
-          <hr>
-          <a href="<%1- global.url.baseLocalized -%1>/settings/security"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></a>
-          <hr>
-          <a href="<%1- global.url.baseLocalized -%1>/settings/notifications"><%1- loc.getString(langKey, 'words.notifications') -%1></a>
-
-          <br>
-          <br>
-
-          <b><u><%1- loc.getString(langKey, 'html.settings.developer_settings') -%1></u></b>
-          <br>
-
-          <a href="<%1- global.url.baseLocalized -%1>/settings/apps"><%1- loc.getString(langKey, 'html.settings.oauth_apps') -%1></a>
-        </div>
+        <div class="col-2"><%0- _SETTINGS_SIDEBAR -%0></div>
 
         <div class="col-2"></div>
 

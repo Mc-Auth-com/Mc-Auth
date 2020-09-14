@@ -1,5 +1,5 @@
 import { post as httpPost } from 'superagent';
-import { cfg, appVersion } from '..';
+import { cfg, appVersion, errorLogStream } from '..';
 
 import { type as osType } from 'os';
 
@@ -21,7 +21,7 @@ export class ApiError extends Error {
     this.httpCode = httpCode;
     this.internalDetails = internalDetails;
 
-    this.log(logErr)
+    ApiError.log(this.httpCode, this.message, logErr, this.internalDetails, this.stack)
       .catch(console.error);
   }
 
@@ -43,15 +43,15 @@ export class ApiError extends Error {
     return new ApiError(err.httpCode, err.message, err.logErr, internalDetails);
   }
 
-  async log(mode: boolean | 'console' | 'discord'): Promise<void> {
+  static async log(httpCode: number, message: string, logMode: boolean | 'console' | 'discord' = false, internalDetails: object | null = null, stack?: string): Promise<void> {
     return new Promise((resolve, _reject) => {
-      if (!mode) return resolve();
+      if (!logMode) return resolve();
 
-      if (mode == true || mode == 'console') {
-        console.error(`[Error] ${this.message} (${JSON.stringify({ srvTime: new Date().toUTCString(), stack: this.stack?.split('\n'), details: this.internalDetails }, null, 2)})`);
+      if (logMode == true || logMode == 'console') {
+        console.error(`[Error] ${message} (${JSON.stringify({ srvTime: new Date().toUTCString(), stack: stack?.split('\n'), details: internalDetails }, null, 2)})`);
       }
 
-      if (mode == true || mode == 'discord') {
+      if (logMode == true || logMode == 'discord') {
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
           httpPost(cfg.logging.discordErrorWebHookURL)
             .set('Content-Type', 'application/json')
@@ -66,17 +66,17 @@ export class ApiError extends Error {
                   fields: [
                     {
                       name: 'HTTP-Code',
-                      value: this.httpCode,
+                      value: httpCode,
                       inline: true
                     },
                     {
                       name: 'Message',
-                      value: this.message,
+                      value: message,
                       inline: true
                     },
                     {
                       name: 'Details',
-                      value: this.internalDetails ? '```JS\n' + JSON.stringify(this.internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
+                      value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
                     }
                   ]
                 }
