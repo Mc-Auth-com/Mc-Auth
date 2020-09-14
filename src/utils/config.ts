@@ -10,7 +10,7 @@ export function loadConfig(defaultCfg: object, path: string): object {
   }
 
   // Parse file at 'path' and merge with 'defaultCfg'
-  const result = objectAssignDeep({}, defaultCfg, JSON.parse(readFileSync(path, 'utf-8')));
+  const result = objectAssignDeep({}, defaultCfg, existsSync(path) ? JSON.parse(readFileSync(path, 'utf-8')) : {});
 
   // Write current config (+ missing default values) into file
   writeFileSync(path, JSON.stringify(result, null, 4));
