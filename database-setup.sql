@@ -112,6 +112,7 @@ CACHE 1;
 DROP TABLE IF EXISTS "public"."accounts";
 CREATE TABLE "public"."accounts" (
   "id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
+  "name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
   "email" varchar(255) COLLATE "pg_catalog"."default",
   "last_login" timestamptz(0)
 );

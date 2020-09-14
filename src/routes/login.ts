@@ -27,6 +27,8 @@ router.all('/', (req, res, next) => {
 
       MojangAPI.getProfile(username)
         .then(async (profile: any /* FIXME TYPE */): Promise<void> => {
+          if (profile) db.updateAccount(profile.id, profile.name); // non-blocking
+
           const success = profile != null && await db.invalidateOneTimePassword(profile.id, otp as string);
 
           if (!success) return next(new ApiError(400, 'Username or One-Time-Passwort do not match', false, { username, otp, keepLoggedIn, profile }));
@@ -39,7 +41,7 @@ router.all('/', (req, res, next) => {
           req.session.loggedIn = true;
           req.session.mcProfile = {
             id: profile.id,
-            name: profile.name
+            name: profile.name  // TODO: update periodically
           };
 
           req.session.save(() => {

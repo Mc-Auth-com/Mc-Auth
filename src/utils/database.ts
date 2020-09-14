@@ -22,6 +22,20 @@ export class dbUtils {
     });
   }
 
+  /* Account */
+  async updateAccount(mcUUID: string, mcName: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
+
+      this.pool.query('INSERT INTO accounts(id,name,last_login) VALUES($1,$2,CURRENT_TIMESTAMP) ON CONFLICT(id) DO UPDATE SET name=$2,last_login=CURRENT_TIMESTAMP;',
+        [mcUUID, mcName], (err, _res) => {
+          if (err) return reject(err);
+
+          resolve();
+        });
+    });
+  }
+
   /* Apps */
 
   async createApp(mcUUID: string, name: string, website: string, description: string | null): Promise<OAuthApp> {
