@@ -86,7 +86,7 @@
             <form method="POST">
               <input type="text" name="authenticity_token" value="<%2- page.grant.id -%2>" hidden>
               <input type="text" name="client_id" value="<%2- page.grant.appId -%2>" hidden>
-              <input type="text" name="state" value="<%2- page.grant.state ?? '' -%2>" hidden>
+              <input type="text" name="state" value="<%2- page.grant.state || '' -%2>" hidden>
 
               <div class="form-check text-center">
                 <input class="form-check-input" type="checkbox" name="alwaysAskForApp" id="alwaysAskForApp">

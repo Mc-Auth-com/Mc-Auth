@@ -29,7 +29,7 @@
 
           if (res.status == 200 || res.status == 201) {
             document.getElementById('icon').value = json.id;
-            elem.src = res.headers.get('Location') ?? json.url;
+            elem.src = res.headers.get('Location') || json.url;
 
             console.log(`Stored at ${elem.src}`);
 
@@ -137,7 +137,7 @@
               <div class="form-group">
                 <label for="description"><%1- loc.getString(langKey, 'words.description') -%1></label>
                 <textarea rows="3" class="form-control" id="description" name="description" maxlength="512"
-                  data-remaining="descRemain" oninput="updateRemainingChars(this)"><%2- (page.apps[0].description ?? '').replace(/\n/g,'\r\n') -%2></textarea>
+                  data-remaining="descRemain" oninput="updateRemainingChars(this)"><%2- (page.apps[0].description || '').replace(/\n/g,'\r\n') -%2></textarea>
                 <small id="descRemain"
                   class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
               </div>
