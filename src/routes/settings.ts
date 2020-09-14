@@ -74,7 +74,7 @@ router.all('/apps/create', (req, res, next) => {
 
       if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, { body: req.body }));
       if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, { body: req.body }));
-      if (isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, { body: req.body }));
+      if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, { body: req.body }));
 
       if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, { body: req.body }));
       if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, { body: req.body }));
