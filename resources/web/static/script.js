@@ -116,6 +116,7 @@ function toggleDarkMode(event) {
   }
 
   setActiveTheme(!isCurrDarkMode);
+  console.info('Dark theme has been set to', !isCurrDarkMode);
 }
 
 /**
@@ -127,11 +128,11 @@ function setActiveTheme(darkTheme) {
 
 /* run when DOM is ready */
 window.addEventListener('load', () => {
-  for (const elem of document.querySelectorAll('[data-remaining]')) {
-    updateRemainingChars(elem);
+  if (document.cookie.indexOf('darkTheme') == -1 && matchMedia('(prefers-color-scheme: dark)').matches) {
+    toggleDarkMode(null);
   }
 
-  if (document.cookie.indexOf('darkTheme') < 0 && matchMedia('(prefers-color-scheme: dark)').matches) {
-    toggleDarkMode(null);
+  for (const elem of document.querySelectorAll('[data-remaining]')) {
+    updateRemainingChars(elem);
   }
 });

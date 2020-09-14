@@ -67,7 +67,7 @@ export function renderPage(html: string, req: express.Request, res: express.Resp
     page: pageData,
     con: {
       query: {},
-      isDarkTheme: true,
+      isDarkTheme: req.cookies.darkTheme == '1',
       lang: res.locals.lang,
       isLoggedIn: req.session && req.session.loggedIn,
       mcProfile: req.session?.loggedIn ? req.session.mcProfile : null,
