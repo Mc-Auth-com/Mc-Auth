@@ -70,7 +70,9 @@
           <br>
 
           <!-- Delete Account -->
-          <form method="POST">
+          <!-- Currently not implemented as parts of the system rely on information marked as deleted instead of being deleted
+               so right now: Only manual deletion when requested per mail is possible-->
+          <!-- <form method="POST">
             <b class="text-danger"><u><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></u></b>
 
             <p class="small text-danger"><%1- loc.getString(langKey, 'html.settings.delete_account_warning') -%1></p>
@@ -79,7 +81,7 @@
               <label for="deleteAccountOTP"><%1- loc.getString(langKey, 'html.login.six_digit_code') -%1></label>
 
               <input id="deleteAccountOTP" type="text" class="form-control" placeholder="123 456" minlength="6" maxlength="7"
-                autocomplete="off" aria-describedby="deleteAccountOTPInfo">
+                autocomplete="off" aria-describedby="deleteAccountOTPInfo" required>
               <small id="deleteAccountOTPInfo" class="form-text text-muted">
                 <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
 
@@ -92,9 +94,8 @@
               </small>
             </div>
 
-            <!-- TODO: Backend needs to notify me (or automatically delete account) -->
             <button type="submit" name="deleteAccount" value="1" class="btn btn-danger"><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></button>
-          </form>
+          </form> -->
         </div>
 
         <div class="col-3"></div>

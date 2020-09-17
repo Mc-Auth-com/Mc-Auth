@@ -145,6 +145,23 @@ router.all('/apps/:appID?', (req, res, next) => {
                 return res.send({ secret });
               })
               .catch(next);
+          } else if (req.body.deleteApp == '1') {
+            let otp = req.body.deleteAppOTP;
+
+            if (typeof otp != 'string' ||
+              !isNumber(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, { appID: app.id, otp }));
+
+            db.invalidateOneTimePassword(app.owner, otp)
+              .then((valid) => {
+                if (!valid) return next(new ApiError(400, 'Invalid One-Time-Password', false, { appID: app.id, otp }));
+
+                db.setAppDeleted(app.id)
+                  .then(() => {
+                    res.redirect(`${global.url.base}/settings/apps`)
+                  })
+                  .catch(next);
+              })
+              .catch(next);
           } else {
             const appName = req.body.name,
               appWebsite = req.body.website,

@@ -161,6 +161,33 @@
                 </div>
               </div>
             </form>
+
+            <br>
+            <br>
+
+            <!-- Delete App -->
+            <form method="POST">
+              <b class="text-danger"><u><%1- loc.getString(langKey, 'html.settings.delete_app') -%1></u></b>
+
+              <div class="form-group">
+                <label for="deleteAppOTP"><%1- loc.getString(langKey, 'html.login.six_digit_code') -%1></label>
+
+                <input id="deleteAppOTP" name="deleteAppOTP" type="text" class="form-control" placeholder="123 456" minlength="6" maxlength="7"
+                  autocomplete="off" aria-describedby="deleteAppOTPInfo" required>
+                <small id="deleteAppOTPInfo" class="form-text text-muted">
+                  <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
+
+                  <button type="button" class="btn btn-sm btn-outline-info" onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"
+                    aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"><i class="far fa-clipboard"
+                    aria-hidden="true"></i></button>
+
+                  <br>
+                  <%1- loc.getString(langKey, 'html.login.kicked_with_code') -%1>
+                </small>
+              </div>
+
+              <button type="submit" name="deleteApp" value="1" class="btn btn-danger"><%1- loc.getString(langKey, 'html.settings.delete_app') -%1></button>
+            </form>
           </div>
         </div>
 

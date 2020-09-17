@@ -624,6 +624,14 @@
     "comment": ""
   },
   {
+    "term": "html.settings.delete_app",
+    "definition": "Delete app",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.settings.delete_account_warning",
     "definition": "<strong>This deletes your account on <em>Mc-Auth.com</em> — Your Minecraft account stays unaffacted.</strong>\n<br>\n<br>\n\nThis process is done manually and may require up to <em>7 days</em>.\n<br>\nIf you've provided an email address, you'll be notified about the successfull deletion.",
     "context": "",

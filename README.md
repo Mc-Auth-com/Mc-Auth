@@ -33,14 +33,14 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
       * Show public Minecraft account data (as example)
       * Adding and confirming email address
       * Export account data
-      * Delete account
+      * ~~Delete account~~ *Can be requested by email*
     * Account Security
       * Show active sessions (+IP, User-Agent, ...)
       * Show all apps that have been granted access
     * Notification
       * Allow enabling/disabling email notifications for specific events
     * oAuth Apps
-      * Delete button
+      * [X] Delete button
       * Force 2FA when editing verified apps
   * When uploading an app icon: Show notification that user needs to use the 'Save' button
   * Send 'Content Security Policy' header

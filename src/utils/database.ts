@@ -63,6 +63,18 @@ export class dbUtils {
     });
   }
 
+  async setAppDeleted(id: string, deleted: boolean = true): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
+
+      this.pool.query('UPDATE apps SET deleted =$2 WHERE id=$1;', [id, deleted], (err, _res) => {
+        if (err) return reject(err);
+
+        resolve();
+      });
+    });
+  }
+
   async getApp(id: string): Promise<OAuthApp | null> {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));

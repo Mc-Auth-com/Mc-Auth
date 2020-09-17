@@ -624,6 +624,14 @@
     "comment": ""
   },
   {
+    "term": "html.settings.delete_app",
+    "definition": "App löschen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.settings.delete_account_warning",
     "definition": "<strong>Dieser Vorgang löscht deinen Account auf <em>Mc-Auth.com</em> — Dein Minecraft-Account ist von dieser Aktion nicht betroffen.</strong>\n<br>\n<br>\n\nDieser Vorgang wird manuell innerhalb von <em>7 Tagen</em> durchgeführt.\n<br>\nWenn eine E-Mail hinterlegt ist, wirst du über die Löschung informiert.",
     "context": "",
