@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { post as httpPost } from 'superagent';
 
 import { db, cfg } from '..';
-import { global, PageParts, renderPage } from '../dynamicPageGenerator';
+import { global, PageTemplate, renderPage } from '../dynamicPageGenerator';
 import { restful, stripLangKeyFromURL, isNumber, toNeutralString, isHttpURL } from '../utils/utils';
 import { ApiError, ApiErrs } from '../utils/errors';
 
@@ -21,7 +21,7 @@ router.all('/account', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageParts.SETTINGS_ACCOUNT, req, res));
+        .send(renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res));
     },
     // post: () => { } // TODO
   });
@@ -33,7 +33,7 @@ router.all('/security', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageParts.SETTINGS_SECURITY, req, res));
+        .send(renderPage(PageTemplate.SETTINGS_SECURITY, req, res));
     },
     // post: () => { } // TODO
   });
@@ -45,7 +45,7 @@ router.all('/notifications', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageParts.SETTINGS_NOTIFICATIONS, req, res));
+        .send(renderPage(PageTemplate.SETTINGS_NOTIFICATIONS, req, res));
     },
     // post: () => { } // TODO
   });
@@ -57,7 +57,7 @@ router.all('/apps/create', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageParts.SETTINGS_APPS_CREATE, req, res));
+        .send(renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
     },
     post: () => {
       if (cfg.reCAPTCHA.private.length == 0) return next(ApiError.create(ApiErrs.NO_RECAPTCHA));
@@ -110,7 +110,7 @@ router.all('/apps/:appID?', (req, res, next) => {
         db.getApps(req.session.mcProfile.id)
           .then((apps) => {
             res.type('html')
-              .send(renderPage(PageParts.SETTINGS_APPS, req, res, { apps }));
+              .send(renderPage(PageTemplate.SETTINGS_APPS, req, res, { apps }));
           })
           .catch(next);
       } else if (isNumber(appID)) {
@@ -120,7 +120,7 @@ router.all('/apps/:appID?', (req, res, next) => {
             if (app.owner != req.session?.mcProfile.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
             res.type('html')
-              .send(renderPage(PageParts.SETTINGS_APPS_APP, req, res, { apps: [app] }));
+              .send(renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, { apps: [app] }));
           })
           .catch(next);
       } else {

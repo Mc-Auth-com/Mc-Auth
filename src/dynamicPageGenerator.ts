@@ -30,7 +30,24 @@ const _HEAD = renderEjs(readFileSync(joinPath(dynamicWebPath, '_head.html'), 'ut
   _FOOTER = renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, { global }),
   _SETTINGS_SIDEBAR = renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/_sidebar.html'), 'utf-8'), 0, { global });
 
-export const PageParts = {
+export enum PageTemplate {
+  INDEX = 'INDEX',
+  LEGAL = 'LEGAL',
+  PRIVACY = 'PRIVACY',
+
+  LOGIN = 'LOGIN',
+  AUTHORIZE = 'AUTHORIZE',
+
+  SETTINGS_ACCOUNT = 'SETTINGS_ACCOUNT',
+  SETTINGS_SECURITY = 'SETTINGS_SECURITY',
+  SETTINGS_NOTIFICATIONS = 'SETTINGS_NOTIFICATIONS',
+
+  SETTINGS_APPS = 'SETTINGS_APPS',
+  SETTINGS_APPS_APP = 'SETTINGS_APPS_APP',
+  SETTINGS_APPS_CREATE = 'SETTINGS_APPS_CREATE'
+}
+
+const PageParts: { [key in PageTemplate]: string } = {
   INDEX: renderEjs(readFileSync(joinPath(dynamicWebPath, 'index.html'), 'utf-8'), 0),
   LEGAL: renderEjs(readFileSync(joinPath(dynamicWebPath, 'legal.html'), 'utf-8'), 0),
   PRIVACY: renderEjs(readFileSync(joinPath(dynamicWebPath, 'privacy.html'), 'utf-8'), 0),
@@ -56,13 +73,24 @@ for (const langKey in getLocalization().languages) {
   }
 }
 
+const htmlCache: { [key: string]: string } = {};
+
+// Generate HTML templates and cache them
+for (const langKey in getLocalization().languages) {
+  for (const key in PageTemplate) {
+    const html = PageParts[key as PageTemplate];
+    htmlCache[langKey + key] = renderEjs1(html, langKey);
+  }
+}
+Object.freeze(htmlCache);  // Protect cache from accidental modification
+
 interface PageData {
   apps?: OAuthApp[],
-  appOwner?: object, // rename or move into apps
+  appOwner?: object, // TODO: rename or move into apps
   grant?: Grant
 }
 
-export function renderPage(html: string, req: express.Request, res: express.Response, pageData: PageData = {}): string {
+export function renderPage(template: PageTemplate, req: express.Request, res: express.Response, pageData: PageData = {}): string {
   const data: { page: PageData, con: { query: { [key: string]: string }, isDarkTheme: boolean, lang: string, isLoggedIn: boolean, mcProfile: object /* FIXME type */, /*isAdmin: boolean, session: object, url: string, urlEncoded: string*/ currPath: string }, currLocalizedURL: { [key: string]: string }, currNonLocalizedURL: string, moment: Moment } = {
     page: pageData,
     con: {
@@ -94,7 +122,7 @@ export function renderPage(html: string, req: express.Request, res: express.Resp
     }
   }
 
-  return renderEjs(renderEjs1(html, data.con.lang), 2, data);  // TODO: cache localization on app startup
+  return renderEjs(htmlCache[data.con.lang + template], 2, data);
 }
 
 /**

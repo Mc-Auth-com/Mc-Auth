@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { db } from '..';
-import { global, PageParts, renderPage } from '../dynamicPageGenerator';
+import { global, PageTemplate, renderPage } from '../dynamicPageGenerator';
 import { ApiError, ApiErrs } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
 import { restful, isNumber, stripLangKeyFromURL, stripParamsFromURL, appendParamsToURL } from '../utils/utils';
@@ -118,7 +118,7 @@ router.all('/authorize', (req, res, next) => {
               MojangAPI.getProfile(app.owner)
                 .then((appOwner) => {
                   res.type('html')
-                    .send(renderPage(PageParts.AUTHORIZE, req, res, { apps: [app], grant, appOwner: appOwner || undefined }));
+                    .send(renderPage(PageTemplate.AUTHORIZE, req, res, { apps: [app], grant, appOwner: appOwner || undefined }));
                 })
                 .catch(next);
             })

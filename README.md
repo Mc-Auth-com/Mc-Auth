@@ -27,7 +27,7 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 * **Complete Recode ([#70](https://github.com/Mc-Auth-com/Mc-Auth-Web/pull/70))**
   * Redesign how localization files look and move to Crowdin
   * Recode demo page
-  * Cache HTML in memory (for every language)
+  * [X] Cache HTML in memory (for every language)
   * Finish settings pages
     * Account
       * Show public Minecraft account data (as example)

@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction, Router } from 'express';
 
-import { renderPage, PageParts } from '../dynamicPageGenerator';
+import { renderPage, PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 
 const router = Router();
 export const staticPagesRouter = router;
 
-const pages: { [key: string]: string } = {
-  '/': PageParts.INDEX,
-  '/legal': PageParts.LEGAL,
-  '/privacy': PageParts.PRIVACY
+const pages: { [key: string]: PageTemplate } = {
+  '/': PageTemplate.INDEX,
+  '/legal': PageTemplate.LEGAL,
+  '/privacy': PageTemplate.PRIVACY
 };
 
 for (const path in pages) {

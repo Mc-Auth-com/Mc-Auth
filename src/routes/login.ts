@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { renderPage, PageParts, global } from '../dynamicPageGenerator';
+import { renderPage, global, PageTemplate } from '../dynamicPageGenerator';
 import { restful, isNumber, getReturnURL } from '../utils/utils';
 import { ApiError } from '../utils/errors';
 import { db } from '..';
@@ -15,7 +15,7 @@ router.all('/', (req, res, next) => {
       if (req.session?.loggedIn) return res.redirect(getReturnURL(req) ?? global.url.base);
 
       res.type('html')
-        .send(renderPage(PageParts.LOGIN, req, res));
+        .send(renderPage(PageTemplate.LOGIN, req, res));
     },
     post: () => {
       const username: string | undefined = req.body.username,
