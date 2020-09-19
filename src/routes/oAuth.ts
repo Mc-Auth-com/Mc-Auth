@@ -133,7 +133,7 @@ router.all('/authorize', (req, res, next) => {
 
       const grantID = req.body.authenticity_token,
         clientID = req.body.client_id,
-        state = req.body.state ?? null,
+        state = req.body.state || null,
         agreed = req.body.result == '1';
 
       /* Basic input validation */
@@ -180,7 +180,7 @@ router.all('/authorize', (req, res, next) => {
 
                   return res.redirect(303,
                     appendParamsToURL(grant.redirectUri,
-                      [{ key: 'code', value: 'token' },
+                      [{ key: 'code', value: token },
                       { key: 'expires_in', value: '300' },
                       { key: 'state', value: state }]));
                 } else if (grant.responseType == 'token') {
