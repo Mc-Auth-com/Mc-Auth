@@ -30,6 +30,15 @@ export interface mcAuthCfg {
     readonly secret: string;
   }
 
+  readonly demo: {
+    readonly cookieSecret: string;
+
+    readonly mcAuth: {
+      readonly client_id: string;
+      readonly client_secret: string;
+    }
+  }
+
   readonly reCAPTCHA: {
     readonly public: string;
     readonly private: string;

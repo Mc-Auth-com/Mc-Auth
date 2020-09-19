@@ -35,6 +35,8 @@ export enum PageTemplate {
   LEGAL = 'LEGAL',
   PRIVACY = 'PRIVACY',
 
+  DEMO = 'DEMO',
+
   LOGIN = 'LOGIN',
   AUTHORIZE = 'AUTHORIZE',
 
@@ -51,6 +53,8 @@ const PageParts: { [key in PageTemplate]: string } = {
   INDEX: renderEjs(readFileSync(joinPath(dynamicWebPath, 'index.html'), 'utf-8'), 0),
   LEGAL: renderEjs(readFileSync(joinPath(dynamicWebPath, 'legal.html'), 'utf-8'), 0),
   PRIVACY: renderEjs(readFileSync(joinPath(dynamicWebPath, 'privacy.html'), 'utf-8'), 0),
+
+  DEMO: renderEjs(readFileSync(joinPath(dynamicWebPath, 'demo.html'), 'utf-8'), 0),
 
   LOGIN: renderEjs(readFileSync(joinPath(dynamicWebPath, 'login.html'), 'utf-8'), 0),
   AUTHORIZE: renderEjs(readFileSync(joinPath(dynamicWebPath, 'authorize.html'), 'utf-8'), 0),
@@ -87,7 +91,8 @@ Object.freeze(htmlCache);  // Protect cache from accidental modification
 interface PageData {
   apps?: OAuthApp[],
   appOwner?: object, // TODO: rename or move into apps
-  grant?: Grant
+  grant?: Grant,
+  demo?: { err?: { name: string, info?: string }, mcProfile?: object }
 }
 
 export function renderPage(template: PageTemplate, req: express.Request, res: express.Response, pageData: PageData = {}): string {

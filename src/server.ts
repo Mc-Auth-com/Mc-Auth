@@ -17,6 +17,7 @@ import { logoutRouter } from './routes/logout';
 import { dbUtils } from './utils/database';
 import { settingsRouter } from './routes/settings';
 import { uploadsRouter, uploadsNoCookieRouter } from './routes/uploads';
+import { demoRouter } from './routes/demo';
 
 export const app = express();
 app.disable('x-powered-by');
@@ -155,6 +156,7 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/settings', settingsRouter);
 app.use('/uploads', uploadsRouter);
+app.use('/demo', demoRouter);
 
 /* Error handling */
 app.use((req, _res, next) => {

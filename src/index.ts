@@ -35,6 +35,13 @@ export let cfg: mcAuthCfg = {
     secure: false,
     secret: require('crypto').randomBytes(1024).toString('base64')
   },
+  demo: {
+    cookieSecret: require('crypto').randomBytes(256).toString('base64'),
+    mcAuth: {
+      client_id: 'Create an app at Mc-Auth.com/settings/apps',
+      client_secret: ''
+    }
+  },
   reCAPTCHA: {
     public: '',
     private: ''
