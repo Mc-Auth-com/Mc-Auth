@@ -28,23 +28,23 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
   * Redesign how localization files look and move to Crowdin
   * [X] Recode demo page
   * [X] Cache HTML in memory (for every language)
-  * Finish settings pages
-    * Account
-      * Show public Minecraft account data (as example)
-      * Adding and confirming email address
-      * Export account data
-      * ~~Delete account~~ *Can be requested by email*
-    * Account Security
-      * Show active sessions (+IP, User-Agent, ...)
-      * Show all apps that have been granted access
-    * Notification
-      * Allow enabling/disabling email notifications for specific events
-    * oAuth Apps
-      * [X] Delete button
-      * Force 2FA when editing verified apps
-  * When uploading an app icon: Show notification that user needs to use the 'Save' button
-  * Send 'Content Security Policy' header
-* Fully support creating verified applications
+* Finish settings pages
+  * Account
+    * Show public Minecraft account data (as example)
+    * Adding and confirming email address
+    * Export account data
+  * Account Security
+    * Show active sessions (+IP, User-Agent, ...)
+    * Show all apps that have been granted access
+  * Notification
+    * Allow enabling/disabling email notifications for specific events
+  * oAuth Apps
+    * [X] Delete button
+* Allow grants to be temporary (60 days without activity by default)
+* Fully implement verified applications
+  * Force 2FA when editing verified apps
+* When uploading an app icon: Show notification that user needs to use the 'Save' button
+* Send 'Content Security Policy' header
 * Allow users to report applications (in authorization screen)
 * Introduce rate limits
 * Create documentation/wiki
