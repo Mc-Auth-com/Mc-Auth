@@ -16,53 +16,50 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 ## Setup
 **You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) on your machine and a PostgreSQL instance**
 
-1. Prepare your PostgreSQL server by running the commands inside `./tables.sql`
+1. Prepare your PostgreSQL server by running `./database-setup.sql`
 2. `npm install`
-3. `npm start`
+3. `npm run build` (needs to be rerun everytime the app is updated)
+4. `npm run start` Or you can use `npm run dev` to automatically recompile on file changes (not recommended for production)
 4. Configure all files inside `./storage` (automatically generated)
-5. Edit the first variables of the files `./storage.js` and `./.static/script-login.js`
 6. Type `rs` into the console or restart the process
 
 ## TODO
-* Settings: Show grants (accepted and denied ones)
+* **Complete Recode ([#70](https://github.com/Mc-Auth-com/Mc-Auth-Web/pull/70))**
+  * Redesign how localization files look and move to Crowdin
+  * [X] Recode demo page
+  * [X] Cache HTML in memory (for every language)
+* Finish settings pages
+  * Account
+    * Show public Minecraft account data (as example)
+    * [X] Adding and confirming email address
+    * Export account data
+  * Account Security
+    * Show active sessions (+IP, User-Agent, ...)
+    * Show all apps that have been granted access
+  * Notification
+    * Allow enabling/disabling email notifications for specific events
+  * oAuth Apps
+    * [X] Delete button
+* Allow grants to be temporary (60 days without activity by default)
+* Fully implement verified applications
+  * Force 2FA when editing verified apps
+* When uploading an app icon: Show notification that user needs to use the 'Save' button
+* Send 'Content Security Policy' header
+* Allow users to report applications (in authorization screen)
+* Introduce rate limits
 * Create documentation/wiki
-  * Create Brand/Press Kit with images
-  * Create HTML-Button examples
-* ~~Allow easy localization of HTML~~
-  * ~~Functional Language-Switcher~~
-  * Cache localized HTML
-  * ~~Create english translation~~
-  * ~~Create german translation~~
-* Tell users that changes have been saved or that an upload failed/succeeded
-* Rate-limit icon uploads
-* Allow users to report applications (On grant-request)
-* Add possibilities to be an verified application
-* App-Settings
-  * Allow deletion
-  * Allow regenerating client_secret
-  * fix text position
-* Allow 2FA for Settings-Page (Applications)
-  * Force for verified applications
-* './.static/script-login.js' should not hold it's own `BASE_URL`
-* Don't use Google Analytics (Something on webserver level is enough with a good dashboard)
-* Recode in TypeScript
-* ~~Notify about cookies~~
-* ~~Resize and crop uploaded images to fit inside 128px x 128px~~
-* ~~Use reCAPTCHA when creating a new app~~
-* ~~Cards (Login, Settings, App-Settings) go out of bounds when view-port is not high enough~~
-* ~~App-Settings: Description looses line-breaks~~
-* ~~Publish Demo-Application~~ 
-* ~~When an application requests authorization and the user is not logged in, the user can't proceed as intended~~
+* Create Brand/Press Kit with images
+  * With HTML Examples for buttons
+* Replace 'Google Analytics'
+* Admin Dashboard
 
 ## Contributors ✨
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/JonasAlpha"><img src="https://avatars1.githubusercontent.com/u/35976079?s=460&v=4" width="100px" alt=""><br><sub><b>Jonas</b></sub></a><br>🎨 Logo and Banner</td>
-    <td align="center"><a href="https://github.com/Songoda"><img src="https://avatars3.githubusercontent.com/u/26376600?s=460&v=4" width="100px" alt=""><br><sub><b>Brianna O'Keefe</b></sub></a><br>🌍 English Translations</td>
+    <td align="center"><a href="https://github.com/JonasAlpha"><img src="https://avatars1.githubusercontent.com/u/35976079" width="100px" alt=""><br><sub><b>Jonas</b></sub></a><br>🎨 Logo and Banner</td>
+    <td align="center"><a href="https://github.com/Songoda"><img src="https://avatars2.githubusercontent.com/u/26376600" width="100px" alt=""><br><sub><b>Brianna O'Keefe</b></sub></a><br>🌍 English Translations</td>
   </tr>
 </table>
 
 ## License
 [MIT License](./LICENSE)
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMc-Auth-com%2FMc-Auth-Web?ref=badge_large)

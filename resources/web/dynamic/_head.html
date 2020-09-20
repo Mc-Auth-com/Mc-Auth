@@ -1,0 +1,64 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="apple-touch-icon" sizes="180x180" href="<%0- global.url.static -%0>/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<%0- global.url.static -%0>/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<%0- global.url.static -%0>/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="<%0- global.url.static -%0>/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="<%0- global.url.static -%0>/img/favicon/safari-pinned-tab.svg" color="#603cba">
+<link rel="shortcut icon" href="<%0- global.url.static -%0>/img/favicon/favicon.ico">
+<meta name="msapplication-TileColor" content="#603cba">
+<meta name="msapplication-config" content="<%0- global.url.static -%0>/img/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<meta name="author" content="Sprax (Christian Koop)">
+
+<meta name="twitter:title" content="Mc-Auth.com — Minecraft Authentication made easy">
+<meta name="twitter:description"
+  content="Mc-Auth.com allows users to securely login with their Minecraft accounts without ever needing to enter their account password.">
+<meta name="twitter:url" content="<%1- global.url.baseLocalized -%1>">
+<meta name="twitter:image" content="<%0- global.url.static -%0>/assets/img/Logo_HD.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@SpraxDev">
+<meta name="twitter:creator" content="@SpraxDev">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mc-Auth.com — Minecraft Authentication made easy">
+<meta property="og:site_name" content="Mc-Auth.com">
+<meta property="og:description"
+content="Mc-Auth.com allows users to securely login with their Minecraft accounts without ever needing to enter their account password.">
+<meta property="og:image" content="<%0- global.url.static -%0>/assets/img/Logo_HD.png">
+<meta property="og:image:width" content="1440">
+<meta property="og:image:height" content="1440">
+<meta property="og:url" content="<%1- global.url.baseLocalized -%1>">
+<meta property="og:locale" content="en_EN"> <!-- TODO: Translate OpenGraph too -->
+<%1 for (const langKey in loc.languages) { _%1>
+  <meta property="og:locale:alternate" content="<%1- langKey -%1>_<%1- langKey.toUpperCase() -%1>"> <!-- TODO: Use 'language_TERRITORY' instead -->
+<%1 } -%1>
+
+<script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "url": "<%0- global.url.base -%0>",
+  "logo": "<%0- global.url.static -%0>/assets/img/Logo_HD.png"
+  }
+</script>
+
+<script src="<%0- global.url.static -%0>/script.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+  integrity="sha256-L/W5Wfqfa0sdBNIKN9cG6QA5F2qx4qICmU2VgLruv9Y=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css"
+  integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+
+<!-- https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.3/css/flag-icon.min.css"
+  integrity="sha256-NkXMfPcpoih3/xWDcrJcAX78pHpfwxkhNj0bAf8AMTs=" crossorigin="anonymous">
+
+<link rel="stylesheet" href="<%0- global.url.static -%0>/style.css">
+
+<%1 for (const langKey in loc.languages) { _%1>
+  <link rel="alternate" hreflang="<%1- langKey -%1>" href="<%2- currLocalizedURL['<%1- langKey -%1>'] -%2>">
+<%1 } -%1>
+<link rel="alternate" hreflang="x-default" href="<%2- currNonLocalizedURL -%2>">

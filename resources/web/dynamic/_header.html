@@ -1,0 +1,64 @@
+<header>
+  <nav class="navbar navbar-expand-md <%2- con.isDarkTheme ? 'navbar-dark bg-dark' : 'navbar-light bg-light' -%2>" id="headerMenu">
+    <a class="navbar-brand" style="color: #7952B3" href="<%1- global.url.baseLocalized -%1>">
+      <img src="https://mc-auth.com/assets/img/Logo.svg" style="height:2.5rem; width: auto" alt="<%1- loc.getString(langKey, 'words.logo') -%1>">
+      Minecraft Authentication
+      <small style="font-size: 60%">Made easy</small>
+    </a>
+
+    <div class="navbar-collapse">
+      <ul class="navbar-nav mr-auto"></ul>
+
+      <ul class="navbar-nav" style="align-items: center">
+        <%2 if(con.isLoggedIn) { %2>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <%1- loc.getString(langKey, 'html.header.logged_in_as') -%1>
+              <img src="https://api.sprax2013.de/mc/skin/<%2- con.mcProfile.id -%2>/head?size=64"
+              style="width: auto; height: 2.5rem; border-radius: 25px; border: 3px solid #F27405"
+              alt="<%1- loc.getString(langKey, 'html.header.your_minecraft_face') -%1>"
+              height="64px" width="64px">
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="<%1- global.url.baseLocalized -%1>/settings">
+                <i class="fas fa-cog" aria-hidden="true"></i> <%1- loc.getString(langKey,  'words.settings') -%1>
+              </a>
+              <a class="dropdown-item" href="<%1- global.url.baseLocalized -%1>/logout?return=<%2- encodeURIComponent(con.currPath) -%2>">
+                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> <%1- loc.getString(langKey, 'words.logout') -%1>
+              </a>
+            </div>
+          </li>
+        <%2 } else { %2>
+          <li class="nav-item">
+            <a class="nav-link" href="<%1- global.url.baseLocalized -%1>/login?return=<%2- encodeURIComponent(con.currPath) -%2>">
+              <%1- loc.getString(langKey, 'words.login') -%1>
+            </a>
+          </li>
+        <%2 } %2>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="toggleDarkMode(event)" aria-label="<%1- loc.getString(langKey, 'html.header.toggle_dark_theme') -%1>">
+            <i class="far fa-moon fa-lg" aria-hidden="true"></i>
+          </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" aria-label="<%1- loc.getString(langKey, 'html.header.open_language_selection') -%1>">
+            <i class="fas fa-language fa-lg" aria-hidden="true"></i>
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right langDropdown" aria-labelledby="langDropdown">
+            <%1 for (const langKey in loc.languages) { %1>
+              <a class="dropdown-item" href="<%2- currLocalizedURL['<%1- langKey -%1>'] -%2>">
+                <!-- <span class="flag-icon flag-icon-de"></span> --> <%1- langKey -%1>
+              </a>
+            <%1 } %1>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.authorize.authorizing_app') -%1> | Mc-Auth.com</title>
+
+  <script>
+    // Force page-reload when using browser-pageinator to get to this page (regenerate Grant-ID)
+    window.addEventListener('pageshow', (e) => {
+      if (historyTraversal = e.persisted ||
+        (window.performance &&
+          window.performance.navigation.type === 2)) {
+        window.location.reload();
+      }
+    });
+  </script>
+  </style>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="text-center">
+        <img src="<%2- page.apps[0].iconID ?
+          `<%0- global.url.base -%0>/uploads/${page.apps[0].iconID}.png` :
+          `<%0- global.url.static -%0>/uploads/default.png` -%2>"
+          class="img-fluid" height="128px" width="128px"
+          alt="<%1- loc.getString(langKey, 'html.authorize.app_logo') -%1>">
+        <h3><%1- loc.getString(langKey, 'html.authorize.login_request_from_app') -%1></h3>
+      </div>
+
+      <div class="row">
+        <div class="col-3"></div>
+
+        <div class="col">
+          <div class="appCard">
+            <p class="text-center">
+              <%2 if(page.apps[0].description) { %2>
+                <%2- page.apps[0].description.replace(/\u003C/g, '&lt;')
+                                              .replace(/\u003E/g, '&gt;')
+                                              .replace(/\n/g,'<br>\n') -%2>
+              <%2 } else { %2>
+                <%1- loc.getString(langKey, 'html.authorize.no_app_description') -%1>
+              <%2 } %2>
+            </p>
+
+            <div class="row">
+              <div class="col">
+                <div class="float-right">
+                  <img width="24px" height="24px" src="https://api.sprax2013.de/mc/skin/<%2- page.apps[0].owner -%2>/head?size=24">
+                  <%1- loc.getString(langKey, 'html.authorize.app_created_by') -%1>
+                </div>
+              </div>
+
+              <div class="col">
+                <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/clock.svg">
+                <%1- loc.getString(langKey, 'html.authorize.app_creation_time') -%1>
+              </div>
+
+              <!-- <div class="col">
+                <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/users.svg">
+                over/less than X users
+              </div> -->
+            </div>
+
+            <hr>
+
+            <div>
+              <p class="text-center"><%1- loc.getString(langKey, 'html.authorize.app_wants_access_to') -%1></p>
+
+              <img class="float-left" style="margin-right: 1rem" width="48px" height="48px" src="<%0- global.url.static -%0>/img/icons/globe.svg">
+              <p class="text-left">
+                <%1- loc.getString(langKey, 'html.authorize.scope.profile') -%1>
+                <br>
+                <em class="text-muted"><%1- loc.getString(langKey, 'html.authorize.scope.profile.note') -%1></em>
+                <!-- TODO: Add '...'-Button that shows/hides example data with explaination on hover that is sent (depends on "scope=profile" or "scope=") -->
+              </p>
+            </div>
+
+            <hr>
+
+            <form method="POST">
+              <input type="text" name="authenticity_token" value="<%2- page.grant.id -%2>" hidden>
+              <input type="text" name="client_id" value="<%2- page.grant.appId -%2>" hidden>
+              <input type="text" name="state" value="<%2- page.grant.state || '' -%2>" hidden>
+
+              <div class="form-check text-center">
+                <input class="form-check-input" type="checkbox" name="alwaysAskForApp" id="alwaysAskForApp" value="1" disabled>
+                <label class="form-check-label" for="alwaysAskForApp"><%1- loc.getString(langKey, 'html.authorize.always_ask_for_app') -%1> (Coming soon)</label>
+              </div>
+
+              <br>
+
+              <div class="row">
+                <div class="col">
+                  <button type="submit" name="result" value="0" class="btn btn-danger float-right"><%1- loc.getString(langKey, 'words.deny') -%1></button>
+                </div>
+
+                <div class="col">
+                  <button type="submit" name="result" value="1" class="btn btn-success float-left"><%1- loc.getString(langKey, 'words.agree') -%1></button>
+                </div>
+              </div>
+            </form>
+
+            <br>
+
+            <p class="text-center small">
+              <%1- loc.getString(langKey, 'html.authorize.will_redirect_to') -%1>
+              <br>
+              <strong><%2- new URL(page.grant.redirectUri).origin -%2></strong>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title>Mc-Auth.com — Easy Minecraft Authentication</title>
+</head>
+
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <h2><%1- loc.getString(langKey, 'html.index.what_is.title') -%1></h2>
+      <p>
+        <%1- loc.getString(langKey, 'html.index.what_is.content1') -%1>
+      </p>
+      <p>
+        <%1- loc.getString(langKey, 'html.index.what_is.content2') -%1>
+      </p>
+
+      <h2><%1- loc.getString(langKey, 'html.index.how.title') -%1></h2>
+      <p>
+        <em><%1- loc.getString(langKey, 'html.index.how.content1') -%1></em>
+      </p>
+
+      <ol>
+        <li><%1- loc.getString(langKey, 'html.index.how.step1') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step2') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step3') -%1></li>
+        <li><%1- loc.getString(langKey, 'html.index.how.step4') -%1><br><br></li>
+
+        <li><%1- loc.getString(langKey, 'html.index.how.step5') -%1></li>
+      </ol>
+
+      <h2><a href="<%1- global.url.baseLocalized -%1>/demo"><u><%1- loc.getString(langKey, 'html.index.how.content2') -%1></u></a></h2>
+    </div>
+
+    <hr>
+
+    <h2 style="text-align: center">
+      <%1- loc.getString(langKey, 'html.index.used_by') -%1>
+    </h2>
+    <br>
+
+    <div class="text-center">
+      <img src="<%0- global.url.static -%0>/assets/img/SkinDB.svg" style="max-height: 150px; max-width: 150px"
+        class="img-fluid rounded" alt="SkinDB.net Logo">
+
+      <img src="<%0- global.url.static -%0>/assets/img/CherryBread_Network.jpg" style="max-height: 150px; max-width: 150px"
+        class="img-fluid rounded" alt="CherryBread-Network Logo">
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

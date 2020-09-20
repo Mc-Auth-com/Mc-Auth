@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.account_settings') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-2"><%0- _SETTINGS_SIDEBAR -%0></div>
+
+        <div class="col-1"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <h4><strong>Work In Progress</strong></h4>
+
+          <p style="font-weight: bold;">You'll soon be able to:</p>
+          <ul>
+            <li>See a preview of your public account information (with link to SkinDB)</li>
+            <li>Export all the data associated with your account</li>
+            <li>Delete your account without contacting me via email</li>
+          </ul>
+
+          <!-- Username & Mail -->
+          <form method="POST">
+            <div class="form-group">
+              <label for="mcName"><u><%1- loc.getString(langKey, 'words.username') -%1></u></label>
+              <input id="mcName" type="text" class="form-control" value="<%2= con.mcProfile.name -%2>" aria-describedby="mcNameInfo" readonly>
+              <small id="mcNameInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.settings.form.name_info') -%1>
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="mailAddr"><u><%1- loc.getString(langKey, 'words.email_address') -%1></u></label>
+
+              <div class="input-group">
+                <%2 if(page.account.emailPending && (Date.now() - 48*60*60*1000 /* 48h in ms */) <= page.account.emailPendingSince) { %2>
+                  <strong class="text-danger"><%1- loc.getString(langKey, 'html.settings.form.email_pending') -%1></strong>
+                <%2 } %2>
+
+                <input id="mailAddr" name="mailAddr" type="email" class="form-control" value="<%2= page.account.email -%2>" aria-describedby="mailAddrInfo">
+
+                <div class="input-group-append">
+                  <div class="input-group-text">
+                    <%2 if(page.account.email) { %2>
+                      <!-- TODO: Color icon -->
+                      <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/check.svg">
+                    <%2 } %2>
+                  </div>
+                </div>
+              </div>
+
+              <small id="mailAddrInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.settings.form.email_info') -%1>
+              </small>
+            </div>
+
+            <button type="submit" name="updateMail" value="1" class="btn btn-success"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
+          </form>
+
+          <!-- Uncomment as soon as 'delete account' is added again -->
+          <!--
+          <br>
+          <hr>
+          <br>
+          -->
+
+          <!-- Delete Account -->
+          <!-- Currently not implemented as parts of the system rely on information marked as deleted instead of being deleted
+               so right now: Only manual deletion when requested per mail is possible-->
+          <!-- <form method="POST">
+            <b class="text-danger"><u><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></u></b>
+
+            <p class="small text-danger"><%1- loc.getString(langKey, 'html.settings.delete_account_warning') -%1></p>
+
+            <div class="form-group">
+              <label for="deleteAccountOTP"><%1- loc.getString(langKey, 'html.login.six_digit_code') -%1></label>
+
+              <input id="deleteAccountOTP" type="text" class="form-control" placeholder="123 456" minlength="6" maxlength="7"
+                autocomplete="off" aria-describedby="deleteAccountOTPInfo" required>
+              <small id="deleteAccountOTPInfo" class="form-text text-muted">
+                <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
+
+                <button type="button" class="btn btn-sm btn-outline-info" onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"
+                  aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"><i class="far fa-clipboard"
+                  aria-hidden="true"></i></button>
+
+                <br>
+                <%1- loc.getString(langKey, 'html.login.kicked_with_code') -%1>
+              </small>
+            </div>
+
+            <button type="submit" name="deleteAccount" value="1" class="btn btn-danger"><%1- loc.getString(langKey, 'html.settings.delete_account') -%1></button>
+          </form> -->
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

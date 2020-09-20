@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.your_oauth_apps') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-2"><%0- _SETTINGS_SIDEBAR -%0></div>
+
+        <div class="col-2"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.your_oauth_apps') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <a href="<%1- global.url.baseLocalized -%1>/settings/apps/create" class="btn btn-primary float-right" role="button">
+            <%1- loc.getString(langKey, 'html.settings.create_app') -%1>
+          </a>
+
+          <br>
+          <br>
+
+          <%2 if(page.apps && page.apps.length > 0) { %2>
+            <%2 for(const app of page.apps) { %2>
+            <div id="app_<%2- app.id -%2>">
+              <a href="<%1- global.url.baseLocalized -%1>/settings/apps/<%2- app.id -%2>">
+                <div class="appCard text-center">
+                  <img src="<%2- app.iconID ? `<%0- global.url.base -%0>/uploads/${app.iconID}.png` : `<%0- global.url.static -%0>/uploads/default.png` -%2>" class="img-fluid" style="max-width: 128px; max-height: 128px;"
+                    alt="<%1- loc.getString(langKey, 'html.authorize.app_logo') -%1>">
+                  <br>
+
+                  <%2= app.name -%2>
+                  <!-- TODO: Show some basic statistics -->
+                  <!-- TODO: Haven edit button and statistics button? -->
+                </div>
+              </a>
+            </div>
+            <%2 } %2>
+          <%2 } else { %2>
+            <strong><%1- loc.getString(langKey, 'html.settings.you_do_not_have_any_apps') -%1></strong>
+          <%2 } %2>
+        </div>
+
+        <div class="col-4"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

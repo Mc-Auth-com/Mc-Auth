@@ -1,0 +1,714 @@
+[
+  {
+    "term": "html.authorize.app_created_on",
+    "definition": "Erstellt",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_logo",
+    "definition": "Logo der Anwendung",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_created_by",
+    "definition": "Erstellt von {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_wants_access_to",
+    "definition": "Folgende Informationen werden mit <strong>{0}</strong> geteilt:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_creation_time",
+    "definition": "{0} erstellt",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.no_app_description",
+    "definition": "<em>Der Anwendungs-Besitzer hat keine Beschreibung verfasst</em>",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.authorizing_app",
+    "definition": "Zugriffsanfrage von {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.always_ask_for_app",
+    "definition": "Bei dieser App jedes Mal nachfragen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.will_redirect_to",
+    "definition": "Du wirst umgeleitet auf",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.login_request_from_app",
+    "definition": "<strong>{0}</strong> möchte deine Minecraft-Identität bestätigen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.scope.profile",
+    "definition": "Öffentliche Account-Daten",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.scope.profile.note",
+    "definition": "Aktueller Username, Skin, ...",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.your_minecraft_skin",
+    "definition": "Dein Minecraft-Skin",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.become_patron",
+    "definition": "Werde ein Patron!",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.legal_data_protection",
+    "definition": "Datenschutzerklärung",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.legal_info",
+    "definition": "Impressum",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.support_on_discord",
+    "definition": "Hilfe findest du auf unserem Discord",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.logged_in_as",
+    "definition": "Eingeloggt als {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.open_language_selection",
+    "definition": "Öffne das Menü zur Sprachwahl",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.toggle_dark_theme",
+    "definition": "Wechsle zwischen dem dunklen und hellen Design",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.your_minecraft_face",
+    "definition": "Dein Minecraft-Gesicht",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.content1",
+    "definition": "Du bist ein Entwickler? Wirf einen Blick auf unsere {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.content2",
+    "definition": "Zur Demo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step1",
+    "definition": "Besuche {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step2",
+    "definition": "Gib deinen Minecraft-Namen ein",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step3",
+    "definition": "Starte Minecraft und verbinde dich mit {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step4",
+    "definition": "Gib einen 6-stelligen Code ein, den du in Minecraft siehst, und schließe so den Login ab",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step5",
+    "definition": "Bestätige die angezeigte Anfrage oder verneine sie",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.title",
+    "definition": "Wie funktioniert es?",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.used_by",
+    "definition": "Mc-Auth.com wird bereits genutzt von:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.what_is.content1",
+    "definition": "Mc-Auth.com ermöglicht es Spielern, sich mit ihren Minecraft-Account einzuloggen, ohne dessen Passwort angeben zu müssen.<br>Andere Webseiten und Entwickler können diese Funktion nutzen, um eine Bestätigung anzufordern, dass du Zugriff auf einen bestimmten Account hast.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": "Muss in 2 einzelne Nachrichten aufgeteilt werden, damit <br> nicht in der Übersetzung vorkommt."
+  },
+  {
+    "term": "html.index.what_is.content2",
+    "definition": "Dank Mc-Auth.com ist es jeder Webseite und jedem Programm eine Login-Anfrage mittels Minecraft-Account anzufragen und durchzuführen.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.what_is.title",
+    "definition": "Was ist Mc-Auth.com?",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.already_logged_in",
+    "definition": "Du bist bereits eingeloggt",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.click_to_copy_minecraft_host_to_clipboard",
+    "definition": "Klicke, um die Server-Adresse in die Zwischenablage zu legen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.kicked_with_code",
+    "definition": "Du wirst automatisch vom Server gekickt und erhälst einen Code",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.six_digit_code",
+    "definition": "6-stelligen Code",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.start_minecraft_and_connect",
+    "definition": "Starte Minecraft und verbinde dich mit dem Server {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.stay_logged_in",
+    "definition": "Eingeloggt bleiben",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.your_minecraft_name",
+    "definition": "Dein Minecraft-Username",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.click_image_above_to_upload",
+    "definition": "Klicke auf das Bild oben, um ein neues hochzuladen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.click_to_show",
+    "definition": "Zum Anzeigen klicken",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.create_app",
+    "definition": "Eine neue Anwendung erstellen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.manage_app",
+    "definition": "Anwendung Verwalten",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.max_length_128_characters",
+    "definition": "Maximal 128 Zeichen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.max_length_512_characters",
+    "definition": "Maximal 512 Zeichen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.please_provide_exact_info",
+    "definition": "Bitte versuche die Angaben so genau wie möglich zu wählen, da sie öffentlich sichtbar sind.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.redirect_uris",
+    "definition": "Redirect URIs (eine pro Zeile, Groß-/Kleinschreibung beachten)",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.return_to_settings",
+    "definition": "Zurück zu den Einstellungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.you_do_not_have_any_apps",
+    "definition": "Du hast noch keine Anwendungen erstellt",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.your_applications_title",
+    "definition": "Deine Anwendungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.agree",
+    "definition": "Zustimmen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.create",
+    "definition": "Erstellen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.website",
+    "definition": "Webseite",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.deny",
+    "definition": "Ablehnen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.description",
+    "definition": "Beschreibung",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.documentation",
+    "definition": "Dokumentation",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.frontpage",
+    "definition": "Startseite",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.login",
+    "definition": "Login",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.logo",
+    "definition": "Logo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.logout",
+    "definition": "Logout",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.manage",
+    "definition": "Verwalten",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.name",
+    "definition": "Name",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.next",
+    "definition": "Weiter",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.save_changes",
+    "definition": "Änderungen Speichern",
+    "context": "Text should be placed on a button",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.settings",
+    "definition": "Einstellungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.notifications",
+    "definition": "Benachrichtigungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_settings",
+    "definition": "Kontoeinstellungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_security",
+    "definition": "Sicherheitseinstellungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.developer_settings",
+    "definition": "Entwicklereinstellungen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.oauth_apps",
+    "definition": "oAuth Apps",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.your_oauth_apps",
+    "definition": "Your oAuth Apps",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.editing_app",
+    "definition": "Editiere {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.username",
+    "definition": "Benutzername",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.email_address",
+    "definition": "E-Mail-Ad­res­se",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.name_info",
+    "definition": "Dieser Name entspricht immer deinem Namen in Minecraft.\n<br>\nWeitere Infos findest du auf\n{0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_info",
+    "definition": "Die Angabe einer E-Mail erhöht die Accountsicherheit auf <em>Mc-Auth.com</em>.\n<br>\nWeitere Einstellungen unter {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account",
+    "definition": "Konto löschen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_app",
+    "definition": "App löschen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account_warning",
+    "definition": "<strong>Dieser Vorgang löscht deinen Account auf <em>Mc-Auth.com</em> — Dein Minecraft-Account ist von dieser Aktion nicht betroffen.</strong>\n<br>\n<br>\n\nDieser Vorgang wird manuell innerhalb von <em>7 Tagen</em> durchgeführt.\n<br>\nWenn eine E-Mail hinterlegt ist, wirst du über die Löschung informiert.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.confirm_regenerate_secret",
+    "definition": "Möchten Sie wirklich einen neuen client_secret generieren?",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.subject",
+    "definition": "Bestätigen Sie ihre E-Mail-Adresse",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.greeting",
+    "definition": "Hallo {0},",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.please_confirm",
+    "definition": "Bitte bestätigen Sie ihre E-Mail-Adresse auf Mc-Auth.com.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_pending",
+    "definition": "Du hast angefangen {0} als deine E-Mail-Adresse hinzuzufügen.<br>Bitte prüfe deine Postfach, um den Vorgang abzuschließen.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.signature",
+    "definition": "— Sprax von Mc-Auth.com",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.button_label",
+    "definition": "Addresse bestätigen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.report_abuse",
+    "definition": "Wenn Sie diese E-Mail nicht angefordert haben, so können Sie diese Nachricht einfach ignorieren.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.follow_on_twitter",
+    "definition": "Folge {0} auf Twitter",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  }
+]

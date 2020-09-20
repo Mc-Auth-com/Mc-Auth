@@ -1,0 +1,9 @@
+<%1- loc.getString(langKey, 'email.confirm_email.greeting') %1>
+<%1- loc.getString(langKey, 'email.confirm_email.please_confirm') %1>
+
+<%1- global.url.baseLocalized -%1>/settings/confirm-email/<%2- page.confirm_mail.token -%2>
+
+<%1- loc.getString(langKey, 'email.confirm_email.signature') %1>
+
+
+<%1- loc.getString(langKey, 'email.confirm_email.report_abuse') %1>

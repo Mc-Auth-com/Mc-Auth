@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.create_app') -%1> | Mc-Auth.com</title>
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-2"><%0- _SETTINGS_SIDEBAR -%0></div>
+
+        <div class="col-1"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.create_app') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <div class="appCard">
+            <p><%1- loc.getString(langKey, 'html.settings.please_provide_exact_info') -%1></p>
+
+            <form method="POST">
+              <div class="form-group">
+                <label for="name"><%1- loc.getString(langKey, 'words.name') -%1><span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" name="name" maxlength="128" data-remaining="nameRemain"
+                  oninput="updateRemainingChars(this)" required>
+                <small id="nameRemain"
+                  class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_128_characters') -%1></small>
+              </div>
+
+              <div class="form-group">
+                <label for="website"><%1- loc.getString(langKey, 'words.website') /* TODO: use text 'The full URL to your application homepage.' */ -%1><span class="text-danger">*</span></label>
+                <input type="url" class="form-control" id="website" name="website" maxlength="512" data-remaining="websiteRemain"
+                  oninput="updateRemainingChars(this)" required>
+                <small id="websiteRemain"
+                  class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
+              </div>
+
+              <div class="form-group">
+                <label for="description"><%1- loc.getString(langKey, 'words.description') -%1></label>
+                <textarea rows="3" class="form-control" id="description" name="description" maxlength="512" data-remaining="descRemain"
+                  oninput="updateRemainingChars(this)"></textarea>
+                <small id="descRemain"
+                  class="form-text text-muted text-left"><%1- loc.getString(langKey, 'html.settings.max_length_512_characters') -%1></small>
+              </div>
+
+              <hr>
+              <div class="g-recaptcha" data-sitekey="<%0- global.reCaptchaPublic -%0>"></div>
+              <hr>
+
+              <button type="submit" class="btn btn-primary" id="submitBtn"><%1- loc.getString(langKey, 'words.create') -%1></button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>

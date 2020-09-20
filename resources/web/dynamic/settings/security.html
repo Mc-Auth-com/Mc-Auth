@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="<%1- langKey -%1>" class="h-100">
+
+<head>
+  <%0- _HEAD -%0>
+
+  <title><%1- loc.getString(langKey, 'html.settings.account_security') -%1> | Mc-Auth.com</title>
+</head>
+
+<body class="d-flex flex-column h-100 <%2- con.isDarkTheme ? 'dark-body text-light' : '' -%2>">
+  <%0- _HEADER -%0>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-2"><%0- _SETTINGS_SIDEBAR -%0></div>
+
+        <div class="col-1"></div>
+
+        <div class="col">
+          <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.account_security') -%1></h2>
+          <hr style="margin-top: 0;">
+
+          <h4><strong>Work In Progress</strong></h4>
+
+          <p style="font-weight: bold;">You'll soon be able to:</p>
+          <ul>
+            <li>Use 2FA to protect your <i>oAuth Apps (edit and delete)</i> (forced for verified apps)</li>
+            <li>See all your active sessions you are logged into [+ IP/Location] (e.g. different devices)</li>
+            <li>All the apps you've granted permission with filtering/sorting functions [+Scope/User-Agent/IP/Location]</li>
+          </ul>
+        </div>
+
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </main>
+
+  <%0- _FOOTER -%0>
+</body>
+
+</html>
