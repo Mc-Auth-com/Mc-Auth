@@ -646,5 +646,69 @@
     "term_plural": "",
     "reference": "",
     "comment": ""
+  },
+  {
+    "term": "email.confirm_email.subject",
+    "definition": "Bestätigen Sie ihre E-Mail-Adresse",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.greeting",
+    "definition": "Hallo {0},",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.please_confirm",
+    "definition": "Bitte bestätigen Sie ihre E-Mail-Adresse auf Mc-Auth.com.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_pending",
+    "definition": "Du hast angefangen {0} als deine E-Mail-Adresse hinzuzufügen.<br>Bitte prüfe deine Postfach, um den Vorgang abzuschließen.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.signature",
+    "definition": "— Sprax von Mc-Auth.com",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.button_label",
+    "definition": "Addresse bestätigen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.report_abuse",
+    "definition": "Wenn Sie diese E-Mail nicht angefordert haben, so können Sie diese Nachricht einfach ignorieren.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.follow_on_twitter",
+    "definition": "Folge {0} auf Twitter",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
   }
 ]

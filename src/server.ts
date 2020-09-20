@@ -5,12 +5,11 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { join as joinPath } from 'path';
 
-import { cfg, webAccessLogStream, dbCfg } from '.';
+import { cfg, webAccessLogStream, dbCfg, pageGenerator } from '.';
 import { ApiError, ApiErrs } from './utils/errors';
 import { loginRouter } from './routes/login';
 import { oAuthNoCookieRouter, oAuthRouter } from './routes/oAuth';
 import { staticPagesRouter } from './routes/staticPages';
-import { global } from './dynamicPageGenerator';
 import { stripLangKeyFromURL } from './utils/utils';
 import { getLocalization } from './localization';
 import { logoutRouter } from './routes/logout';
@@ -96,7 +95,7 @@ app.use(expressSession({
       database: dbCfg.database
     }).getPool() ?? undefined
   }),
-  secret: cfg.cookies.secret,
+  secret: cfg.secret,
   resave: false,
   saveUninitialized: false,
   rolling: true,
@@ -125,7 +124,7 @@ app.use((req, res, next) => {
     if (typeof langKey == 'string' &&
       langKey != getLocalization().defaultLanguage &&
       getLocalization().isAvailable(langKey)) {
-      return redirect ? res.redirect(global.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
+      return redirect ? res.redirect(pageGenerator.globals.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
     }
   } else {
     const acceptedLanguages = req.header('Accept-Language');
@@ -137,7 +136,7 @@ app.use((req, res, next) => {
         if (getLocalization().isAvailable(langKey)) {
           if (getLocalization().defaultLanguage == langKey) break;
 
-          return redirect ? res.redirect(global.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
+          return redirect ? res.redirect(pageGenerator.globals.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
         }
       }
     }

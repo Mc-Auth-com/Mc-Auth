@@ -5,8 +5,7 @@ import sharp from 'sharp';
 
 import { restful, isNumber } from '../utils/utils';
 import { ApiError, ApiErrs } from '../utils/errors';
-import { db } from '..';
-import { global } from '../dynamicPageGenerator';
+import { db, pageGenerator } from '..';
 
 const router = Router(),
   routerNoCookie = Router();
@@ -69,7 +68,7 @@ router.all('/', (req, res, next) => {
 
           db.createImage(req.session?.mcProfile.id, req.body, buffer)
             .then((appIcon) => {
-              const imgURL = `${global.url.base}/uploads/${appIcon.iconID}.png`;
+              const imgURL = `${pageGenerator.globals.url.base}/uploads/${appIcon.iconID}.png`;
 
               if (!appIcon.found) {
                 res.location(imgURL);

@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { renderPage, global, PageTemplate } from '../dynamicPageGenerator';
-import { restful, isNumber, getReturnURL } from '../utils/utils';
 import { ApiError } from '../utils/errors';
-import { db } from '..';
+import { db, pageGenerator } from '..';
 import { MojangAPI } from '../utils/spraxapi';
+import { PageTemplate } from '../dynamicPageGenerator';
+import { restful, isNumber, getReturnURL } from '../utils/utils';
 
 const router = Router();
 export const loginRouter = router;
@@ -12,10 +12,10 @@ export const loginRouter = router;
 router.all('/', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (req.session?.loggedIn) return res.redirect(getReturnURL(req) ?? global.url.base);
+      if (req.session?.loggedIn) return res.redirect(getReturnURL(req) ?? pageGenerator.globals.url.base);
 
       res.type('html')
-        .send(renderPage(PageTemplate.LOGIN, req, res));
+        .send(pageGenerator.renderPage(PageTemplate.LOGIN, req, res));
     },
     post: () => {
       const username: string | undefined = req.body.username,
@@ -45,7 +45,7 @@ router.all('/', (req, res, next) => {
           };
 
           req.session.save(() => {
-            return res.redirect(getReturnURL(req) ?? global.url.base);
+            return res.redirect(getReturnURL(req) ?? pageGenerator.globals.url.base);
           });
         })
         .catch(next);

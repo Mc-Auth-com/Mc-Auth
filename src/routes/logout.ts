@@ -1,6 +1,6 @@
 import { Router } from 'express';
+import { pageGenerator } from '..';
 
-import { global } from '../dynamicPageGenerator';
 import { restful, getReturnURL } from '../utils/utils';
 
 const router = Router();
@@ -9,7 +9,7 @@ export const logoutRouter = router;
 router.all('/', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session) return res.redirect(getReturnURL(req) ?? global.url.base);
+      if (!req.session) return res.redirect(getReturnURL(req) ?? pageGenerator.globals.url.base);
 
       // Store cookie properties for manual deletion
       const cookie = req.session.cookie;
@@ -30,7 +30,7 @@ router.all('/', (req, res, next) => {
         });
 
         // Redirect User-Agent
-        return res.redirect(getReturnURL(req) ?? global.url.base);
+        return res.redirect(getReturnURL(req) ?? pageGenerator.globals.url.base);
       });
     }
   });

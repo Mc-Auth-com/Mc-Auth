@@ -4,10 +4,14 @@ import rfs = require('rotating-file-stream');
 import { join as joinPath } from 'path';
 import { Server, createServer } from 'http';
 
-import { dbUtils } from './utils/database';
 import { mcAuthCfg, mcAuthDbCfg } from './global';
-import { loadConfig } from './utils/config';
 import { ApiError } from './utils/errors';
+import { dbUtils } from './utils/database';
+import { DynamicMailGenerator } from './dynamicEmailGenerator';
+import { DynamicPageGenerator } from './dynamicPageGenerator';
+import { getLocalization } from './localization';
+import { loadConfig } from './utils/config';
+import { mailUtils } from './utils/mail';
 
 export let cfg: mcAuthCfg = {
   listen: {
@@ -32,11 +36,9 @@ export let cfg: mcAuthCfg = {
     }
   },
   cookies: {
-    secure: false,
-    secret: require('crypto').randomBytes(1024).toString('base64')
+    secure: false
   },
   demo: {
-    cookieSecret: require('crypto').randomBytes(256).toString('base64'),
     mcAuth: {
       client_id: 'Create an app at Mc-Auth.com/settings/apps',
       client_secret: ''
@@ -45,7 +47,21 @@ export let cfg: mcAuthCfg = {
   reCAPTCHA: {
     public: '',
     private: ''
-  }
+  },
+  smtp: {
+    host: '127.0.0.1',
+    port: 465,
+
+    secure: true,
+
+    auth: {
+      username: 'user007',
+      password: 's3cr3t!'
+    },
+
+    from: 'Mc-Auth <mc-auth@localhost>'
+  },
+  secret: require('crypto').randomBytes(1024).toString('base64')
 };
 export let dbCfg: mcAuthDbCfg = {
   host: '127.0.0.1',
@@ -60,6 +76,10 @@ export let dbCfg: mcAuthDbCfg = {
 
 let server: Server | null;
 export let db: dbUtils;
+export let mailer: mailUtils;
+
+export let pageGenerator: DynamicPageGenerator;
+export let mailGenerator: DynamicMailGenerator;
 
 export const appVersion: string = JSON.parse(fs.readFileSync(joinPath(__dirname, '..', 'package.json'), 'utf-8')).version ?? 'UNKNOWN_APP_VERSION';
 
@@ -101,6 +121,10 @@ process.on('SIGUSR2', shutdownHook);  // The package 'nodemon' is using this sig
 
 /* Prepare webserver */
 db = new dbUtils(dbCfg);
+mailer = new mailUtils(cfg.smtp);
+
+pageGenerator = new DynamicPageGenerator(getLocalization());
+mailGenerator = new DynamicMailGenerator();
 
 export const webAccessLogStream = rfs.createStream('access.log', { interval: '1d', maxFiles: 14, path: joinPath(process.cwd(), 'logs', 'access'), compress: true }),
   errorLogStream = rfs.createStream('error.log', { interval: '1d', maxFiles: 90, path: joinPath(process.cwd(), 'logs', 'error') });
@@ -183,3 +207,7 @@ errorLogStream.on('error', (err) => {
     server.listen(cfg.listen.port, cfg.listen.host);
   }
 })();
+
+export function getSecret(maxLength: number = 1024): Buffer {
+  return Buffer.from(cfg.secret, 'base64').subarray(0, maxLength);
+}

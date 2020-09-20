@@ -1,6 +1,6 @@
 import { Pool, PoolClient } from 'pg';
 
-import { mcAuthDbCfg, OAuthApp, Grant, GrantType, OAuthAppIcon } from '../global';
+import { mcAuthDbCfg, OAuthApp, Grant, GrantType, OAuthAppIcon, mcAuthAccount } from '../global';
 import { ApiError, ApiErrs } from './errors';
 
 export class dbUtils {
@@ -33,6 +33,43 @@ export class dbUtils {
 
           resolve();
         });
+    });
+  }
+
+  async setAccountEmailAddress(mcUUID: string, email: string | null): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
+
+      this.pool.query('UPDATE accounts SET email =$2,email_pending =NULL,email_pending_since =NULL WHERE id=$1;',
+        [mcUUID, email], (err, _res) => {
+          if (err) return reject(err);
+
+          resolve();
+        });
+    });
+  }
+
+  async setAccountPendingEmailAddress(mcUUID: string, email: string | null): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
+
+      this.pool.query('UPDATE accounts SET email_pending =$2,email_pending_since =CURRENT_TIMESTAMP WHERE id=$1;', [mcUUID, email], (err, _res) => {
+        if (err) return reject(err);
+
+        resolve();
+      });
+    });
+  }
+
+  async getAccount(id: string): Promise<mcAuthAccount | null> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
+
+      this.pool.query('SELECT * FROM accounts WHERE id =$1;', [id], (err, res) => {
+        if (err) return reject(err);
+
+        resolve(res.rows.length > 0 ? RowUtils.toAccount(res.rows[0]) : null);
+      });
     });
   }
 
@@ -363,6 +400,17 @@ class RowUtils {
       verified: row.verified,
       deleted: row.deleted,
       created: row.created
+    };
+  }
+
+  static toAccount(row: any): mcAuthAccount {
+    return {
+      id: row.id,
+      name: row.name,
+      email: row.email,
+      emailPending: row.email_pending,
+      emailPendingSince: row.email_pending_since,
+      lastLogin: row.last_login
     };
   }
 

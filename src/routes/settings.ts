@@ -1,9 +1,10 @@
+import jwt from 'jsonwebtoken';
 import { Router } from 'express';
 import { post as httpPost } from 'superagent';
 
-import { db, cfg } from '..';
-import { global, PageTemplate, renderPage } from '../dynamicPageGenerator';
-import { restful, stripLangKeyFromURL, isNumber, toNeutralString, isHttpURL } from '../utils/utils';
+import { db, cfg, getSecret, mailer, pageGenerator } from '..';
+import { PageTemplate } from '../dynamicPageGenerator';
+import { restful, stripLangKeyFromURL, isNumber, toNeutralString, isHttpURL, isValidEmail } from '../utils/utils';
 import { ApiError, ApiErrs } from '../utils/errors';
 
 const router = Router();
@@ -11,29 +12,82 @@ export const settingsRouter = router;
 
 router.all('/', (req, res, next) => {
   restful(req, res, next, {
-    get: () => res.redirect(`${global.url.base}/settings/account`)
+    get: () => res.redirect(`${pageGenerator.globals.url.base}/settings/account`)
+  });
+});
+
+router.all('/confirm-email/:token', (req, res, next) => {
+  jwt.verify(req.params.token, getSecret(256), { algorithms: ['HS256'] }, (err, data: any) => {
+    if (err || data instanceof Buffer ||
+      !data || !data.id || !data.email) return next(ApiError.create(ApiErrs.INVALID_OR_EXPIRED_MAIL_CONFIRMATION));
+
+    db.getAccount(data.id)
+      .then((account) => {
+        if (!account || !account.emailPending ||
+          account.emailPending.toLowerCase() != data.email.toLowerCase()) return next(ApiError.create(ApiErrs.INVALID_OR_EXPIRED_MAIL_CONFIRMATION, { account, data }));
+
+        db.setAccountEmailAddress(data.id, data.email)
+          .then(() => {
+            if (account.email) {
+              // TODO: Send information mail to old email
+            }
+
+            res.send('Your email has been successfully updated'); // TODO: Send html
+          })
+          .catch(next);
+      })
+      .catch(next);
   });
 });
 
 router.all('/account', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
-      res.type('html')
-        .send(renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res));
+      db.getAccount(req.session?.mcProfile.id)
+        .then((account) => {
+          if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile.id': req.session?.mcProfile.id }));
+
+          res.type('html')
+            .send(pageGenerator.renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res, { account }));
+        })
+        .catch(next);
     },
-    // post: () => { } // TODO
+    post: () => {
+      if (req.body.updateMail == '1' && req.body.mailAddr) {
+        if (!isValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, { body: req.body.mailAddr }));
+
+        db.getAccount(req.session?.mcProfile.id)
+          .then((account) => {
+            if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile.id': req.session?.mcProfile.id }));
+            if (account.email?.toLowerCase() == req.body.mailAddr.toLowerCase()) return res.redirect(`${pageGenerator.globals.url.base}/settings/account`);  // nothing changed
+
+            db.setAccountPendingEmailAddress(req.session?.mcProfile.id, req.body.mailAddr)
+              .then(() => {
+                mailer.sendConfirmEmail(account, req.body.mailAddr, res.locals.lang)
+                  .then(() => {
+                    res.redirect(`${pageGenerator.globals.url.base}/settings/account`);
+                  })
+                  .catch(next);
+              })
+              .catch(next);
+          })
+          .catch(next);
+      } else {
+        return next(new ApiError(400, 'Invalid request body', false, { body: req.body }));
+      }
+    }
   });
 });
 
 router.all('/security', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageTemplate.SETTINGS_SECURITY, req, res));
+        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_SECURITY, req, res));
     },
     // post: () => { } // TODO
   });
@@ -42,10 +96,10 @@ router.all('/security', (req, res, next) => {
 router.all('/notifications', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageTemplate.SETTINGS_NOTIFICATIONS, req, res));
+        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_NOTIFICATIONS, req, res));
     },
     // post: () => { } // TODO
   });
@@ -54,10 +108,10 @@ router.all('/notifications', (req, res, next) => {
 router.all('/apps/create', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
+        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
     },
     post: () => {
       if (cfg.reCAPTCHA.private.length == 0) return next(ApiError.create(ApiErrs.NO_RECAPTCHA));
@@ -92,7 +146,7 @@ router.all('/apps/create', (req, res, next) => {
           if (httpRes.body?.success != true) return next(new ApiError(400, 'reCAPTCHA failed', false, { body: req.body, reCAPTCHA_body: httpRes.body }));
 
           db.createApp(req.session?.mcProfile.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
-            .then((app) => res.redirect(`${global.url.base}/settings/apps/${app.id}`))
+            .then((app) => res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`))
             .catch(next);
         });
     }
@@ -104,13 +158,13 @@ router.all('/apps/:appID?', (req, res, next) => {
 
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       if (appID == null) {
         db.getApps(req.session.mcProfile.id)
           .then((apps) => {
             res.type('html')
-              .send(renderPage(PageTemplate.SETTINGS_APPS, req, res, { apps }));
+              .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS, req, res, { apps }));
           })
           .catch(next);
       } else if (isNumber(appID)) {
@@ -120,7 +174,7 @@ router.all('/apps/:appID?', (req, res, next) => {
             if (app.owner != req.session?.mcProfile.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
             res.type('html')
-              .send(renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, { apps: [app] }));
+              .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, { apps: [app] }));
           })
           .catch(next);
       } else {
@@ -157,7 +211,7 @@ router.all('/apps/:appID?', (req, res, next) => {
 
                 db.setAppDeleted(app.id)
                   .then(() => {
-                    res.redirect(`${global.url.base}/settings/apps`)
+                    res.redirect(`${pageGenerator.globals.url.base}/settings/apps`)
                   })
                   .catch(next);
               })
@@ -207,7 +261,7 @@ router.all('/apps/:appID?', (req, res, next) => {
 
             db.setApp(app.id, toNeutralString(appName), toNeutralString(appWebsite), redirectURIs, descLines.join('\n') || null, iconID || null)
               .then(() => {
-                res.redirect(`${global.url.base}/settings/apps/${app.id}`);
+                res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`);
               })
               .catch(next);
           }

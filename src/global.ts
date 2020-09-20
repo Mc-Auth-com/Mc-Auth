@@ -27,12 +27,9 @@ export interface mcAuthCfg {
 
   readonly cookies: {
     readonly secure: boolean;
-    readonly secret: string;
   }
 
   readonly demo: {
-    readonly cookieSecret: string;
-
     readonly mcAuth: {
       readonly client_id: string;
       readonly client_secret: string;
@@ -43,6 +40,22 @@ export interface mcAuthCfg {
     readonly public: string;
     readonly private: string;
   }
+
+  readonly smtp: {
+    readonly host: string;
+    readonly port: number;
+
+    readonly secure: boolean;
+
+    readonly auth: {
+      readonly username: string;
+      readonly password: string;
+    };
+
+    readonly from: string;
+  }
+
+  readonly secret: string;
 }
 
 export interface mcAuthDbCfg {
@@ -73,6 +86,17 @@ export interface OAuthApp {
   readonly deleted: boolean;
 
   readonly created: Date;
+}
+
+export interface mcAuthAccount {
+  readonly id: string;
+  readonly name: string;
+
+  readonly email: string | null;
+  readonly emailPending: string | null;
+  readonly emailPendingSince: Date | null;
+
+  readonly lastLogin: Date | null;
 }
 
 export interface OAuthAppIcon {

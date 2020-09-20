@@ -76,5 +76,23 @@
     "args": [
       "<a href=\"<%1- global.url.baseLocalized -%1>/settings/notifications\"><%1- loc.getString(langKey, 'words.notifications') -%1></a>"
     ]
+  },
+  {
+    "term": "email.confirm_email.greeting",
+    "args": [
+      "<%2- page.confirm_mail.mcProfile.name -%2>"
+    ]
+  },
+  {
+    "term": "email.confirm_email.follow_on_twitter",
+    "args": [
+      "<a href=\"https://twitter.com/SpraxDev\">@SpraxDev</a>"
+    ]
+  },
+  {
+    "term": "html.settings.form.email_pending",
+    "args": [
+      "<code><%2= page.account.emailPending -%2></code>"
+    ]
   }
 ]

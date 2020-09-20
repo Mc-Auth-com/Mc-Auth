@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
 import { isIPv4, isIPv6 } from 'net';
+import { Request, Response, NextFunction } from 'express';
 
 import { ApiError, ApiErrs } from './errors';
-import { global } from '../dynamicPageGenerator';
+import { pageGenerator } from '..';
 
-const FQDN_PATTERN = /^(?=.{1,253})(?!.*--.*)(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-)\.){1,}(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-))\.?$/i;
+const FQDN_PATTERN = /^(?=.{1,253})(?!.*--.*)(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-)\.){1,}(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-))\.?$/i,
+  EMAIL_PATTERN = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
 /**
  * **Example usage**
@@ -65,6 +66,10 @@ export function isHttpURL(str: string): boolean {
  */
 export function isValidFQDN(str: string): boolean {
   return FQDN_PATTERN.test(str);
+}
+
+export function isValidEmail(str: string): boolean {
+  return str.length > 5 && str.length < 256 && EMAIL_PATTERN.test(str);
 }
 
 /**
@@ -167,5 +172,5 @@ export function getReturnURL(req: Request): string | null {
   returnStr = returnStr.trim();
   if (returnStr.length == 0 || returnStr.charAt(0) != '/') return null;
 
-  return global.url.base + stripParamsFromURL(returnStr);
+  return pageGenerator.globals.url.base + stripParamsFromURL(returnStr);
 }

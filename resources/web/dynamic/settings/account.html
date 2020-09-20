@@ -17,7 +17,6 @@
 
         <div class="col-1"></div>
 
-        <!-- TODO: Public Profile Information (fetched from Mojang, link to SkinDB), Export Account Data -->
         <div class="col">
           <h2 style="margin-bottom: 0;"><%1- loc.getString(langKey, 'html.settings.account_settings') -%1></h2>
           <hr style="margin-top: 0;">
@@ -26,8 +25,9 @@
 
           <p style="font-weight: bold;">You'll soon be able to:</p>
           <ul>
-            <li>Add a mail address</li>
-            <li>Delete your account without contacting me via mail</li>
+            <li>See a preview of your public account information (with link to SkinDB)</li>
+            <li>Export all the data associated with your account</li>
+            <li>Delete your account without contacting me via email</li>
           </ul>
 
           <!-- Username & Mail -->
@@ -44,15 +44,18 @@
               <label for="mailAddr"><u><%1- loc.getString(langKey, 'words.email_address') -%1></u></label>
 
               <div class="input-group">
-                <!-- TODO: Insert current -->
-                <input id="mailAddr" name="mailAddr" type="email" class="form-control" value="Coming soon" aria-describedby="mailAddrInfo" readonly>
+                <%2 if(page.account.emailPending && (Date.now() - 48*60*60*1000 /* 48h in ms */) <= page.account.emailPendingSince) { %2>
+                  <strong class="text-danger"><%1- loc.getString(langKey, 'html.settings.form.email_pending') -%1></strong>
+                <%2 } %2>
+
+                <input id="mailAddr" name="mailAddr" type="email" class="form-control" value="<%2= page.account.email -%2>" aria-describedby="mailAddrInfo">
 
                 <div class="input-group-append">
                   <div class="input-group-text">
-                    <!-- TODO: Color icons -->
-                    <!-- TODO: Only show one of them at a time (confirmed/not confirmed or hide when no mail given) -->
-                    <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/check.svg">
-                    <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/alert-triangle.svg">
+                    <%2 if(page.account.email) { %2>
+                      <!-- TODO: Color icon -->
+                      <img width="24px" height="24px" src="<%0- global.url.static -%0>/img/icons/check.svg">
+                    <%2 } %2>
                   </div>
                 </div>
               </div>
@@ -65,9 +68,12 @@
             <button type="submit" name="updateMail" value="1" class="btn btn-success"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
           </form>
 
+          <!-- Uncomment as soon as 'delete account' is added again -->
+          <!--
           <br>
           <hr>
           <br>
+          -->
 
           <!-- Delete Account -->
           <!-- Currently not implemented as parts of the system rely on information marked as deleted instead of being deleted

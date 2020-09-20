@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import { db } from '..';
-import { global, PageTemplate, renderPage } from '../dynamicPageGenerator';
 import { ApiError, ApiErrs } from '../utils/errors';
+import { db, pageGenerator } from '..';
+import { PageTemplate } from '../dynamicPageGenerator';
 import { MojangAPI } from '../utils/spraxapi';
 import { restful, isNumber, stripLangKeyFromURL, stripParamsFromURL, appendParamsToURL } from '../utils/utils';
 
@@ -73,7 +73,7 @@ routerNoCookie.all('/token', (req, res, next) => {
 router.all('/authorize', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       const clientID = req.query.client_id,
         redirectURI = req.query.redirect_uri,
@@ -118,7 +118,7 @@ router.all('/authorize', (req, res, next) => {
               MojangAPI.getProfile(app.owner)
                 .then((appOwner) => {
                   res.type('html')
-                    .send(renderPage(PageTemplate.AUTHORIZE, req, res, { apps: [app], grant, appOwner: appOwner || undefined }));
+                    .send(pageGenerator.renderPage(PageTemplate.AUTHORIZE, req, res, { apps: [app], grant, appOwner: appOwner || undefined }));
                 })
                 .catch(next);
             })
@@ -129,7 +129,7 @@ router.all('/authorize', (req, res, next) => {
     post: () => {
       res.locals.sendJSON = true; // Used by Error-Handler
 
-      if (!req.session?.loggedIn) return res.redirect(`${global.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       const grantID = req.body.authenticity_token,
         clientID = req.body.client_id,

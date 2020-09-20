@@ -114,6 +114,8 @@ CREATE TABLE "public"."accounts" (
   "id" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
   "name" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
   "email" varchar(255) COLLATE "pg_catalog"."default",
+  "email_pending" varchar(255) COLLATE "pg_catalog"."default",
+  "email_pending_since" timestamptz(0),
   "last_login" timestamptz(0)
 );
 

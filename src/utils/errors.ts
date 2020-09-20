@@ -106,9 +106,10 @@ export class ApiErrs {
   static readonly INVALID_GRANT_TYPE: ApiErrTemplate = { httpCode: 400, message: 'Invalid grant_type', logErr: false };
   static readonly INVALID_CODE_FOR_TOKEN_EXCHANGE: ApiErrTemplate = { httpCode: 400, message: 'Invalid code! expired? Wrong redirect_uri?', logErr: false };
 
+  static readonly INVALID_OR_EXPIRED_MAIL_CONFIRMATION: ApiErrTemplate = { httpCode: 400, message: 'Invalid or expired email confirmation token', logErr: false };
+
   /* 5xx */
   static readonly INTERNAL_SERVER_ERROR: ApiErrTemplate = { httpCode: 500, message: 'An unknown server error occurred', logErr: true };
-
   static readonly NO_DATABASE: ApiErrTemplate = { httpCode: 500, message: 'No database connection', logErr: true };
   static readonly NO_RECAPTCHA: ApiErrTemplate = { httpCode: 500, message: 'reCAPTCHA has not been configured', logErr: true };
   static readonly SRV_GENERATING_ACCESS_TOKEN: ApiErrTemplate = { httpCode: 500, message: 'Failed generating access_token', logErr: true };

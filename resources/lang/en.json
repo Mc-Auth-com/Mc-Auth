@@ -616,6 +616,14 @@
     "comment": ""
   },
   {
+    "term": "html.settings.form.email_pending",
+    "definition": "You've requested adding {0} as your email address.<br>Please check your mails to confirm it.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "html.settings.delete_account",
     "definition": "Delete account",
     "context": "",
@@ -642,6 +650,62 @@
   {
     "term": "html.settings.confirm_regenerate_secret",
     "definition": "Do you really want to generate a new client_secret?",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.subject",
+    "definition": "Confirm your email address",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.greeting",
+    "definition": "Greetings {0},",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.please_confirm",
+    "definition": "Please confirm your email address on Mc-Auth.com.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.signature",
+    "definition": "— Sprax from Mc-Auth.com",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.button_label",
+    "definition": "Confirm address",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.report_abuse",
+    "definition": "If you did not request this email, you can simply ignore it.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.follow_on_twitter",
+    "definition": "Follow {0} on Twitter",
     "context": "",
     "term_plural": "",
     "reference": "",

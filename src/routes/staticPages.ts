@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction, Router } from 'express';
+import { pageGenerator } from '..';
 
-import { renderPage, PageTemplate } from '../dynamicPageGenerator';
+import { PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 
 const router = Router();
@@ -21,7 +22,7 @@ function createHandler(path: string): (req: Request, res: Response, next: NextFu
     restful(req, res, next, {
       get: () => {
         res.type('html')
-          .send(renderPage(pages[path], req, res));
+          .send(pageGenerator.renderPage(pages[path], req, res));
       }
     });
   };

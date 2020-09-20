@@ -1,23 +1,22 @@
 import { CookieOptions, Router } from 'express';
-import jwt from 'jsonwebtoken';
 import { post as httpPost } from 'superagent';
+import jwt from 'jsonwebtoken';
 
-import { cfg } from '..';
-import { global, PageTemplate, renderPage } from '../dynamicPageGenerator';
 import { ApiError, ApiErrs } from '../utils/errors';
+import { cfg, getSecret, pageGenerator } from '..';
+import { PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 
 const cookieOptions: CookieOptions = { httpOnly: true, path: '/', sameSite: 'strict' };
-const demoSecret = Buffer.from(cfg.demo.cookieSecret, 'base64');
 
 const router = Router();
 export const demoRouter = router;
 
-const redirectURI = global.url.base + '/demo/login';
+const redirectURI = pageGenerator.globals.url.base + '/demo/login';
 
 router.all('/', (req, res, next) => {
   restful(req, res, next, {
-    get: async (): Promise<void> => {
+    get: () => {
       // Error? => Failed login
       if (req.query.error) {
         if (req.cookies.demoSession) {  // delete old login if needed
@@ -26,7 +25,7 @@ router.all('/', (req, res, next) => {
 
         // Send html with error message
         res.type('html')
-          .send(renderPage(PageTemplate.DEMO, req, res, {
+          .send(pageGenerator.renderPage(PageTemplate.DEMO, req, res, {
             demo: {
               err: {
                 name: req.query.error as string,
@@ -35,17 +34,18 @@ router.all('/', (req, res, next) => {
             }
           }));
       } else {
+        let demoData;
+
         try {
           // Verify if logged in (cookie exists) and is valid (we don't want to render user-input on the client)
-          const demoData = req.cookies.demoSession ?
-            await jwt.verify(req.cookies.demoSession, demoSecret, { algorithms: ['HS256'] }) as { iat: number, mcProfile: object } :
-            null;
-
-          res.type('html')
-            .send(renderPage(PageTemplate.DEMO, req, res, { demo: { mcProfile: demoData?.mcProfile || undefined } }));
+          demoData = req.cookies.demoSession ?
+            jwt.verify(req.cookies.demoSession, getSecret(256), { algorithms: ['HS256'] }) as { iat: number, mcProfile: object } :
+            undefined;
         } catch (err) {
-          return next(err);
         }
+
+        res.type('html')
+          .send(pageGenerator.renderPage(PageTemplate.DEMO, req, res, { demo: { mcProfile: demoData?.mcProfile || undefined } }));
       }
     }
   });
@@ -55,10 +55,10 @@ router.all('/login', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
       if (req.query.error) {  // User did authenticate but Mc-Auth sends us an error
-        return res.redirect(`${global.url.base}/demo?error=${req.query.error}${req.query.error_description ? `&error_description=${req.query.error_description}` : ''}`);
+        return res.redirect(`${pageGenerator.globals.url.base}/demo?error=${req.query.error}${req.query.error_description ? `&error_description=${req.query.error_description}` : ''}`);
       } else if (!req.query.code) {  // User did not authenticate yet, redirecting to Mc-Auth.com
         const authReqURL =
-          global.url.base + // use 'https://Mc-Auth.com' instead
+          pageGenerator.globals.url.base + // use 'https://Mc-Auth.com' instead
           '/oAuth2/authorize' +
           '?client_id=' + // Your client_id from https://mc-auth.com/de/settings/apps
           cfg.demo.mcAuth.client_id +
@@ -70,7 +70,7 @@ router.all('/login', (req, res, next) => {
         res.redirect(authReqURL);
       } else {
         const exchangeReqURL =
-          global.url.base + // use 'https://Mc-Auth.com' instead
+          pageGenerator.globals.url.base + // use 'https://Mc-Auth.com' instead
           '/oAuth2/token';
 
         httpPost(exchangeReqURL)
@@ -99,9 +99,9 @@ router.all('/login', (req, res, next) => {
                   id: httpBody.body.data.profile.id,
                   name: httpBody.body.data.profile.name
                 }
-              }, demoSecret, { algorithm: 'HS256' }), cookieOptions);
+              }, getSecret(256), { algorithm: 'HS256' }), cookieOptions);
 
-            return res.redirect(`${global.url.base}/demo`);
+            return res.redirect(`${pageGenerator.globals.url.base}/demo`);
           });
       }
     }
@@ -113,7 +113,7 @@ router.all('/logout', (req, res, next) => {
     get: () => {
       res.clearCookie('demoSession', cookieOptions);
 
-      res.redirect(`${global.url.base}/demo`);
+      res.redirect(`${pageGenerator.globals.url.base}/demo`);
     }
   });
 });

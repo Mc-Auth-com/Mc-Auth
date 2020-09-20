@@ -11,7 +11,7 @@
     "build": "tsc",
     "start": "cross-env NODE_ENV=production nodemon --enable-source-maps build/index.js",
     "devStart": "cross-env NODE_ENV=development ts-node src/index.ts",
-    "dev": "nodemon --ext ts,html,json --watch ./src --watch ./resources/lang --watch ./resources/web/dynamic --exec \"npm run devStart\""
+    "dev": "nodemon --ext ts,html,json --watch ./src --watch ./resources/lang --watch ./resources/web/dynamic --watch ./resources/email --exec \"npm run devStart\""
   },
   "author": {
     "name": "Christian Koop",
@@ -40,6 +40,7 @@
     "moment": "^2.27.0",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
+    "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
     "object-assign-deep": "^0.4.0",
     "pg": "^8.3.3",
@@ -57,6 +58,7 @@
     "@types/express-session": "^1.17.0",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.1",
+    "@types/nodemailer": "^6.4.0",
     "@types/object-assign-deep": "^0.4.0",
     "@types/pg": "^7.14.4",
     "@types/request": "^2.48.5",
