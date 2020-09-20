@@ -40,6 +40,7 @@ export class mailUtils {
       this.mailer.sendMail({ to: `${name} <${email}>`, subject, html, text }, (err, info) => {
         if (err) return reject(err);
 
+        console.log(`[INFO] Sent mail ${info.messageId} to ${name} with subject ${subject}`);
         resolve(info);
       });
     });
