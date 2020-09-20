@@ -74,7 +74,7 @@
     "@types/sharp": "^0.26.0",
     "@types/superagent": "^4.1.10",
     "cross-env": "^7.0.2",
-    "ts-node": "^8.10.2",
+    "ts-node": "^9.0.0",
     "typescript": "^3.9.7"
   },
   "nodemonConfig": {
