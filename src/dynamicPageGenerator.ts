@@ -1,6 +1,6 @@
 import * as ejs from 'ejs';
 import * as express from 'express';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
 
@@ -91,7 +91,7 @@ export class DynamicPageGenerator {
       },
       currLocalizedURL: {},
       currNonLocalizedURL: this.globals.url.base + stripLangKeyFromURL(stripParamsFromURL(req.originalUrl)),
-      moment: moment().locale(res.locals.lang)
+      moment: getLocalization().momentInstances[res.locals.lang]
     }
 
     for (const langKey in getLocalization().languages) {

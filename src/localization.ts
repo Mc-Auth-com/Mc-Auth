@@ -4,6 +4,7 @@ import { readFileSync, readdirSync, statSync } from 'fs';
 
 import { ApiError } from './utils/errors';
 import { formatStr } from './utils/utils';
+import moment, { Moment } from 'moment';
 
 let loc: Localization | null = null;
 
@@ -14,6 +15,7 @@ let loc: Localization | null = null;
  */
 export class Localization {
   readonly languages: { [key: string /* langKey */]: { [key: string /* strKey/term */]: string /* localized string */ } };
+  readonly momentInstances: { [key: string /* langKey */]: Moment } = {};
 
   defaultLanguage: string;
 
@@ -29,6 +31,10 @@ export class Localization {
 
     this.languages = languages;
     this.defaultLanguage = defaultLanguage;
+
+    for (const langKey in this.languages) {
+      this.momentInstances[langKey] = moment().locale(langKey);
+    }
   }
 
   getString(langKey: string, strKey: string): string {
