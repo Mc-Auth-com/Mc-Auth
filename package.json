@@ -11,7 +11,7 @@
     "build": "tsc",
     "start": "cross-env NODE_ENV=production nodemon --enable-source-maps build/index.js",
     "devStart": "cross-env NODE_ENV=development ts-node src/index.ts",
-    "dev": "nodemon --ext ts,html,json --watch ./src --watch ./resources/lang --watch ./resources/web/dynamic --watch ./resources/email --exec \"npm run devStart\""
+    "dev": "nodemon --ext ts,html,json,txt --watch ./src --watch ./resources/lang --watch ./resources/web/dynamic --watch ./resources/email --exec \"npm run devStart\""
   },
   "author": {
     "name": "Christian Koop",
