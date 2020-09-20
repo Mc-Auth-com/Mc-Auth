@@ -64,7 +64,7 @@ export class Localization {
 
 export function getLocalization(): Localization {
   if (!loc) {
-    /* Read language files and instanciate Localization */
+    /* Read language files and instantiate Localization */
     const langPath = joinPath(__dirname, '..', 'resources', 'lang');
     const locArgs = JSON.parse(readFileSync(joinPath(langPath, 'arguments.json'), 'utf-8'));
 
