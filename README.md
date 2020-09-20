@@ -31,7 +31,7 @@ So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started w
 * Finish settings pages
   * Account
     * Show public Minecraft account data (as example)
-    * Adding and confirming email address
+    * [X] Adding and confirming email address
     * Export account data
   * Account Security
     * Show active sessions (+IP, User-Agent, ...)
