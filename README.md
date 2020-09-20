@@ -6,19 +6,19 @@ Mc-Auth-Web is used for [mc-auth.com](https://mc-auth.com). You can easily login
 It aims to be highly transparent to users **and** developers.
 Thanks to this transparency it is easily compliant with most data protection laws e.g. the **[GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)**.
 
-### Another Authentificatio Service for Minecraft? Really?
+### Another Authentication Service for Minecraft? Really?
 I know there is *[MCAuth](https://github.com/MC-Auth) by inventivetalent* or *[Minecraft oAuth](https://mc-oauth.net/) by Deftware* (and some more) but I wanted something different for my project [SkinDB.net](https://skindb.net).
 They look neat and both work, but mentions nowhere what happens with your data (I live inside the EU, so I need to be GDPR compliant!).
 Another problem would be that I wanted full oAuth2 implementation. What normally would be done by Mojang as account holders, but they didn't (at least until now).
 
-So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started writeing down what [mc-auth.com](https://mc-auth.com) should be able to do and what the user should be able to do.
+So I read some [oAuth2 paper](https://tools.ietf.org/html/rfc6749) and started writing down what [mc-auth.com](https://mc-auth.com) should be able to do and what the user should be able to do.
 
 ## Setup
 **You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) on your machine and a PostgreSQL instance**
 
 1. Prepare your PostgreSQL server by running `./database-setup.sql`
 2. `npm install`
-3. `npm run build` (needs to be rerun everytime the app is updated)
+3. `npm run build` (needs to be rerun every time the app is updated)
 4. `npm run start` Or you can use `npm run dev` to automatically recompile on file changes (not recommended for production)
 4. Configure all files inside `./storage` (automatically generated)
 6. Type `rs` into the console or restart the process
