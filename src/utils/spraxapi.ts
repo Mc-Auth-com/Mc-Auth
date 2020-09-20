@@ -1,5 +1,6 @@
 // TODO: Move this to own (public) npm package
 import { get as getHttp } from 'superagent';
+
 import { httpUserAgent } from './errors';
 
 export class MojangAPI {

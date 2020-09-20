@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { pageGenerator } from '..';
 
+import { pageGenerator } from '..';
 import { restful, getReturnURL } from '../utils/utils';
 
 const router = Router();

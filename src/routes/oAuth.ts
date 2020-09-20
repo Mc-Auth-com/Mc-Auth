@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { ApiError, ApiErrs } from '../utils/errors';
 import { db, pageGenerator } from '..';
-import { PageTemplate } from '../dynamicPageGenerator';
+import { ApiError, ApiErrs } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
+import { PageTemplate } from '../dynamicPageGenerator';
 import { restful, isNumber, stripLangKeyFromURL, stripParamsFromURL, appendParamsToURL } from '../utils/utils';
 
 // TODO Add rate limiting

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { ApiError } from '../utils/errors';
 import { db, pageGenerator } from '..';
+import { ApiError } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { restful, isNumber, getReturnURL } from '../utils/utils';

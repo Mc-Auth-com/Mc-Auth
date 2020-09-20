@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import { readFileSync } from 'fs';
-import { join as joinPath } from 'path';
 import sharp from 'sharp';
+import { join as joinPath } from 'path';
+import { readFileSync } from 'fs';
+import { Router } from 'express';
 
-import { restful, isNumber } from '../utils/utils';
-import { ApiError, ApiErrs } from '../utils/errors';
 import { db, pageGenerator } from '..';
+import { ApiError, ApiErrs } from '../utils/errors';
+import { restful, isNumber } from '../utils/utils';
 
 const router = Router(),
   routerNoCookie = Router();

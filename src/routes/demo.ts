@@ -1,9 +1,9 @@
+import jwt from 'jsonwebtoken';
 import { CookieOptions, Router } from 'express';
 import { post as httpPost } from 'superagent';
-import jwt from 'jsonwebtoken';
 
-import { ApiError, ApiErrs } from '../utils/errors';
 import { cfg, getSecret, pageGenerator } from '..';
+import { ApiError, ApiErrs } from '../utils/errors';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 

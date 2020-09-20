@@ -1,10 +1,10 @@
 // TODO: Think of a new file structure for en.json. It needs to be easily translatable and contain info like 'de', 'de_DE', 'Deutsch'
+import moment, { Moment } from 'moment';
 import { join as joinPath } from 'path';
 import { readFileSync, readdirSync, statSync } from 'fs';
 
 import { ApiError } from './utils/errors';
 import { formatStr } from './utils/utils';
-import moment, { Moment } from 'moment';
 
 let loc: Localization | null = null;
 

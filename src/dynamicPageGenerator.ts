@@ -1,13 +1,13 @@
 import * as ejs from 'ejs';
 import * as express from 'express';
+import { join as joinPath } from 'path';
 import { Moment } from 'moment';
 import { readFileSync } from 'fs';
-import { join as joinPath } from 'path';
 
 import { cfg } from '.';
-import { stripLangKeyFromURL, stripParamsFromURL } from './utils/utils';
-import { getLocalization, Localization } from './localization';
 import { OAuthApp, Grant, mcAuthAccount } from './global';
+import { getLocalization, Localization } from './localization';
+import { stripLangKeyFromURL, stripParamsFromURL } from './utils/utils';
 
 const dynamicWebPath = joinPath(__dirname, '..', 'resources', 'web', 'dynamic');
 

@@ -1,22 +1,22 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import expressSession from 'express-session';
 import expressSessionPG from 'connect-pg-simple';
-import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { join as joinPath } from 'path';
 
 import { cfg, webAccessLogStream, dbCfg, pageGenerator } from '.';
 import { ApiError, ApiErrs } from './utils/errors';
+import { dbUtils } from './utils/database';
+import { demoRouter } from './routes/demo';
+import { getLocalization } from './localization';
 import { loginRouter } from './routes/login';
+import { logoutRouter } from './routes/logout';
 import { oAuthNoCookieRouter, oAuthRouter } from './routes/oAuth';
+import { settingsRouter } from './routes/settings';
 import { staticPagesRouter } from './routes/staticPages';
 import { stripLangKeyFromURL } from './utils/utils';
-import { getLocalization } from './localization';
-import { logoutRouter } from './routes/logout';
-import { dbUtils } from './utils/database';
-import { settingsRouter } from './routes/settings';
 import { uploadsRouter, uploadsNoCookieRouter } from './routes/uploads';
-import { demoRouter } from './routes/demo';
 
 export const app = express();
 app.disable('x-powered-by');

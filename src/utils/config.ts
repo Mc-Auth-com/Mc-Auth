@@ -1,7 +1,6 @@
 import objectAssignDeep from 'object-assign-deep';
-
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { dirname } from 'path';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 
 export function loadConfig(defaultCfg: object, path: string): object {
   // Create directory if it does not exist

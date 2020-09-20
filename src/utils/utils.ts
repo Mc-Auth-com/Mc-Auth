@@ -1,8 +1,8 @@
 import { isIPv4, isIPv6 } from 'net';
 import { Request, Response, NextFunction } from 'express';
 
-import { ApiError, ApiErrs } from './errors';
 import { pageGenerator } from '..';
+import { ApiError, ApiErrs } from './errors';
 
 const FQDN_PATTERN = /^(?=.{1,253})(?!.*--.*)(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-)\.){1,}(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-))\.?$/i,
   EMAIL_PATTERN = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;

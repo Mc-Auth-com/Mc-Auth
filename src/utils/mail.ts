@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import Mail from 'nodemailer/lib/mailer';
 import nodemailer from 'nodemailer';
 
+import { getSecret, mailGenerator } from '..';
 import { mcAuthAccount } from '../global';
 import { getLocalization } from '../localization';
-import { getSecret, mailGenerator } from '..';
 import { MailTemplate } from '../dynamicEmailGenerator';
 
 /*

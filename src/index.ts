@@ -1,6 +1,5 @@
 import fs = require('fs');
 import rfs = require('rotating-file-stream');
-
 import { join as joinPath } from 'path';
 import { Server, createServer } from 'http';
 

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, Router } from 'express';
-import { pageGenerator } from '..';
 
+import { pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 

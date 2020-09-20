@@ -1,8 +1,8 @@
-import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
+import { readFileSync } from 'fs';
 
-import { getLocalization } from './localization';
 import { pageGenerator } from '.';
+import { getLocalization } from './localization';
 
 const dynamicMailPath = joinPath(__dirname, '..', 'resources', 'email');
 

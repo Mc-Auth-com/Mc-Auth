@@ -1,7 +1,7 @@
 import { post as httpPost } from 'superagent';
-import { cfg, appVersion } from '..';
-
 import { type as osType } from 'os';
+
+import { cfg, appVersion } from '..';
 
 export const httpUserAgent = `MC-Auth.org/${appVersion} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
 

@@ -3,9 +3,9 @@ import { Router } from 'express';
 import { post as httpPost } from 'superagent';
 
 import { db, cfg, getSecret, mailer, pageGenerator } from '..';
+import { ApiError, ApiErrs } from '../utils/errors';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { restful, stripLangKeyFromURL, isNumber, toNeutralString, isHttpURL, isValidEmail } from '../utils/utils';
-import { ApiError, ApiErrs } from '../utils/errors';
 
 const router = Router();
 export const settingsRouter = router;
