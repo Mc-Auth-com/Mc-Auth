@@ -172,5 +172,5 @@ export function getReturnURL(req: Request): string | null {
   returnStr = returnStr.trim();
   if (returnStr.length == 0 || returnStr.charAt(0) != '/') return null;
 
-  return pageGenerator.globals.url.base + stripParamsFromURL(returnStr);
+  return pageGenerator.globals.url.base + returnStr;
 }
