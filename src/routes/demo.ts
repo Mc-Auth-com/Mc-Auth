@@ -7,7 +7,7 @@ import { ApiError, ApiErrs } from '../utils/errors';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { restful } from '../utils/utils';
 
-const cookieOptions: CookieOptions = { httpOnly: true, path: '/', sameSite: 'strict' };
+const cookieOptions: CookieOptions = { httpOnly: true, path: '/', sameSite: 'lax' };
 
 const router = Router();
 export const demoRouter = router;

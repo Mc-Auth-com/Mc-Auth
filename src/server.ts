@@ -100,7 +100,7 @@ app.use(expressSession({
   saveUninitialized: false,
   rolling: true,
   unset: 'destroy',
-  cookie: { secure: cfg.cookies.secure, httpOnly: true, sameSite: 'strict', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */ }
+  cookie: { secure: cfg.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */ }
 }));
 
 // Determin language to use
@@ -114,7 +114,7 @@ app.use((req, res, next) => {
 
     if (getLocalization().isAvailable(langKey)) {
       res.locals.lang = langKey;
-      res.cookie('lang', res.locals.lang, { httpOnly: true, path: '/', sameSite: 'strict', secure: cfg.cookies.secure, maxAge: 12 * 30 * 24 * 60 * 60 * 1000 /* 12mo */ });
+      res.cookie('lang', res.locals.lang, { httpOnly: true, path: '/', sameSite: 'lax', secure: cfg.cookies.secure, maxAge: 12 * 30 * 24 * 60 * 60 * 1000 /* 12mo */ });
 
       req.url = req.url.length == 3 ? '/' : req.url.substring(3);
     }
