@@ -17,8 +17,8 @@ function copyToClipboard(elem, str) {
   document.body.appendChild(tempElem);
 
   const selected = document.getSelection().rangeCount > 0
-    ? document.getSelection().getRangeAt(0)
-    : false;
+      ? document.getSelection().getRangeAt(0)
+      : false;
 
   tempElem.select();
   document.execCommand('copy');
@@ -65,11 +65,11 @@ function updateRemainingChars(elem) {
 
     if (target) {
       if (!target.hasAttribute('data-orgHTML')) {
-        target.setAttribute('data-orgHTML', target.innerHTML);
+        target.setAttribute('data-orgHTML', target.innerText);
       }
 
       if (elem.value.length == 0 && target.hasAttribute('data-orgHTML')) {
-        target.innerHTML = target.getAttribute('data-orgHTML');
+        target.innerText = target.getAttribute('data-orgHTML');
       } else {
         target.innerText = `${elem.value.length}/${elem.getAttribute('maxlength')} characters`;
       }
@@ -83,8 +83,8 @@ function toggleDarkMode(event) {
   }
 
   const navMenu = document.getElementById('headerMenu'),
-    footer = document.getElementById('footer'),
-    body = document.getElementsByTagName('body').item(0);
+      footer = document.getElementById('footer'),
+      body = document.getElementsByTagName('body').item(0);
   const tables = document.getElementsByClassName('table');
 
   const isCurrDarkMode = navMenu.classList.contains('bg-dark');
@@ -124,7 +124,7 @@ function toggleDarkMode(event) {
  */
 function setActiveTheme(darkTheme) {
   document.cookie = `darkTheme=${darkTheme ? 1 : 0}; ` +
-    `expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/; SameSite=Lax${location.protocol == 'https:' ? '; Secure' : ''}`;
+      `expires=${new Date(Date.now() + (90 * 24 * 60 * 60 * 1000)).toUTCString()}; path=/; SameSite=Lax${location.protocol == 'https:' ? '; Secure' : ''}`;
 }
 
 /* run when DOM is ready */
