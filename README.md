@@ -67,6 +67,8 @@ access to a PostgreSQL instance on your machine**
 4. Configure all files inside `./storage` (automatically generated)
 6. Type `rs` into the console or restart the process
 
+7. Visit [Mc-Auth-com/McAuth-BungeeCord](https://github.com/Mc-Auth-com/McAuth-BungeeCord) and continue by setting it up
+
 
 ## TODO
 * **Complete Recode ([#70](https://github.com/Mc-Auth-com/Mc-Auth-Web/pull/70))**
@@ -112,8 +114,8 @@ access to a PostgreSQL instance on your machine**
       🎨 Logo and Banner
     </td>
     <td align="center">
-      <a href="https://github.com/Songoda">
-        <img src="https://avatars3.githubusercontent.com/u/26376600" width="100px" alt="Songoda GitHub-Logo"><!--
+      <a href="https://github.com/briannastatic">
+        <img src="https://avatars3.githubusercontent.com/u/26376600" width="100px" alt="briannastatic GitHub-Logo"><!--
         --><br><!--
         --><sub><b>Brianna O'Keefe</b></sub>
       </a>
@@ -134,7 +136,7 @@ access to a PostgreSQL instance on your machine**
     </td>
     <td>
       <a href="https://www.jetbrains.com/" title="Provides great tools and IDEs">
-        <img src="https://i.imgur.com/RISnfij.png" width="100px"  alt="JetBrains branding"><!--
+        <img src="https://i.imgur.com/RISnfij.png" width="100px" alt="JetBrains branding"><!--
         --><br><!--
         --><sub><b>JetBrains OS License</b></sub>
       </a>
