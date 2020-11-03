@@ -99,7 +99,7 @@ router.all('/login', (req, res, next) => {
                   id: httpBody.body.data.profile.id,
                   name: httpBody.body.data.profile.name
                 }
-              }, getSecret(256), { algorithm: 'HS256' }), cookieOptions);
+              }, getSecret(256), { algorithm: 'HS256', expiresIn:'12 hours' }), cookieOptions);
 
             return res.redirect(`${pageGenerator.globals.url.base}/demo`);
           });
