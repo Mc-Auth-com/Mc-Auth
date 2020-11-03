@@ -2,3 +2,5 @@
 /logs/
 /node_modules/
 /storage/
+
+/.idea/

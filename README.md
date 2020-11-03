@@ -1,23 +1,64 @@
-# Mc-Auth ![Mc-Auth Logo](https://cdn.discordapp.com/attachments/611940958568841227/757340212010418357/Mc-Auth-48px.png)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=security_rating)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth-Web&metric=ncloc)](https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth-Web)
-[![Discord-Chat](https://img.shields.io/discord/344982818863972352?label=Discord&logo=discord&logoColor=white)](https://sprax.me/discord)
+<p align="center">
+  <img alt="Mc-Auth Logo" width="128px" height="auto" src="./docs/images/Mc-Auth.svg">
+</p>
 
-Easily log in with your Minecraft account without giving your password or email to some random website!
+<p align="center">
+  <a href="https://sprax.me/discord">
+    <img alt="Get Support on Discord"
+         src="https://img.shields.io/discord/344982818863972352.svg?label=Get%20Support&logo=Discord&color=blue">
+  </a>
+  <a href="https://www.patreon.com/sprax">
+    <img alt="Support me on Patreon"
+         src="https://img.shields.io/badge/-Support%20me%20on%20Patreon-%23FF424D?logo=patreon&logoColor=white">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Mc-Auth-com/Mc-Auth/actions?query=workflow%3A%22TypeScript+Compile%22">
+    <img alt="TypeScript Compile" src="https://github.com/Mc-Auth-com/Mc-Auth/workflows/TypeScript%20Compile/badge.svg">
+  </a>
+
+  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
+    <img alt="Quality Gate Status"
+         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=alert_status">
+  </a>
+
+  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
+    <img alt="Security Rating"
+         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=security_rating">
+  </a>
+</p>
+
+# Mc-Auth
+Use your Minecraft account to easily log in, without giving your password or email to some random website!
 Thanks to Mc-Auth, you can securely log in to third-party services without providing your sensitive data to Mc-Auth!
 
 It aims to be highly transparent to users **and** developers.
-Thanks to this transparency, it is easily compliant with most data protection laws e. g. the **[GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)**.
+Thanks to this transparency, it is easily compliant with most data protection laws
+e.g. the **[GDPR](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation)**.
 
 ### Another Authentication Service for Minecraft? Really?
-I know there is *[minecraft.id](https://minecraft.id/) by inventivetalent* or *[Minecraft oAuth](https://mc-oauth.net/) by Deftware* (and some more), but I had something different in mind for my project [SkinDB.net](https://github.com/SkinDB).
+I know there is *[minecraft.id](https://minecraft.id/) by inventivetalent* or
+*[Minecraft oAuth](https://mc-oauth.net/) by Deftware* (and some more),
+but I had something different in mind for my project [SkinDB.net](https://github.com/SkinDB).
 They look nice and get the job done, but are lacking information about how your data is treated (e.g. GDPR compliant?).
-Another feature I missed was full oAuth2 implementation. What would normally be done by Mojang as account holders, but they didn't (until now).
+Another feature I missed was full oAuth2 implementation.
+What would normally be done by Mojang as account holders, but they didn't (until now).
 
-So I started reading [RFC 6749](https://tools.ietf.org/html/rfc6749) explaining how oAuth2 works and has to be implemented => Mc-Auth.com was born!
+So I started reading [RFC 6749](https://tools.ietf.org/html/rfc6749) to understand how oAuth2 works
+and has to be implemented => Mc-Auth.com was born!
+
+## How to use Mc-Auth?
+If you are a developer, you can check [the documentation](https://github.com/Mc-Auth-com/Mc-Auth/wiki) and find out
+more about using Mc-Auth.
+
+If you are a normal Minecraft player and a website or application you are using might find this interesting,
+feel free to contact them with a link to this project – While making the Minecraft Community a safer place!
+
 
 ## Setup
-**You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) and access to a PostgreSQL instance on your machine**
+**You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) and
+access to a PostgreSQL instance on your machine**
 
 1. Prepare your database by running `./database-setup.sql`
 2. `npm install`
@@ -25,6 +66,7 @@ So I started reading [RFC 6749](https://tools.ietf.org/html/rfc6749) explaining 
 4. `npm run start` Or you can use `npm run dev` to automatically recompile on file changes (not recommended for production)
 4. Configure all files inside `./storage` (automatically generated)
 6. Type `rs` into the console or restart the process
+
 
 ## TODO
 * **Complete Recode ([#70](https://github.com/Mc-Auth-com/Mc-Auth-Web/pull/70))**
@@ -55,6 +97,7 @@ So I started reading [RFC 6749](https://tools.ietf.org/html/rfc6749) explaining 
   * With HTML Examples for buttons
 * Replace 'Google Analytics'
 * Admin Dashboard
+
 
 ## Thanks To... ✨
 <table>
@@ -98,6 +141,7 @@ So I started reading [RFC 6749](https://tools.ietf.org/html/rfc6749) explaining 
     </td>
   </tr>
 </table>
+
 
 ## License
 [MIT License](./LICENSE)
