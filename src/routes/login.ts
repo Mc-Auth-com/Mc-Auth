@@ -26,7 +26,7 @@ router.all('/', (req, res, next) => {
       if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !isNumber(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, { body: req.body }));
 
       MojangAPI.getProfile(username)
-        .then(async (profile: any /* FIXME TYPE */): Promise<void> => {
+        .then(async (profile: any /* FIXME: type */): Promise<void> => {
           if (profile) db.updateAccount(profile.id, profile.name); // non-blocking
 
           const success = profile != null && await db.invalidateOneTimePassword(profile.id, otp as string);

@@ -94,10 +94,10 @@ access to a PostgreSQL instance on your machine**
 * Send 'Content Security Policy' header
 * Allow users to report applications (inside authorization screen)
 * Introduce rate limits
-* Create documentation/wiki
+* [X] Create documentation/wiki
 * Create a Brand/Press Kit with images
   * With HTML Examples for buttons
-* Replace 'Google Analytics'
+* [X] Replace 'Google Analytics'
 * Admin Dashboard
 
 
