@@ -5,12 +5,12 @@ import { Router } from 'express';
 
 import { db, pageGenerator } from '..';
 import { ApiError, ApiErrs } from '../utils/errors';
-import { restful, isNumber } from '../utils/utils';
+import { isNumber, restful } from '../utils/utils';
 
 const router = Router(),
-  routerNoCookie = Router();
+    routerNoCookie = Router();
 export const uploadsRouter = router,
-  uploadsNoCookieRouter = routerNoCookie;
+    uploadsNoCookieRouter = routerNoCookie;
 
 const DEFAULT_ICON: Buffer = readFileSync(joinPath(__dirname, '..', '..', 'resources', 'web', 'static', 'uploads', 'default.png'));
 
@@ -35,7 +35,7 @@ routerNoCookie.all('/:fileID?', (req, res, next) => {
 
           if (file != null && file.length != 0) {
             return res.type('png')
-              .send(file);
+                .send(file);
           } else {
             status = 404;
           }
@@ -45,8 +45,8 @@ routerNoCookie.all('/:fileID?', (req, res, next) => {
       }
 
       return res.status(status)
-        .type('png')
-        .send(DEFAULT_ICON);
+          .type('png')
+          .send(DEFAULT_ICON);
     },
     post: next  // Fallthrough and call non-noCookie router
   });

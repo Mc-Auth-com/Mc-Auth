@@ -5,7 +5,7 @@ import expressSessionPG from 'connect-pg-simple';
 import morgan from 'morgan';
 import { join as joinPath } from 'path';
 
-import { cfg, webAccessLogStream, dbCfg, pageGenerator } from '.';
+import { cfg, dbCfg, pageGenerator, webAccessLogStream } from '.';
 import { ApiError, ApiErrs } from './utils/errors';
 import { dbUtils } from './utils/database';
 import { demoRouter } from './routes/demo';
@@ -16,7 +16,7 @@ import { oAuthNoCookieRouter, oAuthRouter } from './routes/oAuth';
 import { settingsRouter } from './routes/settings';
 import { staticPagesRouter } from './routes/staticPages';
 import { stripLangKeyFromURL } from './utils/utils';
-import { uploadsRouter, uploadsNoCookieRouter } from './routes/uploads';
+import { uploadsNoCookieRouter, uploadsRouter } from './routes/uploads';
 
 export const app = express();
 app.disable('x-powered-by');
@@ -103,7 +103,7 @@ app.use(expressSession({
   cookie: { secure: cfg.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */ }
 }));
 
-// Determin language to use
+// Determine language to use
 app.use((req, res, next) => {
   res.locals.lang = getLocalization().defaultLanguage;
 
@@ -180,14 +180,4 @@ app.use((err: ApiError /* is 'any' or 'unknown' (using ApiError for IntelliSense
         `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Error ${err.httpCode}</title></head><body><h1>${err.httpCode} - ${err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>\n')}</h1></body></html>`);
   // TODO: Send html based on templates
 });
-
-/* Original code below */
-
-// // ToDo Set caching headers on routes
-
-// /** dynamic **/
-// app.use('/login', require('./routes/login'));
-// app.use('/logout', require('./routes/logout'));
-// app.use('/oauth2', require('./routes/oAuth2'));
-// app.use('/settings', require('./routes/settings'));
-// app.use('/uploads', require('./routes/uploads'));
+// TODO: Set caching headers on routes

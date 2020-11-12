@@ -4,7 +4,7 @@ import { db, pageGenerator } from '..';
 import { ApiError } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
 import { PageTemplate } from '../dynamicPageGenerator';
-import { restful, isNumber, getReturnURL } from '../utils/utils';
+import { getReturnURL, isNumber, restful } from '../utils/utils';
 
 const router = Router();
 export const loginRouter = router;

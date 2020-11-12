@@ -333,7 +333,7 @@ export class dbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, { pool: this.pool }));
 
-      this.pool.query(`UPDATE grants SET access_token =random_string(32) WHERE app =$1 AND access_token IS NULL AND exchange_token =$2 AND redirect_uri =$3 AND result ='GRANTED'::"GrantResult" AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
+      this.pool.query(`UPDATE grants SET access_token =random_string(32) WHERE app =$1 AND access_token IS NULL AND exchange_token =$2 AND lower(redirect_uri) =lower($3) AND result ='GRANTED'::"GrantResult" AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
         [appId, exchange_token, redirect_uri], (err, res) => {
           if (err) return reject(err);
 
