@@ -39,49 +39,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
   integrity="sha256-WqU1JavFxSAMcLP2WIOI+GB2zWmShMI82mTpLDcqFUg=" crossorigin="anonymous"></script>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155179426-1"></script>
-<script>
-  const gtagId = 'UA-155179426-1';
-
-  window['ga-disable-' + gtagId] = true;
-
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() { dataLayer.push(arguments); }
-
-  gtag('js', new Date());
-</script>
-
-<script src="https://cookiehub.net/cc/b745eb9c.js"></script>
-<script>
-  window.addEventListener("load", function () {
-    window.cookieconsent.initialise({
-      onInitialise: function (status) {
-        if (this.hasConsented('required')) { }
-        if (this.hasConsented('analytics')) {
-          window['ga-disable-UA-155179426-1'] = false;
-
-          gtag('config', gtagId, { anonymize_ip: true });
-        }
-      },
-
-      onAllow: function (category) {
-        if (category == 'required') { }
-
-        if (category == 'analytics') {
-          window['ga-disable-UA-155179426-1'] = false;
-
-          gtag('config', gtagId, { anonymize_ip: true });
-        }
-      },
-
-      onRevoke: function (category) {
-        if (category == 'required') { }
-
-        if (category == 'analytics') {
-          window['ga-disable-UA-155179426-1'] = true;
-        }
-      }
-    });
-  });
-</script>
+<script async defer src="https://simplea.mc-auth.com/latest.js"></script>
+<noscript><img src="https://simplea.mc-auth.com/noscript.gif" alt=""/></noscript>
