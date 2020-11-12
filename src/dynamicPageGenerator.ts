@@ -24,7 +24,7 @@ export class DynamicPageGenerator {
         static: DynamicPageGenerator.generateUrlPrefix(cfg.web.urlPrefix.staticContentHost),
 
         mcServer: 'mc-auth.com',
-        docs: 'https://github.com/Mc-Auth-com/Mc-Auth-Web/wiki'
+        docs: 'https://github.com/Mc-Auth-com/Mc-Auth/wiki'
       },
 
       reCaptchaPublic: cfg.reCAPTCHA.public
