@@ -44,10 +44,11 @@ router.all('/account', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-      db.getAccount(req.session?.mcProfile.id)
+      db.getAccount(req.session?.mcProfile?.id)
         .then((account) => {
-          if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile.id': req.session?.mcProfile.id }));
+          if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile?.id': req.session?.mcProfile?.id }));
 
           res.type('html')
             .send(pageGenerator.renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res, { account }));
@@ -56,14 +57,15 @@ router.all('/account', (req, res, next) => {
     },
     post: () => {
       if (req.body.updateMail == '1' && req.body.mailAddr) {
+        if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
         if (!isValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, { body: req.body.mailAddr }));
 
-        db.getAccount(req.session?.mcProfile.id)
+        db.getAccount(req.session?.mcProfile?.id)
           .then((account) => {
-            if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile.id': req.session?.mcProfile.id }));
+            if (!account || !req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile?.id': req.session?.mcProfile?.id }));
             if (account.email?.toLowerCase() == req.body.mailAddr.toLowerCase()) return res.redirect(`${pageGenerator.globals.url.base}/settings/account`);  // nothing changed
 
-            db.setAccountPendingEmailAddress(req.session?.mcProfile.id, req.body.mailAddr)
+            db.setAccountPendingEmailAddress(req.session?.mcProfile?.id, req.body.mailAddr)
               .then(() => {
                 mailer.sendConfirmEmail(account, req.body.mailAddr, res.locals.lang)
                   .then(() => {
@@ -144,8 +146,9 @@ router.all('/apps/create', (req, res, next) => {
           if (err) return next(err);
 
           if (httpRes.body?.success != true) return next(new ApiError(400, 'reCAPTCHA failed', false, { body: req.body, reCAPTCHA_body: httpRes.body }));
+          if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-          db.createApp(req.session?.mcProfile.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
+          db.createApp(req.session?.mcProfile?.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
             .then((app) => res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`))
             .catch(next);
         });
@@ -159,9 +162,10 @@ router.all('/apps/:appID?', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
       if (appID == null) {
-        db.getApps(req.session.mcProfile.id)
+        db.getApps(req.session?.mcProfile?.id)
           .then((apps) => {
             res.type('html')
               .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS, req, res, { apps }));
@@ -171,7 +175,7 @@ router.all('/apps/:appID?', (req, res, next) => {
         db.getApp(appID)
           .then((app) => {
             if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
-            if (app.owner != req.session?.mcProfile.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
+            if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
             res.type('html')
               .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, { apps: [app] }));
@@ -189,7 +193,7 @@ router.all('/apps/:appID?', (req, res, next) => {
       db.getApp(appID)
         .then(async (app) => {
           if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
-          if (app.owner != req.session?.mcProfile.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
+          if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
           if (req.body.regenerateSecret == true) {
             db.regenerateAppSecret(app.id)

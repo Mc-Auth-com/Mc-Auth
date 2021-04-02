@@ -74,6 +74,7 @@ router.all('/authorize', (req, res, next) => {
   restful(req, res, next, {
     get: () => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+      if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
       const clientID = req.query.client_id,
         redirectURI = req.query.redirect_uri,
@@ -96,6 +97,7 @@ router.all('/authorize', (req, res, next) => {
 
       db.getApp(clientID)
         .then((app) => {
+          if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
           if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION, { clientID, exists: !!app, deleted: app ? app.deleted : '?' }));
 
           let validRedirectURI = false;
@@ -113,7 +115,7 @@ router.all('/authorize', (req, res, next) => {
               appendParamsToURL(redirectURI, [{ key: 'error', value: 'unsupported_response_type' }, { key: 'state', value: state }]));
           }
 
-          db.createGrant(clientID, req.session?.mcProfile.id, redirectURI, responseType, state, scope.sort())
+          db.createGrant(clientID, req.session?.mcProfile?.id, redirectURI, responseType, state, scope.sort())
             .then((grant) => {
               MojangAPI.getProfile(app.owner)
                 .then((appOwner) => {

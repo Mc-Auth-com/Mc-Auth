@@ -65,8 +65,9 @@ router.all('/', (req, res, next) => {
         .toBuffer((err, buffer, info) => {
           if (err) return next(new ApiError(400, 'Invalid image', false));
           if (info.width < 64 || info.height < 64) return next(new ApiError(400, 'Unsupported image dimensions', false));
+          if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-          db.createImage(req.session?.mcProfile.id, req.body, buffer)
+          db.createImage(req.session?.mcProfile?.id, req.body, buffer)
             .then((appIcon) => {
               const imgURL = `${pageGenerator.globals.url.base}/uploads/${appIcon.iconID}.png`;
 

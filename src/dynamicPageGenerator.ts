@@ -1,5 +1,6 @@
 import * as ejs from 'ejs';
 import * as express from 'express';
+import { SessionData } from 'express-session';
 import { join as joinPath } from 'path';
 import { Moment } from 'moment';
 import { readFileSync } from 'fs';
@@ -77,14 +78,14 @@ export class DynamicPageGenerator {
   }
 
   renderPage(template: PageTemplate, req: express.Request, res: express.Response, pageData: PageData = {}): string {
-    const data: { page: PageData, con: { query: { [key: string]: string }, isDarkTheme: boolean, lang: string, isLoggedIn: boolean, mcProfile: object /* FIXME type */, /*isAdmin: boolean, session: object, url: string, urlEncoded: string*/ currPath: string }, currLocalizedURL: { [key: string]: string }, currNonLocalizedURL: string, moment: Moment } = {
+    const data: { page: PageData, con: { query: { [key: string]: string }, isDarkTheme: boolean, lang: string, isLoggedIn: boolean, mcProfile: SessionData['mcProfile'] | null, /*isAdmin: boolean, session: object, url: string, urlEncoded: string*/ currPath: string }, currLocalizedURL: { [key: string]: string }, currNonLocalizedURL: string, moment: Moment } = {
       page: pageData,
       con: {
         query: {},
         isDarkTheme: req.cookies.darkTheme == '1',
         lang: res.locals.lang,
-        isLoggedIn: req.session && req.session.loggedIn,
-        mcProfile: req.session?.loggedIn ? req.session.mcProfile : null,
+        isLoggedIn: req.session?.loggedIn || false,
+        mcProfile: req.session?.mcProfile || null,
         // isAdmin: req.session && req.session.data && req.session.data.id == '407b28ede7bd451693d93361fecb7889',
         // session: req.session ? req.session.data : null,
         currPath: stripParamsFromURL(req.originalUrl).toLowerCase()
@@ -92,7 +93,7 @@ export class DynamicPageGenerator {
       currLocalizedURL: {},
       currNonLocalizedURL: this.globals.url.base + stripLangKeyFromURL(stripParamsFromURL(req.originalUrl)),
       moment: getLocalization().momentInstances[res.locals.lang]
-    }
+    };
 
     for (const langKey in getLocalization().languages) {
       data.currLocalizedURL[langKey] = this.globals.url.base + '/' + langKey + stripLangKeyFromURL(stripParamsFromURL(req.originalUrl));

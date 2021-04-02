@@ -1,3 +1,14 @@
+declare module 'express-session' {
+  interface SessionData {
+    loggedIn: true;
+
+    mcProfile: {
+      readonly id: string;
+      readonly name: string;
+    }
+  }
+}
+
 /* SpraxAPI */
 export interface mcAuthCfg {
   readonly listen: {
