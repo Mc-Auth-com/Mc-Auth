@@ -35,7 +35,7 @@ router.all('/', (req, res, next) => {
           if (req.session == undefined) return next(new ApiError(500, 'Session could be initialized', true, { originalUrl: req.originalUrl, username }));
 
           if (!keepLoggedIn) {
-            req.session.cookie.expires = false; // Should delete the cookie when terminating the User-Agent process
+            req.session.cookie.expires = undefined; // Should delete the cookie when terminating the User-Agent process
           }
 
           req.session.loggedIn = true;
