@@ -55,7 +55,7 @@
     "pg": "^8.5.1",
     "request": "^2.88.2",
     "rotating-file-stream": "^2.1.5",
-    "sharp": "^0.28.0",
+    "sharp": "^0.28.1",
     "superagent": "^6.1.0",
     "uuid": "^8.3.2"
   },
