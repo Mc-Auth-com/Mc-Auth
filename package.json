@@ -71,7 +71,7 @@
     "@types/object-assign-deep": "^0.4.0",
     "@types/pg": "^7.14.11",
     "@types/request": "^2.48.5",
-    "@types/sharp": "^0.27.3",
+    "@types/sharp": "^0.28.0",
     "@types/superagent": "^4.1.10",
     "cross-env": "^7.0.3",
     "ts-node": "^9.1.1",
