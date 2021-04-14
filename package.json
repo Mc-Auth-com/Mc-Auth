@@ -52,7 +52,7 @@
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7",
     "object-assign-deep": "^0.4.0",
-    "pg": "^8.5.1",
+    "pg": "^8.6.0",
     "request": "^2.88.2",
     "rotating-file-stream": "^2.1.5",
     "sharp": "^0.28.0",
