@@ -101,6 +101,7 @@ export class ApiErrs {
   static readonly METHOD_NOT_ALLOWED: ApiErrTemplate = { httpCode: 405, message: 'Method Not Allowed (check Allow-Header)', logErr: false };
 
   static readonly UNKNOWN_APPLICATION: ApiErrTemplate = { httpCode: 404, message: 'Unknown application', logErr: false };
+  static readonly INVALID_JSON_BODY: ApiErrTemplate = { httpCode: 400, message: 'Invalid JSON body', logErr: false };
   static readonly INVALID_CLIENT_ID_OR_SECRET: ApiErrTemplate = { httpCode: 400, message: 'client_id does not exist or does not match client_secret', logErr: false };
   static readonly INVALID_REDIRECT_URI_FOR_APP: ApiErrTemplate = { httpCode: 400, message: 'Invalid redirect_uri - Please contact the administrator of the page that sent you here', logErr: false };
   static readonly INVALID_GRANT_TYPE: ApiErrTemplate = { httpCode: 400, message: 'Invalid grant_type', logErr: false };

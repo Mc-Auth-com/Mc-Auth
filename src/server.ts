@@ -22,6 +22,11 @@ export const app = express();
 app.disable('x-powered-by');
 app.set('trust proxy', cfg.trustProxy);
 
+app.use((req, res, next) => {
+  res.locals.sendJSON = true;
+  next();
+});
+
 /* Logging webserver request */
 app.use(morgan(cfg.logging.accessLogFormat, { stream: webAccessLogStream }));
 if (process.env.NODE_ENV == 'production') {
@@ -64,11 +69,25 @@ app.use((req, _res, next) => {
 // });
 
 /* Prepare Request (only call the ones needed by the NoCookie-Routes for now) */
-app.use(express.json());
+const jsonMiddleware = express.json();
+app.use((req, res, next) => {
+  jsonMiddleware(req, res, (err) => {
+    if (err) {
+      next(ApiError.create(ApiErrs.INVALID_JSON_BODY));
+    } else {
+      next();
+    }
+  });
+});
 
 /* Non-Cookie Routes */
 app.use('/oauth2', oAuthNoCookieRouter);
 app.use('/uploads', uploadsNoCookieRouter);
+
+app.use((req, res, next) => {
+  res.locals.sendJSON = false;
+  next();
+});
 
 // Optional: Serving static files too
 if (cfg.web.serveStatic) {
@@ -162,13 +181,25 @@ app.use((req, _res, next) => {
   next(ApiError.create(ApiErrs.NOT_FOUND, { url: `${req.protocol}://${req.hostname}/${req.originalUrl}` }));
 });
 
-app.use((err: ApiError /* is 'any' or 'unknown' (using ApiError for IntelliSense etc.) */, _req: express.Request, res: express.Response, next: express.NextFunction) => {
-  if (err == undefined || err == null) {
-    err = new ApiError(500, 'The error handler has been called without providing an error', true, { typeof: typeof err, err });
-  } else if (typeof err != 'object' || !(err instanceof Error)) {
-    err = new ApiError(500, 'The error handler has been called with an invalid error', true, { typeof: typeof err, err });
-  } else if (!(err instanceof ApiError)) {
-    err = ApiError.fromError(err);
+app.use((errRaw: any, _req: express.Request, res: express.Response, next: express.NextFunction) => {
+  let err;
+
+  if (errRaw == undefined) {
+    err = new ApiError(500, 'The error handler has been called without providing an error', true,
+        {
+          typeof: typeof errRaw,
+          err: errRaw
+        });
+  } else if (typeof errRaw != 'object' || !(errRaw instanceof Error)) {
+    err = new ApiError(500, 'The error handler has been called with an invalid error', true,
+        {
+          typeof: typeof errRaw,
+          errRaw
+        });
+  } else if (!(errRaw instanceof ApiError)) {
+    err = ApiError.fromError(errRaw);
+  } else {
+    err = errRaw;
   }
 
   if (res.headersSent) return next(err);  // Calls express default handler

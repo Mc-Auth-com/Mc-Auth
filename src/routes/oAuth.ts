@@ -19,8 +19,6 @@ export const oAuthRouter = router,
   oAuthNoCookieRouter = routerNoCookie;
 
 routerNoCookie.all('/token', (req, res, next) => {
-  res.locals.sendJSON = true; // Used by Error-Handler
-
   restful(req, res, next, {
     post: () => {
       const clientID = req.body['client_id'],
@@ -129,8 +127,6 @@ router.all('/authorize', (req, res, next) => {
         .catch(next);
     },
     post: () => {
-      res.locals.sendJSON = true; // Used by Error-Handler
-
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       const grantID = req.body.authenticity_token,
