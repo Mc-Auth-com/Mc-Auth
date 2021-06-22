@@ -1,7 +1,7 @@
-import sharp from 'sharp';
-import { join as joinPath } from 'path';
-import { readFileSync } from 'fs';
 import { Router } from 'express';
+import { readFileSync } from 'fs';
+import { join as joinPath } from 'path';
+import sharp from 'sharp';
 
 import { db, pageGenerator } from '..';
 import { ApiError, ApiErrs } from '../utils/errors';
@@ -60,26 +60,26 @@ router.all('/', (req, res, next) => {
       if (!req.body || !(req.body instanceof Buffer) || req.body.length == 0) return next(new ApiError(400, 'Invalid image', false));
 
       sharp(req.body)
-        .png()
-        .resize(128, 128, { fit: 'contain', kernel: 'nearest', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-        .toBuffer((err, buffer, info) => {
-          if (err) return next(new ApiError(400, 'Invalid image', false));
-          if (info.width < 64 || info.height < 64) return next(new ApiError(400, 'Unsupported image dimensions', false));
-          if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
+          .png()
+          .resize(128, 128, {fit: 'contain', kernel: 'nearest', background: {r: 0, g: 0, b: 0, alpha: 0}})
+          .toBuffer((err, buffer, info) => {
+            if (err) return next(new ApiError(400, 'Invalid image', false));
+            if (info.width < 64 || info.height < 64) return next(new ApiError(400, 'Unsupported image dimensions', false));
+            if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-          db.createImage(req.session?.mcProfile?.id, req.body, buffer)
-            .then((appIcon) => {
-              const imgURL = `${pageGenerator.globals.url.base}/uploads/${appIcon.iconID}.png`;
+            db.createImage(req.session?.mcProfile?.id, req.body, buffer)
+                .then((appIcon) => {
+                  const imgURL = `${pageGenerator.globals.url.base}/uploads/${appIcon.iconID}.png`;
 
-              if (!appIcon.found) {
-                res.location(imgURL);
-              }
+                  if (!appIcon.found) {
+                    res.location(imgURL);
+                  }
 
-              res.status(appIcon.found ? 200 : 201)
-                .send({ id: appIcon.iconID, url: imgURL });
-            })
-            .catch(next);
-        });
+                  res.status(appIcon.found ? 200 : 201)
+                      .send({id: appIcon.iconID, url: imgURL});
+                })
+                .catch(next);
+          });
     }
   });
 });

@@ -1,10 +1,10 @@
-import jwt from 'jsonwebtoken';
 import { Router } from 'express';
+import jwt from 'jsonwebtoken';
 import { post as httpPost } from 'superagent';
 
 import { cfg, db, getSecret, mailer, pageGenerator } from '..';
-import { ApiError, ApiErrs } from '../utils/errors';
 import { PageTemplate } from '../dynamicPageGenerator';
+import { ApiError, ApiErrs } from '../utils/errors';
 import { isHttpURL, isNumber, isValidEmail, restful, stripLangKeyFromURL, toNeutralString } from '../utils/utils';
 
 const router = Router();
@@ -17,26 +17,26 @@ router.all('/', (req, res, next) => {
 });
 
 router.all('/confirm-email/:token', (req, res, next) => {
-  jwt.verify(req.params.token, getSecret(256), { algorithms: ['HS256'] }, (err, data: any) => {
+  jwt.verify(req.params.token, getSecret(256), {algorithms: ['HS256']}, (err, data: any) => {
     if (err || data instanceof Buffer ||
-      !data || !data.id || !data.email) return next(ApiError.create(ApiErrs.INVALID_OR_EXPIRED_MAIL_CONFIRMATION));
+        !data || !data.id || !data.email) return next(ApiError.create(ApiErrs.INVALID_OR_EXPIRED_MAIL_CONFIRMATION));
 
     db.getAccount(data.id)
-      .then((account) => {
+        .then((account) => {
         if (!account || !account.emailPending ||
           account.emailPending.toLowerCase() != data.email.toLowerCase()) return next(ApiError.create(ApiErrs.INVALID_OR_EXPIRED_MAIL_CONFIRMATION, { account, data }));
 
-        db.setAccountEmailAddress(data.id, data.email)
-          .then(() => {
-            if (account.email) {
-              // TODO: Send information mail to old email
-            }
+          db.setAccountEmailAddress(data.id, data.email)
+              .then(() => {
+                if (account.email) {
+                  // TODO: Send information mail to old email
+                }
 
-            res.send('Your email has been successfully updated'); // TODO: Send html
-          })
-          .catch(next);
-      })
-      .catch(next);
+                res.send('Your email has been successfully updated'); // TODO: Send html
+              })
+              .catch(next);
+        })
+        .catch(next);
   });
 });
 
@@ -47,37 +47,37 @@ router.all('/account', (req, res, next) => {
       if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
       db.getAccount(req.session?.mcProfile?.id)
-        .then((account) => {
-          if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile?.id': req.session?.mcProfile?.id }));
+          .then((account) => {
+            if (!account) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-          res.type('html')
-            .send(pageGenerator.renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res, { account }));
-        })
-        .catch(next);
+            res.type('html')
+                .send(pageGenerator.renderPage(PageTemplate.SETTINGS_ACCOUNT, req, res, {account}));
+          })
+          .catch(next);
     },
     post: () => {
       if (req.body.updateMail == '1' && req.body.mailAddr) {
         if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
-        if (!isValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, { body: req.body.mailAddr }));
+        if (!isValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, {body: req.body.mailAddr}));
 
         db.getAccount(req.session?.mcProfile?.id)
-          .then((account) => {
-            if (!account || !req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { 'req.session?.mcProfile?.id': req.session?.mcProfile?.id }));
-            if (account.email?.toLowerCase() == req.body.mailAddr.toLowerCase()) return res.redirect(`${pageGenerator.globals.url.base}/settings/account`);  // nothing changed
+            .then((account) => {
+              if (!account || !req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
+              if (account.email?.toLowerCase() == req.body.mailAddr.toLowerCase()) return res.redirect(`${pageGenerator.globals.url.base}/settings/account`);  // nothing changed
 
-            db.setAccountPendingEmailAddress(req.session?.mcProfile?.id, req.body.mailAddr)
-              .then(() => {
-                mailer.sendConfirmEmail(account, req.body.mailAddr, res.locals.lang)
+              db.setAccountPendingEmailAddress(req.session?.mcProfile?.id, req.body.mailAddr)
                   .then(() => {
-                    res.redirect(`${pageGenerator.globals.url.base}/settings/account`);
+                    mailer.sendConfirmEmail(account, req.body.mailAddr, res.locals.lang)
+                        .then(() => {
+                          res.redirect(`${pageGenerator.globals.url.base}/settings/account`);
+                        })
+                        .catch(next);
                   })
                   .catch(next);
-              })
-              .catch(next);
-          })
-          .catch(next);
+            })
+            .catch(next);
       } else {
-        return next(new ApiError(400, 'Invalid request body', false, { body: req.body }));
+        return next(new ApiError(400, 'Invalid request body', false, {body: req.body}));
       }
     }
   });
@@ -89,8 +89,8 @@ router.all('/security', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_SECURITY, req, res));
-    },
+          .send(pageGenerator.renderPage(PageTemplate.SETTINGS_SECURITY, req, res));
+    }
     // post: () => { } // TODO
   });
 });
@@ -101,8 +101,8 @@ router.all('/notifications', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_NOTIFICATIONS, req, res));
-    },
+          .send(pageGenerator.renderPage(PageTemplate.SETTINGS_NOTIFICATIONS, req, res));
+    }
     // post: () => { } // TODO
   });
 });
@@ -113,45 +113,45 @@ router.all('/apps/create', (req, res, next) => {
       if (!req.session?.loggedIn) return res.redirect(`${pageGenerator.globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 
       res.type('html')
-        .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
+          .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
     },
     post: () => {
       if (cfg.reCAPTCHA.private.length == 0) return next(ApiError.create(ApiErrs.NO_RECAPTCHA));
       if (!req.session?.loggedIn) return next(ApiError.create(ApiErrs.UNAUTHORIZED));
 
       const appName = req.body.name,
-        appWebsite = req.body.website,
-        appDesc = req.body.description ?? '',
-        captcha = req.body['g-recaptcha-response'];
+          appWebsite = req.body.website,
+          appDesc = req.body.description ?? '',
+          captcha = req.body['g-recaptcha-response'];
 
       /* User input validation */
-      if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, { body: req.body }));
-      if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, { body: req.body }));
+      if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, {body: req.body}));
+      if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
 
-      if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, { body: req.body }));
-      if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, { body: req.body }));
-      if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, { body: req.body }));
+      if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
+      if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
+      if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
-      if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, { body: req.body }));
-      if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, { body: req.body }));
+      if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
+      if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
 
-      if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, { body: req.body }));
+      if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, {body: req.body}));
 
 
       // Check if reCAPTCHA has been solved
       httpPost('https://www.google.com/recaptcha/api/siteverify')
-        .field('secret', cfg.reCAPTCHA.private)
-        .field('response', captcha)
-        .end((err, httpRes) => {
-          if (err) return next(err);
+          .field('secret', cfg.reCAPTCHA.private)
+          .field('response', captcha)
+          .end((err, httpRes) => {
+            if (err) return next(err);
 
           if (httpRes.body?.success != true) return next(new ApiError(400, 'reCAPTCHA failed', false, { body: req.body, reCAPTCHA_body: httpRes.body }));
-          if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
+            if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-          db.createApp(req.session?.mcProfile?.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
-            .then((app) => res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`))
-            .catch(next);
-        });
+            db.createApp(req.session?.mcProfile?.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
+                .then((app) => res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`))
+                .catch(next);
+          });
     }
   });
 });
@@ -166,21 +166,21 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
 
       if (appID == null) {
         db.getApps(req.session?.mcProfile?.id)
-          .then((apps) => {
-            res.type('html')
-              .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS, req, res, { apps }));
-          })
-          .catch(next);
+            .then((apps) => {
+              res.type('html')
+                  .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS, req, res, {apps}));
+            })
+            .catch(next);
       } else if (isNumber(appID)) {
         db.getApp(appID)
-          .then((app) => {
-            if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
-            if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
+            .then((app) => {
+              if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
+              if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
-            res.type('html')
-              .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, { apps: [app] }));
-          })
-          .catch(next);
+              res.type('html')
+                  .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_APP, req, res, {apps: [app]}));
+            })
+            .catch(next);
       } else {
         return next(ApiError.create(ApiErrs.NOT_FOUND));
       }
@@ -191,86 +191,92 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
       if (typeof appID != 'string' || !isNumber(appID)) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
 
       db.getApp(appID)
-        .then(async (app) => {
-          if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
-          if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
+          .then(async (app) => {
+            if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
+            if (app.owner != req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.FORBIDDEN));
 
-          if (req.body.regenerateSecret == true) {
-            db.regenerateAppSecret(app.id)
-              .then((secret) => {
-                if (!secret) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, { appID: app.id }));
+            if (req.body.regenerateSecret == true) {
+              db.regenerateAppSecret(app.id)
+                  .then((secret) => {
+                    if (!secret) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {appID: app.id}));
 
-                return res.send({ secret });
-              })
-              .catch(next);
-          } else if (req.body.deleteApp == '1') {
-            let otp = req.body.deleteAppOTP;
-
-            if (typeof otp != 'string' ||
-              !isNumber(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, { appID: app.id, otp }));
-
-            db.invalidateOneTimePassword(app.owner, otp)
-              .then((valid) => {
-                if (!valid) return next(new ApiError(400, 'Invalid One-Time-Password', false, { appID: app.id, otp }));
-
-                db.setAppDeleted(app.id)
-                  .then(() => {
-                    res.redirect(`${pageGenerator.globals.url.base}/settings/apps`)
+                    return res.send({secret});
                   })
                   .catch(next);
-              })
-              .catch(next);
-          } else {
-            const appName = req.body.name,
-              appWebsite = req.body.website,
-              appDesc = req.body.description,
-              iconID = req.body.icon,
-              rawRedirectURIs = req.body.redirect_uris;
-            let redirectURIs: string[] = [];
+            } else if (req.body.deleteApp == '1') {
+              let otp = req.body.deleteAppOTP;
 
-            /* User input validation */
-            if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, { body: req.body }));
-            if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, { body: req.body }));
+              if (typeof otp != 'string' ||
+                  !isNumber(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
+                appID: app.id,
+                otp
+              }));
 
-            if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, { body: req.body }));
-            if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, { body: req.body }));
-            if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, { body: req.body }));
+              db.invalidateOneTimePassword(app.owner, otp)
+                  .then((valid) => {
+                    if (!valid) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
+                      appID: app.id,
+                      otp
+                    }));
 
-            if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, { body: req.body }));
-            if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, { body: req.body }));
+                    db.setAppDeleted(app.id)
+                        .then(() => {
+                          res.redirect(`${pageGenerator.globals.url.base}/settings/apps`);
+                        })
+                        .catch(next);
+                  })
+                  .catch(next);
+            } else {
+              const appName = req.body.name,
+                  appWebsite = req.body.website,
+                  appDesc = req.body.description,
+                  iconID = req.body.icon,
+                  rawRedirectURIs = req.body.redirect_uris;
+              let redirectURIs: string[] = [];
 
-            if (typeof iconID != 'string' || (iconID.length != 0 && !isNumber(iconID))) return next(new ApiError(400, 'Invalid iconID', false, { body: req.body }));
+              /* User input validation */
+              if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, {body: req.body}));
+              if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
 
-            if (typeof rawRedirectURIs != 'string') return next(new ApiError(400, 'Invalid redirectURI', false, { body: req.body }));
-            for (let uri of rawRedirectURIs.split(/\r?\n/)) {
-              uri = toNeutralString(uri);
+              if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
+              if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
+              if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
-              if (uri.length == 0) continue;
-              if (!isHttpURL(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
+              if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
+              if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
 
-              if (!redirectURIs.includes(uri)) {
-                redirectURIs.push(uri);
+              if (typeof iconID != 'string' || (iconID.length != 0 && !isNumber(iconID))) return next(new ApiError(400, 'Invalid iconID', false, {body: req.body}));
+
+              if (typeof rawRedirectURIs != 'string') return next(new ApiError(400, 'Invalid redirectURI', false, {body: req.body}));
+              for (let uri of rawRedirectURIs.split(/\r?\n/)) {
+                uri = toNeutralString(uri);
+
+                if (uri.length == 0) continue;
+                if (!isHttpURL(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
+
+                if (!redirectURIs.includes(uri)) {
+                  redirectURIs.push(uri);
+                }
               }
+
+              try {
+                if (iconID.length != 0 && !(await db.doesIconExist(iconID))) return next(new ApiError(400, 'Invalid iconID'));
+              } catch (err) {
+                return next(err);
+              }
+
+              // Update app
+              const descLines: string[] = appDesc.trim().split(/\r?\n/);
+              descLines.forEach(toNeutralString);
+
+              db.setApp(app.id, toNeutralString(appName), toNeutralString(appWebsite), redirectURIs, descLines.join('\n') || null, iconID || null)
+                  .then(() => {
+                    res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`);
+                  })
+                  .catch(next);
             }
-
-            try {
-              if (iconID.length != 0 && !(await db.doesIconExist(iconID))) return next(new ApiError(400, 'Invalid iconID'));
-            } catch (err) {
-              return next(err);
-            }
-
-            // Update app
-            const descLines: string[] = appDesc.trim().split(/\r?\n/);
-            descLines.forEach(toNeutralString);
-
-            db.setApp(app.id, toNeutralString(appName), toNeutralString(appWebsite), redirectURIs, descLines.join('\n') || null, iconID || null)
-              .then(() => {
-                res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`);
-              })
-              .catch(next);
-          }
-        })
-        .catch(next);
+          })
+          .catch(next);
     }
   });
 });

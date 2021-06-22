@@ -1,22 +1,22 @@
+import expressSessionPG from 'connect-pg-simple';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import expressSession from 'express-session';
-import expressSessionPG from 'connect-pg-simple';
 import morgan from 'morgan';
 import { join as joinPath } from 'path';
 
 import { cfg, dbCfg, pageGenerator, webAccessLogStream } from '.';
-import { ApiError, ApiErrs } from './utils/errors';
-import { dbUtils } from './utils/database';
-import { demoRouter } from './routes/demo';
 import { getLocalization } from './localization';
+import { demoRouter } from './routes/demo';
 import { loginRouter } from './routes/login';
 import { logoutRouter } from './routes/logout';
 import { oAuthNoCookieRouter, oAuthRouter } from './routes/oAuth';
 import { settingsRouter } from './routes/settings';
 import { staticPagesRouter } from './routes/staticPages';
-import { stripLangKeyFromURL } from './utils/utils';
 import { uploadsNoCookieRouter, uploadsRouter } from './routes/uploads';
+import { dbUtils } from './utils/database';
+import { ApiError, ApiErrs } from './utils/errors';
+import { stripLangKeyFromURL } from './utils/utils';
 
 export const app = express();
 app.disable('x-powered-by');
@@ -28,9 +28,9 @@ app.use((req, res, next) => {
 });
 
 /* Logging webserver request */
-app.use(morgan(cfg.logging.accessLogFormat, { stream: webAccessLogStream }));
+app.use(morgan(cfg.logging.accessLogFormat, {stream: webAccessLogStream}));
 if (process.env.NODE_ENV == 'production') {
-  app.use(morgan('dev', { skip: (_req, res) => res.statusCode < 500 }));
+  app.use(morgan('dev', {skip: (_req, res) => res.statusCode < 500}));
 } else {
   app.use(morgan('dev'));
 }
@@ -95,8 +95,8 @@ if (cfg.web.serveStatic) {
 }
 
 /* Prepare Request (calling the other middlewares) */
-app.use(express.urlencoded({ extended: false }));
-app.use(express.raw({ type: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'], limit: '3MB' }));
+app.use(express.urlencoded({extended: false}));
+app.use(express.raw({type: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'], limit: '3MB'}));
 app.use(cookieParser());
 app.use(expressSession({
   name: 'sessID',
@@ -119,7 +119,7 @@ app.use(expressSession({
   saveUninitialized: false,
   rolling: true,
   unset: 'destroy',
-  cookie: { secure: cfg.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */ }
+  cookie: {secure: cfg.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */}
 }));
 
 // Determine language to use
@@ -133,7 +133,13 @@ app.use((req, res, next) => {
 
     if (getLocalization().isAvailable(langKey)) {
       res.locals.lang = langKey;
-      res.cookie('lang', res.locals.lang, { httpOnly: true, path: '/', sameSite: 'lax', secure: cfg.cookies.secure, maxAge: 12 * 30 * 24 * 60 * 60 * 1000 /* 12mo */ });
+      res.cookie('lang', res.locals.lang, {
+        httpOnly: true,
+        path: '/',
+        sameSite: 'lax',
+        secure: cfg.cookies.secure,
+        maxAge: 12 * 30 * 24 * 60 * 60 * 1000 /* 12mo */
+      });
 
       req.url = req.url.length == 3 ? '/' : req.url.substring(3);
     }
@@ -141,8 +147,8 @@ app.use((req, res, next) => {
     const langKey = req.cookies.lang;
 
     if (typeof langKey == 'string' &&
-      langKey != getLocalization().defaultLanguage &&
-      getLocalization().isAvailable(langKey)) {
+        langKey != getLocalization().defaultLanguage &&
+        getLocalization().isAvailable(langKey)) {
       return redirect ? res.redirect(pageGenerator.globals.url.base + '/' + langKey + stripLangKeyFromURL(req.originalUrl)) : next();
     }
   } else {
@@ -178,7 +184,7 @@ app.use('/demo', demoRouter);
 
 /* Error handling */
 app.use((req, _res, next) => {
-  next(ApiError.create(ApiErrs.NOT_FOUND, { url: `${req.protocol}://${req.hostname}/${req.originalUrl}` }));
+  next(ApiError.create(ApiErrs.NOT_FOUND, {url: `${req.protocol}://${req.hostname}/${req.originalUrl}`}));
 });
 
 app.use((errRaw: any, _req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -205,10 +211,10 @@ app.use((errRaw: any, _req: express.Request, res: express.Response, next: expres
   if (res.headersSent) return next(err);  // Calls express default handler
 
   res.status(err.httpCode)
-    .send(
-      res.locals.sendJSON ?
-        { error: err.httpCode, message: err.message } :
-        `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Error ${err.httpCode}</title></head><body><h1>${err.httpCode} - ${err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>\n')}</h1></body></html>`);
+      .send(
+          res.locals.sendJSON ?
+              {error: err.httpCode, message: err.message} :
+              `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Error ${err.httpCode}</title></head><body><h1>${err.httpCode} - ${err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>\n')}</h1></body></html>`);
   // TODO: Send html based on templates
 });
 // TODO: Set caching headers on routes

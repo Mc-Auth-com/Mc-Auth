@@ -1,7 +1,7 @@
 // TODO: Think of a new file structure for en.json. It needs to be easily translatable and contain info like 'de', 'de_DE', 'Deutsch'
+import { readdirSync, readFileSync, statSync } from 'fs';
 import moment, { Moment } from 'moment';
 import { join as joinPath } from 'path';
-import { readFileSync, readdirSync, statSync } from 'fs';
 
 import { ApiError } from './utils/errors';
 import { formatStr } from './utils/utils';
@@ -22,11 +22,11 @@ export class Localization {
   constructor(languages: { [key: string]: { [key: string]: string } }, defaultLanguage: string, langPath: string) {
     if (!languages[defaultLanguage]) {
       throw new ApiError(500, 'Could not find localization for default language', true,
-        {
-          defaultLanguage,
-          expectedPath: joinPath(langPath, defaultLanguage + '.json'),
-          providedLangs: Object.keys(languages)
-        });
+          {
+            defaultLanguage,
+            expectedPath: joinPath(langPath, defaultLanguage + '.json'),
+            providedLangs: Object.keys(languages)
+          });
     }
 
     this.languages = languages;
@@ -80,16 +80,16 @@ export function getLocalization(): Localization {
       const filePath = joinPath(langPath, fileName);
 
       if (fileNameLower.endsWith('.json') &&
-        fileNameLower != 'arguments.json' &&
-        statSync(filePath).isFile()) {
+          fileNameLower != 'arguments.json' &&
+          statSync(filePath).isFile()) {
         const langKey = fileName.substring(0, fileName.length - 5).toLowerCase(),
-          lang = JSON.parse(readFileSync(filePath, 'utf-8'));
+            lang = JSON.parse(readFileSync(filePath, 'utf-8'));
 
         if (langKey.length != 2) {
-          ApiError.log(500, 'Language key needs to be 2 characters long (e.g. en.json)', true, { file: filePath });  // log error
+          ApiError.log(500, 'Language key needs to be 2 characters long (e.g. en.json)', true, {file: filePath});  // log error
           continue;
         } else if (tempLoc[langKey]) {
-          ApiError.log(500, 'Duplicate language file for the same language', true, { langKey, file: filePath });  // log error
+          ApiError.log(500, 'Duplicate language file for the same language', true, {langKey, file: filePath});  // log error
           continue;
         }
 
@@ -115,7 +115,7 @@ export function getLocalization(): Localization {
         }
 
         if (duplicateTerms.length > 0) {
-          ApiError.log(500, 'Duplicate localization terms', true, { file: filePath, duplicates: duplicateTerms });  // log error
+          ApiError.log(500, 'Duplicate localization terms', true, {file: filePath, duplicates: duplicateTerms});  // log error
         }
       }
     }

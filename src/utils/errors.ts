@@ -1,5 +1,5 @@
-import { post as httpPost } from 'superagent';
 import { type as osType } from 'os';
+import { post as httpPost } from 'superagent';
 
 import { appVersion, cfg } from '..';
 
@@ -22,13 +22,13 @@ export class ApiError extends Error {
     this.internalDetails = internalDetails;
 
     ApiError.log(this.httpCode, this.message, logErr, this.internalDetails, this.stack)
-      .catch(console.error);
+        .catch(console.error);
   }
 
   static fromError(err: Error, httpCode: number = 500, logErr: boolean | 'console' | 'discord' = true, internalDetails: object | null = null): ApiError {
     if (err.message) {
       if (!internalDetails) {
-        internalDetails = { message: err.message };
+        internalDetails = {message: err.message};
       } else {
         const key = (internalDetails as any).message ? `message_${Date.now()}` : 'message';
 
@@ -54,39 +54,39 @@ export class ApiError extends Error {
       if (logMode == true || logMode == 'discord') {
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
           httpPost(cfg.logging.discordErrorWebHookURL)
-            .set('Content-Type', 'application/json')
-            .set('Accept', 'application/json')
-            .set('User-Agent', httpUserAgent)
-            .send({
-              username: 'Mc-Auth.org (Error-Reporter)',
-              avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
-              embeds: [
-                {
-                  title: 'An error occurred',
-                  fields: [
-                    {
-                      name: 'HTTP-Code',
-                      value: httpCode,
-                      inline: true
-                    },
-                    {
-                      name: 'Message',
-                      value: message,
-                      inline: true
-                    },
-                    {
-                      name: 'Details',
-                      value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
-                    }
-                  ]
-                }
-              ]
-            })
-            .end((err, res) => {
-              if (err) return console.error('Discord WebHook err:', err);
-              // TODO: write to 'webhookRequestsLeft' and use setTimeout() to automatically set it when RateLimit is over (https://discord.com/developers/docs/topics/rate-limits#header-format)
-              console.log(`Discord WebHook (${res.status}):`, res.text); // TODO: remove debug
-            });
+              .set('Content-Type', 'application/json')
+              .set('Accept', 'application/json')
+              .set('User-Agent', httpUserAgent)
+              .send({
+                username: 'Mc-Auth.org (Error-Reporter)',
+                avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
+                embeds: [
+                  {
+                    title: 'An error occurred',
+                    fields: [
+                      {
+                        name: 'HTTP-Code',
+                        value: httpCode,
+                        inline: true
+                      },
+                      {
+                        name: 'Message',
+                        value: message,
+                        inline: true
+                      },
+                      {
+                        name: 'Details',
+                        value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
+                      }
+                    ]
+                  }
+                ]
+              })
+              .end((err, res) => {
+                if (err) return console.error('Discord WebHook err:', err);
+                // TODO: write to 'webhookRequestsLeft' and use setTimeout() to automatically set it when RateLimit is over (https://discord.com/developers/docs/topics/rate-limits#header-format)
+                console.log(`Discord WebHook (${res.status}):`, res.text); // TODO: remove debug
+              });
         }
       }
     });
@@ -118,7 +118,7 @@ export class ApiErrs {
 
   /* dynamic errors */
   static invalidQueryArg(queryArg: string): ApiErrTemplate {
-    return { httpCode: 400, message: `Invalid value for query argument ${queryArg}`, logErr: false };
+    return {httpCode: 400, message: `Invalid value for query argument ${queryArg}`, logErr: false};
   }
 }
 

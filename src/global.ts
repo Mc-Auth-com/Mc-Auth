@@ -5,7 +5,7 @@ declare module 'express-session' {
     mcProfile: {
       readonly id: string;
       readonly name: string;
-    }
+    };
   }
 }
 
@@ -17,14 +17,14 @@ export interface mcAuthCfg {
 
     readonly host: string,
     readonly port: number
-  }
+  };
 
   readonly trustProxy: boolean;
 
   readonly logging: {
     readonly accessLogFormat: string;
     readonly discordErrorWebHookURL: string | null;
-  }
+  };
 
   readonly web: {
     readonly serveStatic: boolean;
@@ -34,23 +34,23 @@ export interface mcAuthCfg {
       readonly dynamicContentHost: string | 'auto';
       readonly staticContentHost: string | 'auto';
     }
-  }
+  };
 
   readonly cookies: {
     readonly secure: boolean;
-  }
+  };
 
   readonly demo: {
     readonly mcAuth: {
       readonly client_id: string;
       readonly client_secret: string;
     }
-  }
+  };
 
   readonly reCAPTCHA: {
     readonly public: string;
     readonly private: string;
-  }
+  };
 
   readonly smtp: {
     readonly host: string;
@@ -64,7 +64,7 @@ export interface mcAuthCfg {
     };
 
     readonly from: string;
-  }
+  };
 
   readonly secret: string;
 }

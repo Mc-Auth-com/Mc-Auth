@@ -1,15 +1,15 @@
 import fs = require('fs');
 import rfs = require('rotating-file-stream');
+import { createServer, Server } from 'http';
 import { join as joinPath } from 'path';
-import { Server, createServer } from 'http';
-
-import { mcAuthCfg, mcAuthDbCfg } from './global';
-import { ApiError } from './utils/errors';
-import { dbUtils } from './utils/database';
 import { DynamicMailGenerator } from './dynamicEmailGenerator';
 import { DynamicPageGenerator } from './dynamicPageGenerator';
+
+import { mcAuthCfg, mcAuthDbCfg } from './global';
 import { getLocalization } from './localization';
 import { loadConfig } from './utils/config';
+import { dbUtils } from './utils/database';
+import { ApiError } from './utils/errors';
 import { mailUtils } from './utils/mail';
 
 export let cfg: mcAuthCfg = {
@@ -129,10 +129,10 @@ export const webAccessLogStream = rfs.createStream('access.log', { interval: '1d
   errorLogStream = rfs.createStream('error.log', { interval: '1d', maxFiles: 90, path: joinPath(process.cwd(), 'logs', 'error') });
 
 webAccessLogStream.on('error', (err) => {
-  ApiError.log(500, 'webAccessLogStream called error-event', true, { err });
+  ApiError.log(500, 'webAccessLogStream called error-event', true, {err});
 });
 errorLogStream.on('error', (err) => {
-  ApiError.log(500, 'errorLogStream called error-event', true, { err });
+  ApiError.log(500, 'errorLogStream called error-event', true, {err});
 });
 
 (async () => {
@@ -170,11 +170,11 @@ errorLogStream.on('error', (err) => {
 
   if (cfg.listen.usePath) {
     const unixSocketPath = cfg.listen.path,
-      unixSocketPIDPath = cfg.listen.path + '.pid',
-      parentDir = require('path').dirname(unixSocketPath);
+        unixSocketPIDPath = cfg.listen.path + '.pid',
+        parentDir = require('path').dirname(unixSocketPath);
 
     if (!fs.existsSync(parentDir)) {
-      fs.mkdirSync(parentDir, { recursive: true });
+      fs.mkdirSync(parentDir, {recursive: true});
     }
 
     const isProcessRunning = (pid: number): boolean => {

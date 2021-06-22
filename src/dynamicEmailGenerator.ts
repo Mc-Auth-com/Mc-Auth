@@ -1,5 +1,5 @@
-import { join as joinPath } from 'path';
 import { readFileSync } from 'fs';
+import { join as joinPath } from 'path';
 
 import { pageGenerator } from '.';
 import { getLocalization } from './localization';
@@ -23,7 +23,10 @@ export class DynamicMailGenerator {
       for (const key in MailTemplate) {
         const html = this.mailTemplates[key as MailTemplate];
 
-        this.mailCache[langKey + key] = { html: pageGenerator.renderEjs1(html.html, langKey), txt: pageGenerator.renderEjs1(html.txt, langKey) };
+        this.mailCache[langKey + key] = {
+          html: pageGenerator.renderEjs1(html.html, langKey),
+          txt: pageGenerator.renderEjs1(html.txt, langKey)
+        };
       }
     }
     Object.freeze(this.mailCache);  // Protect cache from accidental modification
@@ -35,7 +38,7 @@ export class DynamicMailGenerator {
       con: {
         lang: langKey
       }
-    }
+    };
 
     return {
       html: pageGenerator.renderEjs(this.mailCache[data.con.lang + template].html, 2, data),
@@ -49,5 +52,5 @@ export enum MailTemplate {
 }
 
 interface MailData {
-  confirm_mail?: { mcProfile: { id: string, name: string }, token: string }
+  confirm_mail?: { mcProfile: { id: string, name: string }, token: string };
 }

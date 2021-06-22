@@ -8,6 +8,7 @@ function reveal(elem, str) {
 }
 
 const btnClipboardClasses = ['btn-info', 'btn-outline-info', 'btn-secondary', 'btn-outline-secondary', 'btn-danger', 'btn-outline-danger', 'btn-warning', 'btn-outline-warning', 'btn-light', 'btn-outline-light', 'btn-dark', 'btn-outline-dark'];
+
 function copyToClipboard(elem, str) {
   const tempElem = document.createElement('textarea');
   tempElem.style.position = 'absolute';

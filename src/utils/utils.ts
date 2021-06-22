@@ -1,11 +1,11 @@
+import { NextFunction, Request, Response } from 'express';
 import { isIPv4, isIPv6 } from 'net';
-import { Request, Response, NextFunction } from 'express';
 
 import { pageGenerator } from '..';
 import { ApiError, ApiErrs } from './errors';
 
 const FQDN_PATTERN = /^(?=.{1,253})(?!.*--.*)(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-)\.){1,}(?:(?![0-9-])[a-z0-9-]{1,63}(?<!-))\.?$/i,
-  EMAIL_PATTERN = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+    EMAIL_PATTERN = /^[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
 
 /**
  * **Example usage**
@@ -116,7 +116,7 @@ export function restful(req: Request, res: Response, next: NextFunction, handler
   }
 
   res.set('Allow', allowedMethods.join(', ').toUpperCase());
-  return next(ApiError.create(ApiErrs.METHOD_NOT_ALLOWED, { allowedMethods }));
+  return next(ApiError.create(ApiErrs.METHOD_NOT_ALLOWED, {allowedMethods}));
 }
 
 export function urlContainsLangKey(url: string): boolean {

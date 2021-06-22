@@ -1,12 +1,12 @@
 import * as ejs from 'ejs';
 import * as express from 'express';
 import { SessionData } from 'express-session';
-import { join as joinPath } from 'path';
-import { Moment } from 'moment';
 import { readFileSync } from 'fs';
+import { Moment } from 'moment';
+import { join as joinPath } from 'path';
 
 import { cfg } from '.';
-import { OAuthApp, Grant, mcAuthAccount } from './global';
+import { Grant, mcAuthAccount, OAuthApp } from './global';
 import { getLocalization, Localization } from './localization';
 import { stripLangKeyFromURL, stripParamsFromURL } from './utils/utils';
 
@@ -34,10 +34,10 @@ export class DynamicPageGenerator {
     /* Read HTML and apply level 0 rendering */
 
     this.pagePartTemplates = {
-      _HEAD: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_head.html'), 'utf-8'), 0, { global: this.globals }),
-      _HEADER: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_header.html'), 'utf-8'), 0, { global: this.globals }),
-      _FOOTER: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, { global: this.globals }),
-      _SETTINGS_SIDEBAR: this.renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/_sidebar.html'), 'utf-8'), 0, { global: this.globals })
+      _HEAD: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_head.html'), 'utf-8'), 0, {global: this.globals}),
+      _HEADER: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_header.html'), 'utf-8'), 0, {global: this.globals}),
+      _FOOTER: this.renderEjs(readFileSync(joinPath(dynamicWebPath, '_footer.html'), 'utf-8'), 0, {global: this.globals}),
+      _SETTINGS_SIDEBAR: this.renderEjs(readFileSync(joinPath(dynamicWebPath, 'settings/_sidebar.html'), 'utf-8'), 0, {global: this.globals})
     };
 
     this.pageTemplates = {
@@ -129,7 +129,7 @@ export class DynamicPageGenerator {
       };
     }
 
-    return ejs.render(str, data, { delimiter: `%${level}` }) as string;
+    return ejs.render(str, data, {delimiter: `%${level}`}) as string;
   }
 
   /**
@@ -147,7 +147,7 @@ export class DynamicPageGenerator {
         url: {
           baseLocalized: this.globals.url.base + (langKey != getLocalization().defaultLanguage ? `/${langKey}` : '')
         }
-      },
+      }
     });
   }
 
@@ -161,7 +161,7 @@ export class DynamicPageGenerator {
    */
   private static generateUrlPrefix(host: string | 'auto') {
     return `http${cfg.web.urlPrefix.https ? 's' : ''}://${host != 'auto' ? host : `${cfg.listen.host}${((cfg.web.urlPrefix.https && cfg.listen.port != 443) ||
-      (!cfg.web.urlPrefix.https && cfg.listen.port != 80)) ? `:${cfg.listen.port}` : ''}`}`;
+        (!cfg.web.urlPrefix.https && cfg.listen.port != 80)) ? `:${cfg.listen.port}` : ''}`}`;
   }
 }
 
