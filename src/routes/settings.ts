@@ -156,8 +156,8 @@ router.all('/apps/create', (req, res, next) => {
   });
 });
 
-router.all('/apps/:appID?', (req, res, next) => {
-  const appID = req.params.appID || null;
+router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
+  const appID = req.params['appID'] || null;
 
   restful(req, res, next, {
     get: () => {

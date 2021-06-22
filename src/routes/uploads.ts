@@ -16,10 +16,10 @@ const DEFAULT_ICON: Buffer = readFileSync(joinPath(__dirname, '..', '..', 'resou
 
 // TODO Add rate limit to upload
 
-routerNoCookie.all('/:fileID?', (req, res, next) => {
+routerNoCookie.all<{ fileID?: any }>('/:fileID?', (req, res, next) => {
   restful(req, res, next, {
     get: async () => {
-      let fileID = req.params.fileID?.toLowerCase() || null;
+      let fileID = req.params['fileID']?.toLowerCase() || null;
 
       // Validate user input
       if (typeof fileID != 'string' || !fileID.endsWith('.png') || fileID == '.png') return next(new ApiError(404, 'Not Found', false));
