@@ -75,7 +75,7 @@
     "@types/superagent": "^4.1.11",
     "cross-env": "^7.0.3",
     "ts-node": "^10.0.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   },
   "nodemonConfig": {
     "watch": [
