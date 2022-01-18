@@ -138,8 +138,8 @@ errorLogStream.on('error', (err) => {
 (async () => {
   try {
     await db.isReady();
-  } catch (err) {
-    console.error(`Database is not ready! (${err.message})`);
+  } catch (err: any) {
+    console.error(`Database is not ready! (${err?.message})`);
     process.exit(2);
   }
 
@@ -181,8 +181,8 @@ errorLogStream.on('error', (err) => {
       try {
         process.kill(pid, 0);
         return true;
-      } catch (ex) {
-        return ex.code == 'EPERM';
+      } catch (ex: any) {
+        return ex?.code == 'EPERM';
       }
     };
 

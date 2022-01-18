@@ -2,10 +2,10 @@ import { Router } from 'express';
 
 import { db, pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
+import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
 import ApiErrs from '../utils/ApiErrs';
 import { ApiError } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
-import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
 import Utils from '../utils/Utils';
 
 // TODO Add rate limiting
@@ -234,7 +234,7 @@ router.all('/authorize', (req, res, next) => {
                                     },
                                     {key: 'state', value: state}]));
                     }
-                  } catch (err) {
+                  } catch (err: any) {
                     ApiError.fromError(err, 500, true, {
                       appID: app.id,
                       grantID: grant.id,
