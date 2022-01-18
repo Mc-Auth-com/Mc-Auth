@@ -21,14 +21,14 @@ export class DynamicPageGenerator {
   constructor(localization: Localization) {
     this.globals = {
       url: {
-        base: DynamicPageGenerator.generateUrlPrefix(cfg.web.urlPrefix.dynamicContentHost),
-        static: DynamicPageGenerator.generateUrlPrefix(cfg.web.urlPrefix.staticContentHost),
+        base: DynamicPageGenerator.generateUrlPrefix(cfg.data.web.urlPrefix.dynamicContentHost),
+        static: DynamicPageGenerator.generateUrlPrefix(cfg.data.web.urlPrefix.staticContentHost),
 
         mcServer: 'mc-auth.com',
         docs: 'https://github.com/Mc-Auth-com/Mc-Auth/wiki'
       },
 
-      reCaptchaPublic: cfg.reCAPTCHA.public
+      reCaptchaPublic: cfg.data.reCAPTCHA.public
     };
 
     /* Read HTML and apply level 0 rendering */
@@ -160,8 +160,8 @@ export class DynamicPageGenerator {
    * @param host Should be `auto` or a hostname with optional port (`host[:port]`)
    */
   private static generateUrlPrefix(host: string | 'auto') {
-    return `http${cfg.web.urlPrefix.https ? 's' : ''}://${host != 'auto' ? host : `${cfg.listen.host}${((cfg.web.urlPrefix.https && cfg.listen.port != 443) ||
-        (!cfg.web.urlPrefix.https && cfg.listen.port != 80)) ? `:${cfg.listen.port}` : ''}`}`;
+    return `http${cfg.data.web.urlPrefix.https ? 's' : ''}://${host != 'auto' ? host : `${cfg.data.listen.host}${((cfg.data.web.urlPrefix.https && cfg.data.listen.port != 443) ||
+        (!cfg.data.web.urlPrefix.https && cfg.data.listen.port != 80)) ? `:${cfg.data.listen.port}` : ''}`}`;
   }
 }
 

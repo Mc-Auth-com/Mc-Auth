@@ -62,7 +62,7 @@ router.all('/login', (req, res, next) => {
             pageGenerator.globals.url.base + // use 'https://Mc-Auth.com' instead
             '/oAuth2/authorize' +
             '?client_id=' + // Your client_id from https://mc-auth.com/de/settings/apps
-            cfg.demo.mcAuth.client_id +
+            cfg.data.demo.mcAuth.client_id +
             '&redirect_uri=' + // Where should Mc-Auth.com redirect the client to (needs to be whitelisted inside your app settings)
             encodeURIComponent(redirectURI) +
             '&scope=profile' + // Optional. Tells Mc-Auth that we want the public profile (so we don't have to contact Mojang ourself)
@@ -80,8 +80,8 @@ router.all('/login', (req, res, next) => {
             // .set('User-Agent', '') // TODO
             .send({
               // client_secret from Mc-Auth to authenticate our request
-              client_id: cfg.demo.mcAuth.client_id,
-              client_secret: cfg.demo.mcAuth.client_secret,
+              client_id: cfg.data.demo.mcAuth.client_id,
+              client_secret: cfg.data.demo.mcAuth.client_secret,
 
               code: req.query.code,             // The code that Mc-Auth told the user to give us (redirect)
               redirect_uri: redirectURI,        // The same URL we redirected the user to

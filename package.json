@@ -53,12 +53,12 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.6.2",
     "nodemon": "^2.0.7",
-    "object-assign-deep": "^0.4.0",
     "pg": "^8.6.0",
     "request": "^2.88.2",
     "rotating-file-stream": "^2.1.5",
     "sharp": "^0.28.3",
     "superagent": "^6.1.0",
+    "ts-deepmerge": "^2.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -71,7 +71,6 @@
     "@types/jsonwebtoken": "^8.5.2",
     "@types/morgan": "^1.9.2",
     "@types/nodemailer": "^6.4.2",
-    "@types/object-assign-deep": "^0.4.0",
     "@types/pg": "^8.6.0",
     "@types/request": "^2.48.5",
     "@types/sharp": "^0.28.3",

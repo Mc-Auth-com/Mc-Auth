@@ -7,12 +7,25 @@ import { DynamicPageGenerator } from './dynamicPageGenerator';
 
 import { mcAuthCfg, mcAuthDbCfg } from './global';
 import { getLocalization } from './localization';
-import { loadConfig } from './utils/config';
+import { ConfigFile } from './utils/ConfigFile';
 import { dbUtils } from './utils/database';
 import { ApiError } from './utils/errors';
 import { mailUtils } from './utils/mail';
 
-export let cfg: mcAuthCfg = {
+export let cfg: ConfigFile<mcAuthCfg>;
+export let dbCfg: ConfigFile<mcAuthDbCfg>;
+
+let server: Server | null;
+export let db: dbUtils;
+export let mailer: mailUtils;
+
+export let pageGenerator: DynamicPageGenerator;
+export let mailGenerator: DynamicMailGenerator;
+
+export const appVersion: string = JSON.parse(fs.readFileSync(joinPath(__dirname, '..', 'package.json'), 'utf-8')).version ?? 'UNKNOWN_APP_VERSION';
+
+/* Init configuration files */
+cfg = new ConfigFile<mcAuthCfg>(joinPath(process.cwd(), 'storage', 'config.json'), {
   listen: {
     usePath: false,
     path: './mcAuth.unixSocket',
@@ -60,9 +73,9 @@ export let cfg: mcAuthCfg = {
 
     from: 'Mc-Auth <mc-auth@localhost>'
   },
-  secret: require('crypto').randomBytes(1024).toString('base64')
-};
-export let dbCfg: mcAuthDbCfg = {
+  secret: (() => require('crypto').randomBytes(1024).toString('base64')) as any
+});
+dbCfg = new ConfigFile<mcAuthDbCfg>(joinPath(process.cwd(), 'storage', 'db.json'), {
   host: '127.0.0.1',
   port: 5432,
   ssl: false,
@@ -71,20 +84,7 @@ export let dbCfg: mcAuthDbCfg = {
   user: 'user007',
   password: 's3cr3t!',
   database: 'skindb'
-};
-
-let server: Server | null;
-export let db: dbUtils;
-export let mailer: mailUtils;
-
-export let pageGenerator: DynamicPageGenerator;
-export let mailGenerator: DynamicMailGenerator;
-
-export const appVersion: string = JSON.parse(fs.readFileSync(joinPath(__dirname, '..', 'package.json'), 'utf-8')).version ?? 'UNKNOWN_APP_VERSION';
-
-/* Init configuration files */
-cfg = loadConfig(cfg, joinPath(process.cwd(), 'storage', 'config.json')) as mcAuthCfg;
-dbCfg = loadConfig(dbCfg, joinPath(process.cwd(), 'storage', 'db.json')) as mcAuthDbCfg;
+});
 
 /* Register shutdown hook */
 function shutdownHook() {
@@ -119,8 +119,8 @@ process.on('SIGHUP', shutdownHook);
 process.on('SIGUSR2', shutdownHook);  // The package 'nodemon' is using this signal
 
 /* Prepare webserver */
-db = new dbUtils(dbCfg);
-mailer = new mailUtils(cfg.smtp);
+db = new dbUtils(dbCfg.data);
+mailer = new mailUtils(cfg.data.smtp);
 
 pageGenerator = new DynamicPageGenerator(getLocalization());
 mailGenerator = new DynamicMailGenerator();
@@ -150,7 +150,7 @@ errorLogStream.on('error', (err) => {
       throw err;
     }
 
-    const errPrefix = cfg.listen.usePath ? `path ${cfg.listen.path}` : `port ${cfg.listen.port}`;
+    const errPrefix = cfg.data.listen.usePath ? `path ${cfg.data.listen.path}` : `port ${cfg.data.listen.port}`;
     switch (err.code) {
       case 'EACCES':
         console.error(`${errPrefix} requires elevated privileges`);
@@ -165,12 +165,12 @@ errorLogStream.on('error', (err) => {
     }
   });
   server.on('listening', () => {
-    console.log(`Listening on ${cfg.listen.usePath ? `path ${cfg.listen.path}` : `port ${cfg.listen.port}`}`);
+    console.log(`Listening on ${cfg.data.listen.usePath ? `path ${cfg.data.listen.path}` : `port ${cfg.data.listen.port}`}`);
   });
 
-  if (cfg.listen.usePath) {
-    const unixSocketPath = cfg.listen.path,
-        unixSocketPIDPath = cfg.listen.path + '.pid',
+  if (cfg.data.listen.usePath) {
+    const unixSocketPath = cfg.data.listen.path,
+        unixSocketPIDPath = cfg.data.listen.path + '.pid',
         parentDir = require('path').dirname(unixSocketPath);
 
     if (!fs.existsSync(parentDir)) {
@@ -203,10 +203,10 @@ errorLogStream.on('error', (err) => {
     server.listen(unixSocketPath);
     fs.chmodSync(unixSocketPath, '0777');
   } else {
-    server.listen(cfg.listen.port, cfg.listen.host);
+    server.listen(cfg.data.listen.port, cfg.data.listen.host);
   }
 })();
 
 export function getSecret(maxLength: number = 1024): Buffer {
-  return Buffer.from(cfg.secret, 'base64').subarray(0, maxLength);
+  return Buffer.from(cfg.data.secret, 'base64').subarray(0, maxLength);
 }

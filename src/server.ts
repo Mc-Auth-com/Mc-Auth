@@ -21,7 +21,7 @@ import { stripLangKeyFromURL } from './utils/_old_utils';
 
 export const app = express();
 app.disable('x-powered-by');
-app.set('trust proxy', cfg.trustProxy);
+app.set('trust proxy', cfg.data.trustProxy);
 
 app.use((req, res, next) => {
   res.locals.sendJSON = true;
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
 });
 
 /* Logging webserver request */
-app.use(morgan(cfg.logging.accessLogFormat, {stream: webAccessLogStream}));
+app.use(morgan(cfg.data.logging.accessLogFormat, {stream: webAccessLogStream}));
 if (process.env.NODE_ENV == 'production') {
   app.use(morgan('dev', {skip: (_req, res) => res.statusCode < 500}));
 } else {
@@ -91,7 +91,7 @@ app.use((req, res, next) => {
 });
 
 // Optional: Serving static files too
-if (cfg.web.serveStatic) {
+if (cfg.data.web.serveStatic) {
   app.use(express.static(joinPath(__dirname, '..', 'resources', 'web', 'static')));
 }
 
@@ -105,22 +105,22 @@ app.use(expressSession({
     tableName: 'sessions',
     pruneSessionInterval: 60 * 60 * 24, /* 24h */
     pool: new dbUtils({
-      host: dbCfg.host,
-      port: dbCfg.port,
-      ssl: dbCfg.ssl,
+      host: dbCfg.data.host,
+      port: dbCfg.data.port,
+      ssl: dbCfg.data.ssl,
       connectionPoolSize: 12,
 
-      user: dbCfg.user,
-      password: dbCfg.password,
-      database: dbCfg.database
+      user: dbCfg.data.user,
+      password: dbCfg.data.password,
+      database: dbCfg.data.database
     }).getPool() ?? undefined
   }),
-  secret: cfg.secret,
+  secret: cfg.data.secret,
   resave: false,
   saveUninitialized: false,
   rolling: true,
   unset: 'destroy',
-  cookie: {secure: cfg.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */}
+  cookie: {secure: cfg.data.cookies.secure, httpOnly: true, sameSite: 'lax', maxAge: 60 * 24 * 60 * 60 * 1000 /* 60d */}
 }));
 
 // Determine language to use
@@ -138,7 +138,7 @@ app.use((req, res, next) => {
         httpOnly: true,
         path: '/',
         sameSite: 'lax',
-        secure: cfg.cookies.secure,
+        secure: cfg.data.cookies.secure,
         maxAge: 12 * 30 * 24 * 60 * 60 * 1000 /* 12mo */
       });
 

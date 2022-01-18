@@ -118,7 +118,7 @@ router.all('/apps/create', (req, res, next) => {
           .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS_CREATE, req, res));
     },
     post: () => {
-      if (cfg.reCAPTCHA.private.length == 0) return next(ApiError.create(ApiErrs.NO_RECAPTCHA));
+      if (cfg.data.reCAPTCHA.private.length == 0) return next(ApiError.create(ApiErrs.NO_RECAPTCHA));
       if (!req.session?.loggedIn) return next(ApiError.create(ApiErrs.UNAUTHORIZED));
 
       const appName = req.body.name,
@@ -142,7 +142,7 @@ router.all('/apps/create', (req, res, next) => {
 
       // Check if reCAPTCHA has been solved
       httpPost('https://www.google.com/recaptcha/api/siteverify')
-          .field('secret', cfg.reCAPTCHA.private)
+          .field('secret', cfg.data.reCAPTCHA.private)
           .field('response', captcha)
           .end((err, httpRes) => {
             if (err) return next(err);
