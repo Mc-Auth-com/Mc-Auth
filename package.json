@@ -19,6 +19,7 @@
     "build": "tsc",
     "test": "jest --coverage",
 
+    "snyk": "npm run build && snyk test",
     "start": "cross-env NODE_ENV=production nodemon --enable-source-maps build/index.js",
     "devStart": "cross-env NODE_ENV=development ts-node src/index.ts",
     "dev": "nodemon --ext ts,html,json,txt --watch ./src --watch ./resources/lang --watch ./resources/web/dynamic --watch ./resources/email --exec \"npm run devStart\""
@@ -77,6 +78,7 @@
     "@types/superagent": "^4.1.11",
     "cross-env": "^7.0.3",
     "jest": "^27.4.7",
+    "snyk": "^1.833.0",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
