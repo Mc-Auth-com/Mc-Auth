@@ -8,7 +8,7 @@ import { join as joinPath } from 'path';
 import { cfg } from '.';
 import { Grant, mcAuthAccount, OAuthApp } from './global';
 import { getLocalization, Localization } from './localization';
-import { stripLangKeyFromURL, stripParamsFromURL } from './utils/utils';
+import { stripLangKeyFromURL, stripParamsFromURL } from './utils/_old_utils';
 
 const dynamicWebPath = joinPath(__dirname, '..', 'resources', 'web', 'dynamic');
 

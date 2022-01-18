@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from 'express';
 
 import { pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
-import { restful } from '../utils/utils';
+import { restful } from '../utils/_old_utils';
 
 const router = Router();
 export const staticPagesRouter = router;

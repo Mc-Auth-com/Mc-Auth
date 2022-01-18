@@ -14,9 +14,10 @@ import { oAuthNoCookieRouter, oAuthRouter } from './routes/oAuth';
 import { settingsRouter } from './routes/settings';
 import { staticPagesRouter } from './routes/staticPages';
 import { uploadsNoCookieRouter, uploadsRouter } from './routes/uploads';
+import ApiErrs from './utils/ApiErrs';
 import { dbUtils } from './utils/database';
-import { ApiError, ApiErrs } from './utils/errors';
-import { stripLangKeyFromURL } from './utils/utils';
+import { ApiError } from './utils/errors';
+import { stripLangKeyFromURL } from './utils/_old_utils';
 
 export const app = express();
 app.disable('x-powered-by');

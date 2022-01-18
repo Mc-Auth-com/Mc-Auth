@@ -4,7 +4,8 @@ import { db, pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
 import { ApiError } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
-import { getReturnURL, isNumber, restful } from '../utils/utils';
+import { getReturnURL, restful } from '../utils/_old_utils';
+import Utils from '../utils/Utils';
 
 const router = Router();
 export const loginRouter = router;
@@ -23,7 +24,7 @@ router.all('/', (req, res, next) => {
       let otp: string | undefined = req.body.otp; // valid otp may have up to 1 space: '### ###'
 
       if (typeof username != 'string' || username.length > 16) return next(new ApiError(401, 'You have to provide a valid username', false, {body: req.body}));
-      if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !isNumber(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, {body: req.body}));
+      if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !Utils.isNumeric(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, {body: req.body}));
 
       MojangAPI.getProfile(username)
           .then(async (profile: any /* FIXME: type */): Promise<void> => {

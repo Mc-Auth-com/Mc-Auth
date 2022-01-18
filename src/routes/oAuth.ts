@@ -2,9 +2,11 @@ import { Router } from 'express';
 
 import { db, pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
-import { ApiError, ApiErrs } from '../utils/errors';
+import ApiErrs from '../utils/ApiErrs';
+import { ApiError } from '../utils/errors';
 import { MojangAPI } from '../utils/spraxapi';
-import { appendParamsToURL, isNumber, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/utils';
+import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
+import Utils from '../utils/Utils';
 
 // TODO Add rate limiting
 //  No confirmed mail: 5/second (burst, status 429), 100/hour (status 429)
@@ -27,7 +29,7 @@ routerNoCookie.all('/token', (req, res, next) => {
           redirectURI = req.body['redirect_uri'],
           grantType = req.body['grant_type'];
 
-      if (!clientID || !clientSecret || !isNumber(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
+      if (!clientID || !clientSecret || !Utils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
 
       db.getApp(clientID)
           .then((app) => {
@@ -83,7 +85,7 @@ router.all('/authorize', (req, res, next) => {
           });
 
       /* Basic input validation */
-      if (typeof clientID != 'string' || !isNumber(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
+      if (typeof clientID != 'string' || !Utils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
         typeof: typeof clientID,
         clientID
       }));
@@ -157,8 +159,8 @@ router.all('/authorize', (req, res, next) => {
           agreed = req.body.result == '1';
 
       /* Basic input validation */
-      if (typeof grantID != 'string' || !isNumber(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
-      if (typeof clientID != 'string' || !isNumber(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
+      if (typeof grantID != 'string' || !Utils.isNumeric(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
+      if (typeof clientID != 'string' || !Utils.isNumeric(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
       if (typeof state != 'string' && state != null) return next(new ApiError(400, 'Invalid body parameter: state', false, {body: req.body}));
       if (typeof req.body.result != 'string') return next(new ApiError(400, 'Invalid body parameter: result', false, {body: req.body}));
       // Done with basic validation

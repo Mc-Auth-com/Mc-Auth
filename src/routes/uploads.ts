@@ -4,8 +4,10 @@ import { join as joinPath } from 'path';
 import sharp from 'sharp';
 
 import { db, pageGenerator } from '..';
-import { ApiError, ApiErrs } from '../utils/errors';
-import { isNumber, restful } from '../utils/utils';
+import ApiErrs from '../utils/ApiErrs';
+import { ApiError } from '../utils/errors';
+import { restful } from '../utils/_old_utils';
+import Utils from '../utils/Utils';
 
 const router = Router(),
     routerNoCookie = Router();
@@ -29,7 +31,7 @@ routerNoCookie.all<{ fileID?: any }>('/:fileID?', (req, res, next) => {
 
       let status = 200;
 
-      if (isNumber(fileID)) {
+      if (Utils.isNumeric(fileID)) {
         try {
           const file = await db.getOptimizedIconBuffer(fileID);
 

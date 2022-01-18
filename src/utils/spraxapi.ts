@@ -1,7 +1,7 @@
 // TODO: Move this to own (public) npm package
 import { get as getHttp } from 'superagent';
 
-import { httpUserAgent } from './errors';
+import { ApiError } from './errors';
 
 export class MojangAPI {
   // TODO: Define multiple backends (SpraxAPI (+Fallback), MojangAPI)
@@ -10,7 +10,7 @@ export class MojangAPI {
   static async getProfile(uuid: string): Promise<object | null> {
     return new Promise((resolve, reject) => {
       getHttp(`https://api.sprax2013.de/mc/profile/${uuid}`)
-          .set('User-Agent', httpUserAgent)
+          .set('User-Agent', ApiError.getUserAgent())
           .end((err, res) => {
             if (res.status == 200) return resolve(res.body);
             if (res.status == 204 || res.status == 404 || !err) return resolve(null);

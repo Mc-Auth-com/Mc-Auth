@@ -4,8 +4,9 @@ import { post as httpPost } from 'superagent';
 
 import { cfg, getSecret, pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
-import { ApiError, ApiErrs } from '../utils/errors';
-import { restful } from '../utils/utils';
+import ApiErrs from '../utils/ApiErrs';
+import { ApiError } from '../utils/errors';
+import { restful } from '../utils/_old_utils';
 
 const cookieOptions: CookieOptions = {httpOnly: true, path: '/', sameSite: 'lax'};
 

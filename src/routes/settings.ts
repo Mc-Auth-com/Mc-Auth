@@ -4,8 +4,10 @@ import { post as httpPost } from 'superagent';
 
 import { cfg, db, getSecret, mailer, pageGenerator } from '..';
 import { PageTemplate } from '../dynamicPageGenerator';
-import { ApiError, ApiErrs } from '../utils/errors';
-import { isHttpURL, isNumber, isValidEmail, restful, stripLangKeyFromURL, toNeutralString } from '../utils/utils';
+import { restful, stripLangKeyFromURL } from '../utils/_old_utils';
+import ApiErrs from '../utils/ApiErrs';
+import { ApiError } from '../utils/errors';
+import Utils from '../utils/Utils';
 
 const router = Router();
 export const settingsRouter = router;
@@ -58,7 +60,7 @@ router.all('/account', (req, res, next) => {
     post: () => {
       if (req.body.updateMail == '1' && req.body.mailAddr) {
         if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
-        if (!isValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, {body: req.body.mailAddr}));
+        if (!Utils.looksLikeValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, {body: req.body.mailAddr}));
 
         db.getAccount(req.session?.mcProfile?.id)
             .then((account) => {
@@ -126,14 +128,14 @@ router.all('/apps/create', (req, res, next) => {
 
       /* User input validation */
       if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, {body: req.body}));
-      if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
+      if (Utils.normalizeWhitespaceChars(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
 
       if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
-      if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
-      if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
+      if (Utils.normalizeWhitespaceChars(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
+      if (!Utils.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
       if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
-      if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
+      if (Utils.normalizeWhitespaceChars(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
 
       if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, {body: req.body}));
 
@@ -148,7 +150,7 @@ router.all('/apps/create', (req, res, next) => {
           if (httpRes.body?.success != true) return next(new ApiError(400, 'reCAPTCHA failed', false, { body: req.body, reCAPTCHA_body: httpRes.body }));
             if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
-            db.createApp(req.session?.mcProfile?.id, toNeutralString(appName), toNeutralString(appWebsite), toNeutralString(appDesc) || null)
+            db.createApp(req.session?.mcProfile?.id, Utils.normalizeWhitespaceChars(appName), Utils.normalizeWhitespaceChars(appWebsite), Utils.normalizeWhitespaceChars(appDesc) || null)
                 .then((app) => res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`))
                 .catch(next);
           });
@@ -171,7 +173,7 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
                   .send(pageGenerator.renderPage(PageTemplate.SETTINGS_APPS, req, res, {apps}));
             })
             .catch(next);
-      } else if (isNumber(appID)) {
+      } else if (Utils.isNumeric(appID)) {
         db.getApp(appID)
             .then((app) => {
               if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
@@ -188,7 +190,7 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
     post: () => {
       if (!req.session?.loggedIn) return next(ApiError.create(ApiErrs.UNAUTHORIZED));
 
-      if (typeof appID != 'string' || !isNumber(appID)) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
+      if (typeof appID != 'string' || !Utils.isNumeric(appID)) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
 
       db.getApp(appID)
           .then(async (app) => {
@@ -207,7 +209,7 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
               let otp = req.body.deleteAppOTP;
 
               if (typeof otp != 'string' ||
-                  !isNumber(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
+                  !Utils.isNumeric(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
                 appID: app.id,
                 otp
               }));
@@ -236,23 +238,23 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
 
               /* User input validation */
               if (typeof appName != 'string' || appName.trim().length == 0) return next(new ApiError(400, 'Missing application name', false, {body: req.body}));
-              if (toNeutralString(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
+              if (Utils.normalizeWhitespaceChars(appName).length > 128) return next(new ApiError(400, 'Application name exceeds 128 characters', false, {body: req.body}));
 
               if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
-              if (toNeutralString(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
-              if (!isHttpURL(toNeutralString(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
+              if (Utils.normalizeWhitespaceChars(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
+              if (!Utils.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
               if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
-              if (toNeutralString(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
+              if (Utils.normalizeWhitespaceChars(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
 
-              if (typeof iconID != 'string' || (iconID.length != 0 && !isNumber(iconID))) return next(new ApiError(400, 'Invalid iconID', false, {body: req.body}));
+              if (typeof iconID != 'string' || (iconID.length != 0 && !Utils.isNumeric(iconID))) return next(new ApiError(400, 'Invalid iconID', false, {body: req.body}));
 
               if (typeof rawRedirectURIs != 'string') return next(new ApiError(400, 'Invalid redirectURI', false, {body: req.body}));
               for (let uri of rawRedirectURIs.split(/\r?\n/)) {
-                uri = toNeutralString(uri);
+                uri = Utils.normalizeWhitespaceChars(uri);
 
                 if (uri.length == 0) continue;
-                if (!isHttpURL(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
+                if (!Utils.looksLikeHttpUrl(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
 
                 if (!redirectURIs.includes(uri)) {
                   redirectURIs.push(uri);
@@ -267,9 +269,9 @@ router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
 
               // Update app
               const descLines: string[] = appDesc.trim().split(/\r?\n/);
-              descLines.forEach(toNeutralString);
+              descLines.forEach(Utils.normalizeWhitespaceChars);
 
-              db.setApp(app.id, toNeutralString(appName), toNeutralString(appWebsite), redirectURIs, descLines.join('\n') || null, iconID || null)
+              db.setApp(app.id, Utils.normalizeWhitespaceChars(appName), Utils.normalizeWhitespaceChars(appWebsite), redirectURIs, descLines.join('\n') || null, iconID || null)
                   .then(() => {
                     res.redirect(`${pageGenerator.globals.url.base}/settings/apps/${app.id}`);
                   })

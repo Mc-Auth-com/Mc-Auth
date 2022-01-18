@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { pageGenerator } from '..';
-import { getReturnURL, restful } from '../utils/utils';
+import { getReturnURL, restful } from '../utils/_old_utils';
 
 const router = Router();
 export const logoutRouter = router;
