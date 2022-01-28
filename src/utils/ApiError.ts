@@ -1,5 +1,6 @@
 import { type as osType } from 'os';
 import { post as httpPost } from 'superagent';
+import { APP_VERSION, getCfg } from '../Constants';
 
 import { ApiErrTemplate } from './ApiErrs';
 
@@ -46,11 +47,15 @@ export class ApiError extends Error {
       if (!logMode) return resolve();
 
       if (logMode == true || logMode == 'console') {
-        console.error(`[Error] ${message} (${JSON.stringify({ srvTime: new Date().toUTCString(), stack: stack?.split('\n'), details: internalDetails }, null, 2)})`);
+        console.error(`[Error] ${message} (${JSON.stringify({
+          srvTime: new Date().toUTCString(),
+          stack: stack?.split('\n'),
+          details: internalDetails
+        }, null, 2)})`);
       }
 
       if (logMode == true || logMode == 'discord') {
-        const cfg = require('..').cfg;
+        const cfg = getCfg().data;
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
           httpPost(cfg.logging.discordErrorWebHookURL)
               .set('Content-Type', 'application/json')
@@ -92,6 +97,6 @@ export class ApiError extends Error {
   }
 
   static getUserAgent() {
-    return `MC-Auth.org/${require('..').appVersion} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
+    return `MC-Auth.org/${APP_VERSION} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
   }
 }

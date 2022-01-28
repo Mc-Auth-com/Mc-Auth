@@ -1,7 +1,7 @@
 // TODO: Move this to own (public) npm package
 import { get as getHttp } from 'superagent';
 
-import { ApiError } from './errors';
+import { ApiError } from './ApiError';
 
 export class MojangAPI {
   // TODO: Define multiple backends (SpraxAPI (+Fallback), MojangAPI)

@@ -128,3 +128,8 @@ describe('Whitespace character normalization', () => {
         .toBe('Hello\nWorld!');
   });
 });
+
+test('Funktioniert toLowerCase wie erwartet?', () => {
+  expect('Hallo Welt!'.toLowerCase())
+      .toBe('hallo welt!');
+});

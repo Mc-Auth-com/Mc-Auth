@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from 'fs';
 import moment, { Moment } from 'moment';
 import { join as joinPath } from 'path';
 
-import { ApiError } from './utils/errors';
+import { ApiError } from './utils/ApiError';
 import Utils from './utils/Utils';
 
 let loc: Localization | null = null;

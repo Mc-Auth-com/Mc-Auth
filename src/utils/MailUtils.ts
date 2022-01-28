@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
+import { getMailGenerator } from '../Constants';
 
-import { getSecret, mailGenerator } from '..';
-import { MailTemplate } from '../dynamicEmailGenerator';
+import { MailTemplate } from '../DynamicMailGenerator';
 import { mcAuthAccount } from '../global';
-import { getLocalization } from '../localization';
+import { getLocalization } from '../Localization';
+import { getPartOfSecret } from './_old_utils';
 
 /*
 TODO: Allow users to add their email to a blacklist and only be removed when
@@ -20,7 +21,7 @@ TODO: temporarily blacklist mails when returned with 'hard bounce'?
         perhaps due to a full mailbox or a server problem.
 */
 
-export class mailUtils {
+export class MailUtils {
   private mailer: Mail;
 
   constructor(options: { host: string, port: number, secure: boolean, auth: { username: string, password: string } }) {
@@ -36,21 +37,17 @@ export class mailUtils {
   }
 
   async send(name: string, email: string, subject: string, html: string, text?: string): Promise<{ accepted: string[], rejected: string[], response: string, messageId: string }> {
-    return new Promise((resolve, reject) => {
-      this.mailer.sendMail({to: `${name} <${email}>`, subject, html, text}, (err, info) => {
-        if (err) return reject(err);
+    const mailResult = await this.mailer.sendMail({to: `${name} <${email}>`, subject, html, text});
 
-        console.log(`[INFO] Sent mail ${info.messageId} to ${name} with subject ${subject}`);
-        resolve(info);
-      });
-    });
+    console.log(`[INFO] Sent mail ${mailResult.messageId} to ${name} with subject ${subject}`);
+    return mailResult;
   }
 
-  async sendConfirmEmail(account: mcAuthAccount, newEmail: string, langKey: string): Promise<object> {
-    const content = mailGenerator.renderMail(MailTemplate.CONFIRM_EMAIL, langKey, {
+  async sendConfirmEmail(account: mcAuthAccount, newEmail: string, langKey: string): Promise<{ accepted: string[], rejected: string[], response: string, messageId: string }> {
+    const content = getMailGenerator().renderMail(MailTemplate.CONFIRM_EMAIL, langKey, {
       confirm_mail: {
         mcProfile: {id: account.id, name: account.name},
-        token: jwt.sign({id: account.id, email: newEmail}, getSecret(256), {expiresIn: '2d'})
+        token: jwt.sign({id: account.id, email: newEmail}, getPartOfSecret(256), {expiresIn: '2d'})
       }
     });
 

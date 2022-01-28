@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { getCfg, getPageGenerator } from '../Constants';
 import ApiErrs from './ApiErrs';
-import { ApiError } from './errors';
+import { ApiError } from './ApiError';
 
 /**
  * This shortcut function responses with HTTP 405 to the requests having
@@ -94,5 +95,9 @@ export function getReturnURL(req: Request): string | null {
   if (returnStr.length == 0 || returnStr.charAt(0) != '/') return null;
 
 
-  return require('..').pageGenerator.globals.url.base + returnStr;
+  return getPageGenerator().globals.url.base + returnStr;
+}
+
+export function getPartOfSecret(maxLength: number = 1024): Buffer {
+  return Buffer.from(getCfg().data.secret, 'base64').subarray(0, maxLength);
 }

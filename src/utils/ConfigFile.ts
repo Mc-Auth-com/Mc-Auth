@@ -60,6 +60,10 @@ export class ConfigFile<T> {
   }
 
   private resolveLazyValues(object: { [key: string | number]: any }): void {
+    if (object === null) {
+      return;
+    }
+
     for (const key of Object.keys(object)) {
       const value = object[key];
 

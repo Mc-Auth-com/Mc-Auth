@@ -2,9 +2,9 @@ import { Pool, PoolClient } from 'pg';
 
 import { Grant, GrantType, mcAuthAccount, mcAuthDbCfg, OAuthApp, OAuthAppIcon } from '../global';
 import ApiErrs from './ApiErrs';
-import { ApiError } from './errors';
+import { ApiError } from './ApiError';
 
-export class dbUtils {
+export class DbUtils {
   private pool: Pool | null = null;
 
   constructor(dbCfg: mcAuthDbCfg) {
