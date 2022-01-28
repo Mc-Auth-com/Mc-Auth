@@ -4,13 +4,12 @@ import Path from 'path';
 
 import * as rfs from 'rotating-file-stream';
 import { getCfg } from './Constants';
-import { mcAuthCfg, mcAuthDbCfg } from './global';
-import { getLocalization } from './Localization';
-import WebServer from './WebServer';
+import { mcAuthDbCfg } from './global';
 import { ApiError } from './utils/ApiError';
 import { ConfigFile } from './utils/ConfigFile';
 import { DbUtils } from './utils/DbUtils';
 import { MailUtils } from './utils/MailUtils';
+import WebServer from './WebServer';
 
 export let dbCfg: ConfigFile<mcAuthDbCfg>;
 
