@@ -26,7 +26,7 @@ export default class LogoutRouter {
               maxAge: 0,
               path: cookie.path,
               sameSite: cookie.sameSite,
-              secure: cookie.secure
+              secure: cookie.secure == 'auto' ? req.secure : cookie.secure
             });
 
             // Redirect User-Agent
