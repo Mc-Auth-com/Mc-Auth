@@ -56,7 +56,7 @@
     "pg": "^8.6.0",
     "request": "^2.88.2",
     "rotating-file-stream": "^2.1.5",
-    "sharp": "^0.28.3",
+    "sharp": "^0.29.3",
     "superagent": "^6.1.0",
     "ts-deepmerge": "^2.0.1",
     "uuid": "^8.3.2"
@@ -73,7 +73,7 @@
     "@types/nodemailer": "^6.4.2",
     "@types/pg": "^8.6.0",
     "@types/request": "^2.48.5",
-    "@types/sharp": "^0.28.3",
+    "@types/sharp": "^0.29.5",
     "@types/superagent": "^4.1.11",
     "cross-env": "^7.0.3",
     "jest": "^27.4.7",
