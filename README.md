@@ -18,14 +18,14 @@
     <img alt="Node.js CI" src="https://github.com/Mc-Auth-com/Mc-Auth/actions/workflows/nodejs.yml/badge.svg">
   </a>
 
-  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
+  <a href="https://sonarcloud.io/summary/new_code?id=Mc-Auth-com_Mc-Auth">
     <img alt="Quality Gate Status"
          src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=alert_status">
   </a>
 
-  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
-    <img alt="Security Rating"
-         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=security_rating">
+  <a href="https://sonarcloud.io/summary/new_code?id=Mc-Auth-com_Mc-Auth">
+    <img alt="Coverage"
+         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=coverage">
   </a>
 </p>
 
