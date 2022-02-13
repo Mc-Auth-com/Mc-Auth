@@ -19,7 +19,7 @@ export class ConfigFile<T> {
   readonly path: string;
   readonly prettyPrint: number | string;
 
-  private readonly defaults: T;
+  public readonly defaults: T;
   public data: T;
 
   constructor(path: string, defaults: T, prettyPrint: number | string | false = 4, autoLoad: boolean = true) {
