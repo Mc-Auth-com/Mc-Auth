@@ -1,3 +1,4 @@
+import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
 import { Router } from 'express';
 import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
@@ -7,7 +8,6 @@ import { db } from '../index';
 import { restful } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
-import Utils from '../utils/Utils';
 
 export default class UploadsRouter {
   static createAuthorizedRouter(): Router {
@@ -68,7 +68,7 @@ export default class UploadsRouter {
 
           let status = 200;
 
-          if (Utils.isNumeric(fileID)) {
+          if (StringUtils.isNumeric(fileID)) {
             try {
               const file = await db.getOptimizedIconBuffer(fileID);
 

@@ -1,3 +1,4 @@
+import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
 import { Router } from 'express';
 import { getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
@@ -6,7 +7,6 @@ import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } f
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
 import { MojangAPI } from '../utils/MojangAPI';
-import Utils from '../utils/Utils';
 
 // TODO Add rate limiting
 //  No confirmed mail: 5/second (burst, status 429), 100/hour (status 429)
@@ -34,7 +34,7 @@ export default class OAuthRouter {
               });
 
           /* Basic input validation */
-          if (typeof clientID != 'string' || !Utils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
+          if (typeof clientID != 'string' || !StringUtils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
             typeof: typeof clientID,
             clientID
           }));
@@ -109,8 +109,8 @@ export default class OAuthRouter {
               agreed = req.body.result == '1';
 
           /* Basic input validation */
-          if (typeof grantID != 'string' || !Utils.isNumeric(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
-          if (typeof clientID != 'string' || !Utils.isNumeric(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
+          if (typeof grantID != 'string' || !StringUtils.isNumeric(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
+          if (typeof clientID != 'string' || !StringUtils.isNumeric(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
           if (typeof state != 'string' && state != null) return next(new ApiError(400, 'Invalid body parameter: state', false, {body: req.body}));
           if (typeof req.body.result != 'string') return next(new ApiError(400, 'Invalid body parameter: result', false, {body: req.body}));
           // Done with basic validation
@@ -221,7 +221,7 @@ export default class OAuthRouter {
               redirectURI = req.body['redirect_uri'],
               grantType = req.body['grant_type'];
 
-          if (!clientID || !clientSecret || !Utils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
+          if (!clientID || !clientSecret || !StringUtils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
 
           db.getApp(clientID)
               .then((app) => {

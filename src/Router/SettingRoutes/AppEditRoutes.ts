@@ -1,3 +1,5 @@
+import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
+import StringValidators from '@spraxdev/node-commons/dist/strings/StringValidators';
 import { Router } from 'express';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
@@ -24,7 +26,7 @@ export default class AppEditRoutes {
                       .send(getPageGenerator().renderPage(PageTemplate.SETTINGS_APPS, req, res, {apps}));
                 })
                 .catch(next);
-          } else if (Utils.isNumeric(appID)) {
+          } else if (StringUtils.isNumeric(appID)) {
             db.getApp(appID)
                 .then((app) => {
                   if (!app || app.deleted) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
@@ -41,7 +43,7 @@ export default class AppEditRoutes {
         post: () => {
           if (!req.session?.loggedIn) return next(ApiError.create(ApiErrs.UNAUTHORIZED));
 
-          if (typeof appID != 'string' || !Utils.isNumeric(appID)) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
+          if (typeof appID != 'string' || !StringUtils.isNumeric(appID)) return next(ApiError.create(ApiErrs.UNKNOWN_APPLICATION));
 
           db.getApp(appID)
               .then(async (app) => {
@@ -60,7 +62,7 @@ export default class AppEditRoutes {
                   let otp = req.body.deleteAppOTP;
 
                   if (typeof otp != 'string' ||
-                      !Utils.isNumeric(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
+                      !StringUtils.isNumeric(otp = otp.replace(/ /g, ''))) return next(new ApiError(400, 'Invalid One-Time-Password', false, {
                     appID: app.id,
                     otp
                   }));
@@ -93,19 +95,19 @@ export default class AppEditRoutes {
 
                   if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
                   if (Utils.normalizeWhitespaceChars(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
-                  if (!Utils.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
+                  if (!StringValidators.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
                   if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
                   if (Utils.normalizeWhitespaceChars(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
 
-                  if (typeof iconID != 'string' || (iconID.length != 0 && !Utils.isNumeric(iconID))) return next(new ApiError(400, 'Invalid iconID', false, {body: req.body}));
+                  if (typeof iconID != 'string' || (iconID.length != 0 && !StringUtils.isNumeric(iconID))) return next(new ApiError(400, 'Invalid iconID', false, {body: req.body}));
 
                   if (typeof rawRedirectURIs != 'string') return next(new ApiError(400, 'Invalid redirectURI', false, {body: req.body}));
                   for (let uri of rawRedirectURIs.split(/\r?\n/)) {
                     uri = Utils.normalizeWhitespaceChars(uri);
 
                     if (uri.length == 0) continue;
-                    if (!Utils.looksLikeHttpUrl(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
+                    if (!StringValidators.looksLikeHttpUrl(uri)) return next(new ApiError(400, `Invalid redirectURI: ${uri}`));
 
                     if (!redirectURIs.includes(uri)) {
                       redirectURIs.push(uri);

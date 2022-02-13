@@ -4,7 +4,7 @@ import moment, { Moment } from 'moment';
 import { join as joinPath } from 'path';
 
 import { ApiError } from './utils/ApiError';
-import Utils from './utils/Utils';
+import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
 
 let loc: Localization | null = null;
 
@@ -111,7 +111,7 @@ export function getLocalization(): Localization {
             }
           }
 
-          tempLoc[langKey][langElem.term] = Utils.formatStr(langElem.definition, langArgs);
+          tempLoc[langKey][langElem.term] = StringUtils.format(langElem.definition, langArgs);
         }
 
         if (duplicateTerms.length > 0) {

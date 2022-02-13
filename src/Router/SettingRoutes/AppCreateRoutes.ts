@@ -1,8 +1,9 @@
+import StringValidators from '@spraxdev/node-commons/dist/strings/StringValidators';
 import { Router } from 'express';
 import { post as httpPost } from 'superagent';
 import { getCfg, getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
-import {  db } from '../../index';
+import { db } from '../../index';
 import { restful, stripLangKeyFromURL } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
@@ -33,7 +34,7 @@ export default class AppCreateRoutes {
 
           if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
           if (Utils.normalizeWhitespaceChars(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
-          if (!Utils.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
+          if (!StringValidators.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
           if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
           if (Utils.normalizeWhitespaceChars(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
