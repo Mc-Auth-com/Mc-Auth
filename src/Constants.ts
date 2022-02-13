@@ -1,4 +1,6 @@
+import HttpClient from '@spraxdev/node-commons/dist/HttpClient';
 import Fs from 'fs';
+import MinecraftApi from 'minecraft-api-client';
 import Path from 'path';
 import { DynamicMailGenerator } from './DynamicMailGenerator';
 import { DynamicPageGenerator } from './DynamicPageGenerator';
@@ -10,6 +12,7 @@ export const APP_VERSION: string = JSON.parse(Fs.readFileSync(Path.join(__dirnam
 
 let cfg: ConfigFile<mcAuthCfg>;
 
+let minecraftApi: MinecraftApi;
 let mailGenerator: DynamicMailGenerator;
 let pageGenerator: DynamicPageGenerator;
 
@@ -68,6 +71,14 @@ export function getCfg(): ConfigFile<mcAuthCfg> {
   }
 
   return cfg;
+}
+
+export function getMinecraftApi(): MinecraftApi {
+  if (minecraftApi == null) {
+    minecraftApi = new MinecraftApi(HttpClient.generateUserAgent('Mc-Auth.com', APP_VERSION, true, 'https://github.com/Mc-Auth-com/Mc-Auth#readme'));
+  }
+
+  return minecraftApi;
 }
 
 // TODO: This should be made redundant and turned into static methods on the DynamicPageGenerator class

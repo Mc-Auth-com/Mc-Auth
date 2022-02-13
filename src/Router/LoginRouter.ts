@@ -1,11 +1,10 @@
 import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
 import { Router } from 'express';
-import { getPageGenerator } from '../Constants';
+import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
 import { db } from '../index';
 import { getReturnURL, restful } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
-import { MojangAPI } from '../utils/MojangAPI';
 
 export default class LoginRouter {
   static createRouter(): Router {
@@ -27,14 +26,22 @@ export default class LoginRouter {
           if (typeof username != 'string' || username.length > 16) return next(new ApiError(401, 'You have to provide a valid username', false, {body: req.body}));
           if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !StringUtils.isNumeric(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, {body: req.body}));
 
-          MojangAPI.getProfile(username)
+          getMinecraftApi().getProfile(username)
               .then(async (profile: any /* FIXME: type */): Promise<void> => {
                 if (profile) db.updateAccount(profile.id, profile.name); // non-blocking
 
                 const success = profile != null && await db.invalidateOneTimePassword(profile.id, otp as string);
 
-                if (!success) return next(new ApiError(400, 'Username or One-Time-Passwort do not match', false, { username, otp, keepLoggedIn, profile }));
-                if (req.session == undefined) return next(new ApiError(500, 'Session could be initialized', true, { originalUrl: req.originalUrl, username }));
+                if (!success) return next(new ApiError(400, 'Username or One-Time-Passwort do not match', false, {
+                  username,
+                  otp,
+                  keepLoggedIn,
+                  profile
+                }));
+                if (req.session == undefined) return next(new ApiError(500, 'Session could be initialized', true, {
+                  originalUrl: req.originalUrl,
+                  username
+                }));
 
                 if (!keepLoggedIn) {
                   req.session.cookie.expires = undefined; // Should delete the cookie when terminating the User-Agent process

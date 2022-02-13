@@ -1,12 +1,11 @@
 import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
 import { Router } from 'express';
-import { getPageGenerator } from '../Constants';
+import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
 import { db } from '../index';
 import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
-import { MojangAPI } from '../utils/MojangAPI';
 
 // TODO Add rate limiting
 //  No confirmed mail: 5/second (burst, status 429), 100/hour (status 429)
@@ -84,7 +83,7 @@ export default class OAuthRouter {
 
                 db.createGrant(clientID, req.session?.mcProfile?.id, redirectURI, responseType, state, scope.sort())
                     .then((grant) => {
-                      MojangAPI.getProfile(app.owner)
+                      getMinecraftApi().getProfile(app.owner)
                           .then((appOwner) => {
                             res.type('html')
                                 .send(getPageGenerator().renderPage(PageTemplate.AUTHORIZE, req, res, {
@@ -247,7 +246,7 @@ export default class OAuthRouter {
 
                       if (grant.scopes.includes('profile')) {
                         try {
-                          result.data.profile = await MojangAPI.getProfile(grant.mcAccountId) as object; // TODO: handle null value
+                          result.data.profile = await getMinecraftApi().getProfile(grant.mcAccountId) as object; // TODO: handle null value
                         } catch (err) {
                           return next(ApiError.create(ApiErrs.SRV_FETCHING_MINECRAFT_PROFILE, {uuid: grant.mcAccountId}));
                         }

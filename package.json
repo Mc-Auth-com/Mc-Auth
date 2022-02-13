@@ -49,6 +49,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
+    "minecraft-api-client": "github:SpraxDev/Node-Minecraft-API-Client#3ed6425f5ad180bd136561ccc09b403ad25bdbf5",
     "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
