@@ -1,0 +1,9 @@
+*
+!dist/
+!resources/
+!src/
+!package.json
+!package-lock.json
+!tsconfig.json
+!LICENSE
+!README.md

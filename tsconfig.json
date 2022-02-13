@@ -1,7 +1,6 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "sourceMap": true,
     "outDir": "./dist",
     "moduleResolution": "Node"
   },

@@ -23,8 +23,8 @@ export function getCfg(): ConfigFile<mcAuthCfg> {
         usePath: false,
         path: './mcAuth.unixSocket',
 
-        host: '127.0.0.1',
-        port: 8091
+        host: '0.0.0.0',
+        port: 8080
       },
       trustProxy: false,
 
