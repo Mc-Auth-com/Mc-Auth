@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mc-Auth-com/Mc-Auth/actions?query=workflow%3A%22TypeScript+Compile%22">
-    <img alt="TypeScript Compile" src="https://github.com/Mc-Auth-com/Mc-Auth/workflows/TypeScript%20Compile/badge.svg">
+  <a href="https://github.com/Mc-Auth-com/Mc-Auth/actions/workflows/nodejs.yml">
+    <img alt="Node.js CI" src="https://github.com/Mc-Auth-com/Mc-Auth/actions/workflows/nodejs.yml/badge.svg">
   </a>
 
   <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">

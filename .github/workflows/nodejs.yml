@@ -1,13 +1,13 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: TypeScript Compile
+name: Node.js CI
 
 on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
+    types: [ opened, synchronize, reopened ]
 
 jobs:
   build:
@@ -15,21 +15,15 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 12.x, 14.x ]  # Oldest 'Active' version: https://nodejs.org/en/about/releases/
+        node-version: [ 16.x, 17.x ]  # Oldest 'Active' version: https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js v${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: 'Cache: npm-node_modules'
-        uses: actions/cache@v1
-        with:
-          path: ./node_modules/
-          key: ${{ runner.os }}-npm-${{ hashFiles('./package-lock.json') }}
-      - run: npm i
+          cache: 'npm'
+      - run: npm ci
       - run: npm run build
-        #- run: npm test
-        env:
-          CI: true
+      - run: npm run test
