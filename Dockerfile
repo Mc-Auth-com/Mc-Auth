@@ -6,12 +6,18 @@ LABEL maintainer="Christian Koop <contact@sprax2013.de>"
 EXPOSE 8091
 VOLUME ["/app/storage/"]
 
-USER node
 WORKDIR /app/
+RUN chown node:node /app/
+
+USER node
+
 COPY --chown=node:node LICENSE README.md ./
 COPY --chown=node:node package.json package-lock.json ./
 
 
+##
+# Builder: Compiles the project into js files (optionally generates source maps too)
+##
 FROM base as builder
 
 ARG BUILD_SCRIPT=build
@@ -23,6 +29,9 @@ RUN npm run $BUILD_SCRIPT
 RUN ls -l
 
 
+##
+# Production: Copies the resources and compiled js files and starts the application
+##
 FROM base as prod
 
 ENV NODE_ENV=production
@@ -35,6 +44,9 @@ COPY --chown=node:node resources/ ./resources/
 CMD ["node", "dist/index.js"]
 
 
+##
+# Development: Copies the resources, compiled js files and source maps and starts the application with source map support
+##
 FROM base as dev
 
 # TODO: Check if volume mounts could be beneficial for development
