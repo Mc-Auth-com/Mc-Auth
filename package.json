@@ -54,7 +54,6 @@
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0",
-    "request": "^2.88.2",
     "rotating-file-stream": "^3.0.2",
     "sharp": "^0.29.3",
     "superagent": "^7.1.1",
