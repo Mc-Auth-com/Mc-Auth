@@ -129,13 +129,11 @@ export class DynamicPageGenerator {
       };
     }
 
-    return ejs.render(str, data, {delimiter: `%${level}`}) as string;
+    return ejs.render(str, data, {delimiter: `%${level}`});
   }
 
   /**
-   * Calls #renderEjs(str, 1, data) with default data based on langKey
-   *
-   * @param langKey The language to use for localization
+   * Calls `#renderEjs(str, 1, data)` with default data based on langKey
    */
   renderEjs1(str: string, langKey: string): string {
     // TODO: Provide getString(key: string): string {} as function that automatically calls loc.getString with langKey
