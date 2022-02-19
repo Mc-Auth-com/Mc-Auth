@@ -3,11 +3,9 @@ FROM node:16-alpine as base
 
 LABEL maintainer="Christian Koop <contact@sprax2013.de>"
 
-EXPOSE 8091
-VOLUME ["/app/storage/"]
-
+RUN mkdir -p /app/storage/ /app/logs/ && \
+    chown -R node:node /app/
 WORKDIR /app/
-RUN chown node:node /app/
 
 USER node
 
@@ -26,7 +24,6 @@ RUN npm ci
 COPY --chown=node:node tsconfig.json ./tsconfig.json
 COPY --chown=node:node src/ ./src/
 RUN npm run $BUILD_SCRIPT
-RUN ls -l
 
 
 ##
