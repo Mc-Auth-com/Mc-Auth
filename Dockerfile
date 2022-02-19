@@ -3,6 +3,10 @@ FROM node:16-alpine as base
 
 LABEL maintainer="Christian Koop <contact@sprax2013.de>"
 
+RUN apk --no-cache -U upgrade && \
+    npm i -g npm --update-notifier false && \
+    npm cache clean --force
+
 RUN mkdir -p /app/storage/ /app/logs/ && \
     chown -R node:node /app/
 WORKDIR /app/
