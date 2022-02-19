@@ -52,6 +52,12 @@ export class ConfigFile<T> {
     fs.writeFileSync(this.path, JSON.stringify(this.data, null, this.prettyPrint), 'utf-8');
   }
 
+  saveIfChanged(): void {
+    if (JSON.stringify(this.data) != JSON.stringify(JSON.parse(fs.readFileSync(this.path, 'utf-8')))) {
+      this.save();
+    }
+  }
+
   private lazyDeepMerge(...objects: T[]): T {
     const merged = deepMerge.withOptions<any>({mergeArrays: false}, ...objects) as any;
 

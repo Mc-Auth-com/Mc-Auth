@@ -76,6 +76,13 @@ export const webAccessLogStream = rfs.createStream('access.log', {
 main();
 
 function main(): void {
+  try {
+    getCfg().saveIfChanged();
+    dbCfg.saveIfChanged();
+  } catch (err) {
+    console.error(err);
+  }
+
   /* Prepare webserver */
   db = new DbUtils(dbCfg.data);
   mailer = new MailUtils(getCfg().data.smtp);
