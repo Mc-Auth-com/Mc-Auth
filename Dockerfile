@@ -30,21 +30,6 @@ RUN ls -l
 
 
 ##
-# Production: Copies the resources and compiled js files and starts the application
-##
-FROM base as prod
-
-ENV NODE_ENV=production
-RUN npm ci && \
-    npm cache clean --force
-
-COPY --chown=node:node --from=builder /app/dist/ ./dist/
-COPY --chown=node:node resources/ ./resources/
-
-CMD ["node", "dist/index.js"]
-
-
-##
 # Development: Copies the resources, compiled js files and source maps and starts the application with source map support
 ##
 FROM base as dev
@@ -56,3 +41,19 @@ COPY --chown=node:node --from=builder /app/dist/ ./dist/
 COPY --chown=node:node resources/ ./resources/
 
 CMD ["node", "--enable-source-maps", "dist/index.js"]
+
+
+##
+# Production: Copies the resources and compiled js files and starts the application
+##
+FROM base as prod
+
+ENV NODE_ENV=production
+RUN npm ci && \
+    npm cache clean --force && \
+    rm -Rf /home/node/.npm/
+
+COPY --chown=node:node --from=builder /app/dist/ ./dist/
+COPY --chown=node:node resources/ ./resources/
+
+CMD ["node", "dist/index.js"]
