@@ -1,3 +1,4 @@
+import ConfigFile from '@spraxdev/node-commons/dist/ConfigFile';
 import HttpClient from '@spraxdev/node-commons/dist/HttpClient';
 import Fs from 'fs';
 import MinecraftApi from 'minecraft-api-client';
@@ -6,7 +7,6 @@ import { DynamicMailGenerator } from './DynamicMailGenerator';
 import { DynamicPageGenerator } from './DynamicPageGenerator';
 import { mcAuthCfg } from './global';
 import { getLocalization } from './Localization';
-import { ConfigFile } from './utils/ConfigFile';
 
 export const APP_VERSION: string = JSON.parse(Fs.readFileSync(Path.join(__dirname, '..', 'package.json'), 'utf-8')).version ?? 'UNKNOWN_APP_VERSION';
 

@@ -1,12 +1,11 @@
+import ConfigFile from '@spraxdev/node-commons/dist/ConfigFile';
 import Fs from 'fs';
 import { createServer, Server } from 'http';
 import Path from 'path';
-
 import * as rfs from 'rotating-file-stream';
 import { getCfg } from './Constants';
 import { mcAuthDbCfg } from './global';
 import { ApiError } from './utils/ApiError';
-import { ConfigFile } from './utils/ConfigFile';
 import { DbUtils } from './utils/DbUtils';
 import { MailUtils } from './utils/MailUtils';
 import WebServer from './WebServer';
