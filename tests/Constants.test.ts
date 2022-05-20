@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { getCfg } from '../src/Constants';
 
-
 describe('Test app version extraction from package.json', () => {
   test('Extracted from package.json', () => {
     jest.isolateModules(() => {
