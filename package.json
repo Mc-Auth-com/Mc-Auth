@@ -72,6 +72,7 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.7.5",
     "pg": "^8.7.3",
+    "rate-limiter-flexible": "^2.3.7",
     "rotating-file-stream": "^3.0.4",
     "sharp": "^0.30.6",
     "superagent": "^7.1.3",
