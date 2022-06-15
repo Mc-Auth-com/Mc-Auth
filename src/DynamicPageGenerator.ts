@@ -4,11 +4,11 @@ import { SessionData } from 'express-session';
 import { readFileSync } from 'fs';
 import { Moment } from 'moment';
 import { join as joinPath } from 'path';
+import { getCfg } from './Constants';
 
-import { cfg } from '.';
 import { Grant, mcAuthAccount, OAuthApp } from './global';
-import { getLocalization, Localization } from './localization';
-import { stripLangKeyFromURL, stripParamsFromURL } from './utils/utils';
+import { getLocalization, Localization } from './Localization';
+import { stripLangKeyFromURL, stripParamsFromURL } from './utils/_old_utils';
 
 const dynamicWebPath = joinPath(__dirname, '..', 'resources', 'web', 'dynamic');
 
@@ -21,14 +21,14 @@ export class DynamicPageGenerator {
   constructor(localization: Localization) {
     this.globals = {
       url: {
-        base: DynamicPageGenerator.generateUrlPrefix(cfg.web.urlPrefix.dynamicContentHost),
-        static: DynamicPageGenerator.generateUrlPrefix(cfg.web.urlPrefix.staticContentHost),
+        base: DynamicPageGenerator.generateUrlPrefix(getCfg().data.web.urlPrefix.dynamicContentHost),
+        static: DynamicPageGenerator.generateUrlPrefix(getCfg().data.web.urlPrefix.staticContentHost),
 
         mcServer: 'mc-auth.com',
         docs: 'https://github.com/Mc-Auth-com/Mc-Auth/wiki'
       },
 
-      reCaptchaPublic: cfg.reCAPTCHA.public
+      reCaptchaPublic: getCfg().data.reCAPTCHA.public
     };
 
     /* Read HTML and apply level 0 rendering */
@@ -129,13 +129,11 @@ export class DynamicPageGenerator {
       };
     }
 
-    return ejs.render(str, data, {delimiter: `%${level}`}) as string;
+    return ejs.render(str, data, {delimiter: `%${level}`});
   }
 
   /**
-   * Calls #renderEjs(str, 1, data) with default data based on langKey
-   *
-   * @param langKey The language to use for localization
+   * Calls `#renderEjs(str, 1, data)` with default data based on langKey
    */
   renderEjs1(str: string, langKey: string): string {
     // TODO: Provide getString(key: string): string {} as function that automatically calls loc.getString with langKey
@@ -160,8 +158,8 @@ export class DynamicPageGenerator {
    * @param host Should be `auto` or a hostname with optional port (`host[:port]`)
    */
   private static generateUrlPrefix(host: string | 'auto') {
-    return `http${cfg.web.urlPrefix.https ? 's' : ''}://${host != 'auto' ? host : `${cfg.listen.host}${((cfg.web.urlPrefix.https && cfg.listen.port != 443) ||
-        (!cfg.web.urlPrefix.https && cfg.listen.port != 80)) ? `:${cfg.listen.port}` : ''}`}`;
+    return `http${getCfg().data.web.urlPrefix.https ? 's' : ''}://${host != 'auto' ? host : `${getCfg().data.listen.host}${((getCfg().data.web.urlPrefix.https && getCfg().data.listen.port != 443) ||
+        (!getCfg().data.web.urlPrefix.https && getCfg().data.listen.port != 80)) ? `:${getCfg().data.listen.port}` : ''}`}`;
   }
 }
 

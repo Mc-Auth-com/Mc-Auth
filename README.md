@@ -14,18 +14,18 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Mc-Auth-com/Mc-Auth/actions?query=workflow%3A%22TypeScript+Compile%22">
-    <img alt="TypeScript Compile" src="https://github.com/Mc-Auth-com/Mc-Auth/workflows/TypeScript%20Compile/badge.svg">
+  <a href="https://github.com/Mc-Auth-com/Mc-Auth/actions/workflows/nodejs.yml">
+    <img alt="Node.js CI" src="https://github.com/Mc-Auth-com/Mc-Auth/actions/workflows/nodejs.yml/badge.svg">
   </a>
 
-  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
+  <a href="https://sonarcloud.io/summary/new_code?id=Mc-Auth-com_Mc-Auth">
     <img alt="Quality Gate Status"
          src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=alert_status">
   </a>
 
-  <a href="https://sonarcloud.io/dashboard?id=Mc-Auth-com_Mc-Auth">
-    <img alt="Security Rating"
-         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=security_rating">
+  <a href="https://sonarcloud.io/summary/new_code?id=Mc-Auth-com_Mc-Auth">
+    <img alt="Coverage"
+         src="https://sonarcloud.io/api/project_badges/measure?project=Mc-Auth-com_Mc-Auth&metric=coverage">
   </a>
 </p>
 
@@ -57,48 +57,85 @@ feel free to contact them with a link to this project – While making the Minec
 
 
 ## Setup
-**You'll need [Node.js and npm](https://nodejs.org/en/download/package-manager/) and
-access to a PostgreSQL instance on your machine**
+Some npm scripts exist for convenience:
+* `build`: Builds the project for production
+* `build:dev`: Builds the project for development (includes source maps)
 
-1. Prepare your database by running `./database-setup.sql`
-2. `npm install`
-3. `npm run build` (needs to be rerun every time the app is updated)
-4. `npm run start` Or you can use `npm run dev` to automatically recompile on file changes (not recommended for production)
-4. Configure all files inside `./storage` (automatically generated)
-6. Type `rs` into the console or restart the process
+* `dev`: Builds and starts the project while watches for file changes to automatically restart
+* `test`: Runs the tests
 
-7. Visit [Mc-Auth-com/McAuth-BungeeCord](https://github.com/Mc-Auth-com/McAuth-BungeeCord) and continue by setting it up
+* `snyk`: Uses *snyk* to check the source code for vulnerabilities
+* `snyk:docker`: Uses *snyk* to check the production Docker image for vulnerabilities
+
+* `docker:build:prod`: Builds the production Docker image
+* `docker:build:dev`: Builds the development Docker image
+* `docker:dev`: Builds and starts the development Docker image (container uses host network and mounts local `./storage/` directory)
+
+### Development
+You'll need at least Node.js v16 and Linux/Bash is recommended (my npm scripts expect bash).
+Additionally, you'll need a PostgreSQL instance
+([a local docker container might be an option](https://github.com/docker-library/docs/tree/master/postgres#start-a-postgres-instance)).
+
+Configuration is done inside `./storage/` and interesting npm scripts are `dev`, `build:dev` and `docker:dev`.
+
+
+## Production
+* Please prepare your database by running `./database-setup.sql`
+* When you are done, visit
+  [Mc-Auth-com/McAuth-BungeeCord](https://github.com/Mc-Auth-com/McAuth-BungeeCord#setup)
+  and continue by setting it up too
+
+1. Run `npm run docker:build:prod` (no `npm install` needed)
+2. Start the container with something similar to:
+   ```shell
+   docker run \
+   --detach \
+   --publish 8080:8080 \
+   --name mc-auth-web \
+   --cpus 2 \
+   --memory 256M \
+   --volume mc-auth-web-storage:/app/storage/ \
+   mc-auth-web:latest
+   ```
+3. Edit the configuration inside the container at `/app/storage/`
+
+
+Or without docker:
+1. `npm ci`
+2. `npm run build`
+3. `node ./dist/index.js`
+4. Edit the configuration inside `./storage/`
 
 
 ## TODO
-* **Complete Recode ([#70](https://github.com/Mc-Auth-com/Mc-Auth-Web/pull/70))**
-  * Redesign how localization files look and move to Crowdin
+* **Recode most parts ([#182](https://github.com/Mc-Auth-com/Mc-Auth/pull/182))**
+  * [ ] Redesign how localization files look
   * [X] Recode demo page
   * [X] Cache HTML in memory (for every language)
 * Finish settings pages
   * Account
-    * Show public Minecraft account data (as an example)
+    * [ ] Show public Minecraft account data (as an example, maybe link to SkinDB)
     * [X] Adding and confirming an email address
-    * Export account data
+    * [ ] Export account data
   * Account Security
-    * Show active sessions (+IP, User-Agent, ...)
-    * Show all apps that have been granted access
+    * [ ] Show active sessions (+IP, User-Agent, ...)
+    * [ ] Show all apps that have been granted access
   * Notification
-    * Allow enabling/disabling email notifications for specific events
+    * [ ] Allow enabling/disabling email notifications for specific events
   * oAuth Apps
     * [X] Delete button
-* Allow grants to be temporary (60 days without activity by default)
+* [ ] Allow grants to be temporary (60 days without activity by default)
 * Fully implement verified applications
-  * Force 2FA when editing verified apps
+  * [ ] Force 2FA when editing verified apps
 * When uploading an app icon: Show notification that the user needs to use the 'Save' button
-* Send 'Content Security Policy' header
-* Allow users to report applications (inside authorization screen)
-* Introduce rate limits
+* [ ] Send 'Content Security Policy' header
+* [ ] Allow users to report applications (inside authorization screen)
+* [ ] Introduce rate limits
 * [X] Create documentation/wiki
 * Create a Brand/Press Kit with images
-  * With HTML Examples for buttons
+  * [ ] With HTML Examples for buttons
 * [X] Replace 'Google Analytics'
-* Admin Dashboard
+* [ ] Admin Dashboard
 
 
 ## Thanks To... ✨
@@ -143,7 +180,3 @@ access to a PostgreSQL instance on your machine**
     </td>
   </tr>
 </table>
-
-
-## License
-[MIT License](./LICENSE)

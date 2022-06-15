@@ -1,9 +1,8 @@
 import { type as osType } from 'os';
 import { post as httpPost } from 'superagent';
+import { APP_VERSION, getCfg } from '../Constants';
 
-import { appVersion, cfg } from '..';
-
-export const httpUserAgent = `MC-Auth.org/${appVersion} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
+import { ApiErrTemplate } from './ApiErrs';
 
 export class ApiError extends Error {
   private static webhookRequestsLeft: number = 10;
@@ -48,15 +47,20 @@ export class ApiError extends Error {
       if (!logMode) return resolve();
 
       if (logMode == true || logMode == 'console') {
-        console.error(`[Error] ${message} (${JSON.stringify({ srvTime: new Date().toUTCString(), stack: stack?.split('\n'), details: internalDetails }, null, 2)})`);
+        console.error(`[Error] ${message} (${JSON.stringify({
+          srvTime: new Date().toUTCString(),
+          stack: stack?.split('\n'),
+          details: internalDetails
+        }, null, 2)})`);
       }
 
       if (logMode == true || logMode == 'discord') {
+        const cfg = getCfg().data;
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
           httpPost(cfg.logging.discordErrorWebHookURL)
               .set('Content-Type', 'application/json')
               .set('Accept', 'application/json')
-              .set('User-Agent', httpUserAgent)
+              .set('User-Agent', this.getUserAgent())
               .send({
                 username: 'Mc-Auth.org (Error-Reporter)',
                 avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
@@ -91,39 +95,8 @@ export class ApiError extends Error {
       }
     });
   }
-}
 
-export class ApiErrs {
-  /* 4xx */
-  static readonly NOT_FOUND: ApiErrTemplate = { httpCode: 404, message: 'The requested page does not exist', logErr: false };
-  static readonly UNAUTHORIZED: ApiErrTemplate = { httpCode: 401, message: 'Unauthorized', logErr: false };
-  static readonly FORBIDDEN: ApiErrTemplate = { httpCode: 403, message: 'Forbidden', logErr: false };
-  static readonly METHOD_NOT_ALLOWED: ApiErrTemplate = { httpCode: 405, message: 'Method Not Allowed (check Allow-Header)', logErr: false };
-
-  static readonly UNKNOWN_APPLICATION: ApiErrTemplate = { httpCode: 404, message: 'Unknown application', logErr: false };
-  static readonly INVALID_JSON_BODY: ApiErrTemplate = { httpCode: 400, message: 'Invalid JSON body', logErr: false };
-  static readonly INVALID_CLIENT_ID_OR_SECRET: ApiErrTemplate = { httpCode: 400, message: 'client_id does not exist or does not match client_secret', logErr: false };
-  static readonly INVALID_REDIRECT_URI_FOR_APP: ApiErrTemplate = { httpCode: 400, message: 'Invalid redirect_uri - Please contact the administrator of the page that sent you here', logErr: false };
-  static readonly INVALID_GRANT_TYPE: ApiErrTemplate = { httpCode: 400, message: 'Invalid grant_type', logErr: false };
-  static readonly INVALID_CODE_FOR_TOKEN_EXCHANGE: ApiErrTemplate = { httpCode: 400, message: 'Invalid code! expired? Wrong redirect_uri?', logErr: false };
-
-  static readonly INVALID_OR_EXPIRED_MAIL_CONFIRMATION: ApiErrTemplate = { httpCode: 400, message: 'Invalid or expired email confirmation token', logErr: false };
-
-  /* 5xx */
-  static readonly INTERNAL_SERVER_ERROR: ApiErrTemplate = { httpCode: 500, message: 'An unknown server error occurred', logErr: true };
-  static readonly NO_DATABASE: ApiErrTemplate = { httpCode: 500, message: 'No database connection', logErr: true };
-  static readonly NO_RECAPTCHA: ApiErrTemplate = { httpCode: 500, message: 'reCAPTCHA has not been configured', logErr: true };
-  static readonly SRV_GENERATING_ACCESS_TOKEN: ApiErrTemplate = { httpCode: 500, message: 'Failed generating access_token', logErr: true };
-  static readonly SRV_FETCHING_MINECRAFT_PROFILE: ApiErrTemplate = { httpCode: 500, message: 'Failed fetching minecraft profile', logErr: true };
-
-  /* dynamic errors */
-  static invalidQueryArg(queryArg: string): ApiErrTemplate {
-    return {httpCode: 400, message: `Invalid value for query argument ${queryArg}`, logErr: false};
+  static getUserAgent() {
+    return `MC-Auth.org/${APP_VERSION} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
   }
-}
-
-export interface ApiErrTemplate {
-  httpCode: number;
-  message: string;
-  logErr: boolean;
 }

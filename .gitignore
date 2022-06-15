@@ -1,6 +1,13 @@
-/node_modules/
-/storage/
-/build/
+# Project
+/dist/
 /logs/
+/storage/
 
+
+# npm and other dependencies
+/node_modules/
+/coverage/
+
+
+# JetBrains IDEs
 /.idea/
