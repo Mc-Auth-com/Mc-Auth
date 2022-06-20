@@ -96,7 +96,7 @@
     "@types/superagent": "^4.1.15",
     "jest": "^28.1.1",
     "nodemon": "^2.0.16",
-    "snyk": "^1.951.0",
+    "snyk": "^1.954.0",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.8.1",
     "typescript": "^4.7.3"
