@@ -28,7 +28,7 @@ describe('Send mails [Mocked]', () => {
   });
 
   test('Call send method directly', async () => {
-    await expect(mailUtils.send('Sprax2013', 'sprax2013@localhost', 'Test Subject', '<p>Test Body</p>', 'Test Body'))
+    await expect(mailUtils.send('SpraxDev', 'SpraxDev@localhost', 'Test Subject', '<p>Test Body</p>', 'Test Body'))
         .resolves
         .toStrictEqual(sendMailResult);
 
@@ -37,7 +37,7 @@ describe('Send mails [Mocked]', () => {
       html: '<p>Test Body</p>',
       text: 'Test Body',
       subject: 'Test Subject',
-      to: 'Sprax2013 <sprax2013@localhost>'
+      to: 'SpraxDev <SpraxDev@localhost>'
     });
   });
 
@@ -51,16 +51,16 @@ describe('Send mails [Mocked]', () => {
   });
 
   test('Send confirm email', async () => {
-    await expect(mailUtils.sendConfirmEmail({id: '<id>', name: 'Sprax2013'} as any, 'sprax2013@new', 'en'))
+    await expect(mailUtils.sendConfirmEmail({id: '<id>', name: 'SpraxDev'} as any, 'SpraxDev@new', 'en'))
         .resolves
         .toStrictEqual(sendMailResult);
 
     expect(mockSendMail).toHaveBeenCalledTimes(1);
 
-    expect(mockSendMail.mock.calls[0][0].to).toBe('Sprax2013 <sprax2013@new>');
+    expect(mockSendMail.mock.calls[0][0].to).toBe('SpraxDev <SpraxDev@new>');
     expect(mockSendMail.mock.calls[0][0].subject).toBe('Confirm your email address');
     expect(mockSendMail.mock.calls[0][0].html.startsWith('<!DOCTYPE html')).toBeTruthy();
-    expect(mockSendMail.mock.calls[0][0].html.includes('Sprax2013')).toBeTruthy();
-    expect(mockSendMail.mock.calls[0][0].text.includes('Sprax2013')).toBeTruthy();
+    expect(mockSendMail.mock.calls[0][0].html.includes('SpraxDev')).toBeTruthy();
+    expect(mockSendMail.mock.calls[0][0].text.includes('SpraxDev')).toBeTruthy();
   });
 });
