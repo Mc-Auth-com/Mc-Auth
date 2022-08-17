@@ -39,7 +39,7 @@ export class MailUtils {
   async send(name: string, email: string, subject: string, html: string, text?: string): Promise<{ accepted: string[], rejected: string[], response: string, messageId: string }> {
     const mailResult = await this.mailer.sendMail({to: `${name} <${email}>`, subject, html, text});
 
-    console.log(`[INFO] Sent mail ${mailResult.messageId} to ${name} with subject ${subject}`);
+    console.log(`[INFO] Sent mail '${mailResult.messageId}' to '${name}' with subject '${subject}'`);
     return mailResult;
   }
 

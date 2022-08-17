@@ -5,7 +5,7 @@ jest.mock('nodemailer');
 
 describe('Send mails [Mocked]', () => {
   const sendMailResult = {
-    messageId: '<messageId>'
+    messageId: '<mockMessageId>'
   };
   let mockSendMail: jest.Mock;
   let mailUtils: MailUtils;
