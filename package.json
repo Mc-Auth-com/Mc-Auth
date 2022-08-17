@@ -95,7 +95,7 @@
     "@types/sharp": "^0.30.4",
     "@types/superagent": "^4.1.15",
     "jest": "^28.1.1",
-    "nodemon": "^2.0.18",
+    "nodemon": "^2.0.19",
     "snyk": "1.*.*",
     "ts-jest": "^28.0.5",
     "ts-node": "^10.9.1",
