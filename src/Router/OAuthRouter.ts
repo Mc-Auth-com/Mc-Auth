@@ -212,8 +212,14 @@ export default class OAuthRouter {
     const router = Router();
 
     router.all('/token', (req, res, next) => {
+      const supportedBodyContentTypes = ['application/json', 'application/x-www-form-urlencoded'];
+
       restful(req, res, next, {
         post: () => {
+          if (!req.is(supportedBodyContentTypes)) {
+            return next(ApiError.create(ApiErrs.unsupportedBodyContentType(req.header('Content-Type') ?? '', supportedBodyContentTypes)));
+          }
+
           const clientID = req.body['client_id'],
               clientSecret = req.body['client_secret'],
               code = req.body['code'],

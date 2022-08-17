@@ -31,4 +31,8 @@ export default class ApiErrs {
   static invalidQueryArg(queryArg: string): ApiErrTemplate {
     return {httpCode: 400, message: `Invalid value for query argument ${queryArg}`, logErr: false};
   }
+
+  static unsupportedBodyContentType(given: string, supported: string[]): ApiErrTemplate {
+    return {httpCode: 400, message: `Provided Content-Type '${given}' must be one of the following: ${supported.join(',')}`, logErr: false};
+  }
 }
