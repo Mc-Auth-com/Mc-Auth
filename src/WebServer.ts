@@ -83,6 +83,7 @@ export default class WebServer {
         }
       });
     });
+    app.use(express.urlencoded({extended: false, parameterLimit: 100}));
 
     /* Non-Cookie Routes */
     app.use('/oauth2', OAuthRouter.createNonAuthorizedRouter());
@@ -100,7 +101,6 @@ export default class WebServer {
 
 
     /* Prepare Request (calling the other middlewares) */
-    app.use(express.urlencoded({extended: false}));
     app.use(express.raw({type: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml', 'image/webp'], limit: '3MB'}));
     app.use(cookieParser());
     app.use(expressSession({
