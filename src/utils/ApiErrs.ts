@@ -33,6 +33,6 @@ export default class ApiErrs {
   }
 
   static unsupportedBodyContentType(given: string, supported: string[]): ApiErrTemplate {
-    return {httpCode: 400, message: `Provided Content-Type '${given}' must be one of the following: ${supported.join(',')}`, logErr: false};
+    return {httpCode: 400, message: `Provided Content-Type '${given}' must be one of the following: ${supported.join(', ')}`, logErr: false};
   }
 }
