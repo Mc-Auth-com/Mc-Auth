@@ -71,7 +71,7 @@
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
     "nodemailer": "^6.7.8",
-    "pg": "^8.7.3",
+    "pg": "^8.8.0",
     "rate-limiter-flexible": "^2.3.8",
     "rotating-file-stream": "^3.0.4",
     "sharp": "^0.30.7",
