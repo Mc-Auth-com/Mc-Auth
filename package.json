@@ -75,7 +75,7 @@
     "rate-limiter-flexible": "^2.3.8",
     "rotating-file-stream": "^3.0.4",
     "sharp": "^0.30.7",
-    "superagent": "^7.1.3",
+    "superagent": "^8.0.2",
     "ts-deepmerge": "^3.0.0"
   },
   "devDependencies": {
