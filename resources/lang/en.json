@@ -1,5 +1,10 @@
 [
   {
+    "term": "meta.language_switch.label",
+    "definition": "English (English)",
+    "context": "Syntax: 'name of language in own language' ('name of language in english')"
+  },
+  {
     "term": "html.authorize.app_created_on",
     "definition": "Created",
     "context": "",

@@ -44,12 +44,12 @@ export class Localization {
       result = this.languages[langKey][strKey];
     }
 
-    if (!result) {
+    if (!result && !strKey.startsWith('meta.')) {
       result = this.languages[this.defaultLanguage][strKey];
     }
 
     if (!result) {
-      result = '<i>[missing translation]</i>';
+      result = '<em>[missing translation]</em>';
 
       // Log error
       ApiError.log(500, 'Could not find a matching localization', true, {
