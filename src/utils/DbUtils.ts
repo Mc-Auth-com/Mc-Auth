@@ -1,8 +1,8 @@
 import { Pool, PoolClient } from 'pg';
 
 import { Grant, GrantType, mcAuthAccount, mcAuthDbCfg, OAuthApp, OAuthAppIcon } from '../global';
-import ApiErrs from './ApiErrs';
 import { ApiError } from './ApiError';
+import ApiErrs from './ApiErrs';
 
 export class DbUtils {
   private pool: Pool | null = null;

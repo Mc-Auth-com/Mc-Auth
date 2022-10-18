@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { getCfg, getPageGenerator } from '../Constants';
-import ApiErrs from './ApiErrs';
 import { ApiError } from './ApiError';
+import ApiErrs from './ApiErrs';
 
 /**
  * This shortcut function responses with HTTP 405 to the requests having
