@@ -1,7 +1,6 @@
 import { CookieOptions, Router } from 'express';
 import jwt from 'jsonwebtoken';
-import { post as httpPost } from 'superagent';
-import { getCfg, getPageGenerator } from '../../Constants';
+import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
 import { getPartOfSecret, restful } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
@@ -32,22 +31,27 @@ export default class DemoAuthorizationRoutes {
                 getPageGenerator().globals.url.base + // use 'https://Mc-Auth.com' instead
                 '/oAuth2/token';
 
-            httpPost(exchangeReqURL)
-                .set('Accept', 'application/json')
-                .set('Content-Type', 'application/json')
-                // .set('User-Agent', '') // TODO
-                .send({
-                  // client_secret from Mc-Auth to authenticate our request
-                  client_id: getCfg().data.demo.mcAuth.client_id,
-                  client_secret: getCfg().data.demo.mcAuth.client_secret,
+            const requestHeaders = {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'User-Agent': 'Mc-Auth Demo'
+            };
+            const requestBody = {
+              // client_secret from Mc-Auth to authenticate our request
+              client_id: getCfg().data.demo.mcAuth.client_id,
+              client_secret: getCfg().data.demo.mcAuth.client_secret,
 
-                  code: req.query.code,             // The code that Mc-Auth told the user to give us (redirect)
-                  redirect_uri: redirectURI,        // The same URL we redirected the user to
-                  grant_type: 'authorization_code'  // REQUIRED. See oAuth2 specs
-                })
-                .end((err, httpBody) => {
-                  if (err) return next(err);  // An error occurred
-                  if (!httpBody.body.access_token) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR)); // Should not be possible but just in case
+              code: req.query.code,             // The code that Mc-Auth told the user to give us (redirect)
+              redirect_uri: redirectURI,        // The same URL we redirected the user to
+              grant_type: 'authorization_code'  // REQUIRED. See oAuth2 specs
+            };
+
+            getHttpClient().post(exchangeReqURL, requestHeaders, requestBody)
+                .then((httpRes) => {
+                  const responseBody = JSON.parse(httpRes.body.toString('utf-8'));
+
+                  // FIXME: This should be rendered in the Demo-Context instead of throwing a generic server error
+                  if (!responseBody.access_token) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR)); // Should not be possible but just in case
 
                   // Authentication was successful!!
 
@@ -55,13 +59,14 @@ export default class DemoAuthorizationRoutes {
                   res.cookie('demoSession',
                       jwt.sign({
                         mcProfile: {
-                          id: httpBody.body.data.profile.id,
-                          name: httpBody.body.data.profile.name
+                          id: responseBody.data.profile.id,
+                          name: responseBody.data.profile.name
                         }
                       }, getPartOfSecret(256), {algorithm: 'HS256', expiresIn: '12 hours'}), cookieOptions);
 
                   return res.redirect(`${getPageGenerator().globals.url.base}/demo`);
-                });
+                })
+                .catch(next);
           }
         }
       });

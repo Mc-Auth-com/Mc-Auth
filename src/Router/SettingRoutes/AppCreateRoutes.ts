@@ -1,7 +1,6 @@
 import StringValidators from '@spraxdev/node-commons/dist/strings/StringValidators';
 import { Router } from 'express';
-import { post as httpPost } from 'superagent';
-import { getCfg, getPageGenerator } from '../../Constants';
+import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { db } from '../../index';
 import { restful, stripLangKeyFromURL } from '../../utils/_old_utils';
@@ -41,23 +40,34 @@ export default class AppCreateRoutes {
 
           if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, {body: req.body}));
 
-          // Check if reCAPTCHA has been solved
-          httpPost('https://www.google.com/recaptcha/api/siteverify')
-              .field('secret', getCfg().data.reCAPTCHA.private)
-              .field('response', captcha)
-              .end((err, httpRes) => {
-                if (err) return next(err);
+          getHttpClient()
+              .post('https://www.google.com/recaptcha/api/siteverify', undefined, {
+                'secret': getCfg().data.reCAPTCHA.private,
+                'response': captcha,
+              })
+              .then((httpRes) => {
+                const recaptchaResponse = JSON.parse(httpRes.body.toString('utf-8'));
+                if (recaptchaResponse.success != true) {
+                  return next(new ApiError(400, 'reCAPTCHA failed', false, {
+                    requestBody: req.body,
+                    reCaptchaBody: recaptchaResponse
+                  }));
+                }
 
-                if (httpRes.body?.success != true) return next(new ApiError(400, 'reCAPTCHA failed', false, {
-                  body: req.body,
-                  reCAPTCHA_body: httpRes.body
-                }));
-                if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
+                if (!req.session?.mcProfile?.id) {
+                  return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
+                }
 
-                db.createApp(req.session?.mcProfile?.id, Utils.normalizeWhitespaceChars(appName), Utils.normalizeWhitespaceChars(appWebsite), Utils.normalizeWhitespaceChars(appDesc) || null)
+                db.createApp(
+                    req.session?.mcProfile?.id,
+                    Utils.normalizeWhitespaceChars(appName),
+                    Utils.normalizeWhitespaceChars(appWebsite),
+                    Utils.normalizeWhitespaceChars(appDesc) || null
+                )
                     .then((app) => res.redirect(`${getPageGenerator().globals.url.base}/settings/apps/${app.id}`))
                     .catch(next);
-              });
+              })
+              .catch(next);
         }
       });
     });

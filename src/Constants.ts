@@ -13,8 +13,13 @@ export const APP_VERSION: string = JSON.parse(Fs.readFileSync(Path.join(__dirnam
 let cfg: ConfigFile<mcAuthCfg>;
 
 let minecraftApi: MinecraftApi;
+let httpClient: HttpClient;
 let mailGenerator: DynamicMailGenerator;
 let pageGenerator: DynamicPageGenerator;
+
+export function generateUserAgent(): string {
+  return HttpClient.generateUserAgent('Mc-Auth.com', APP_VERSION, true, 'https://github.com/Mc-Auth-com/Mc-Auth#readme');
+}
 
 export function getCfg(): ConfigFile<mcAuthCfg> {
   if (cfg == null) {
@@ -75,10 +80,18 @@ export function getCfg(): ConfigFile<mcAuthCfg> {
 
 export function getMinecraftApi(): MinecraftApi {
   if (minecraftApi == null) {
-    minecraftApi = new MinecraftApi(HttpClient.generateUserAgent('Mc-Auth.com', APP_VERSION, true, 'https://github.com/Mc-Auth-com/Mc-Auth#readme'));
+    minecraftApi = new MinecraftApi(generateUserAgent());
   }
 
   return minecraftApi;
+}
+
+export function getHttpClient(): HttpClient {
+  if (httpClient == null) {
+    httpClient = new HttpClient(generateUserAgent());
+  }
+
+  return httpClient;
 }
 
 // TODO: This should be made redundant and turned into static methods on the DynamicPageGenerator class

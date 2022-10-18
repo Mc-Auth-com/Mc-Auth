@@ -1,7 +1,4 @@
-import { type as osType } from 'os';
-import { post as httpPost } from 'superagent';
-import { APP_VERSION, getCfg } from '../Constants';
-
+import { generateUserAgent, getCfg, getHttpClient } from '../Constants';
 import { ApiErrTemplate } from './ApiErrs';
 
 export class ApiError extends Error {
@@ -57,46 +54,42 @@ export class ApiError extends Error {
       if (logMode == true || logMode == 'discord') {
         const cfg = getCfg().data;
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
-          httpPost(cfg.logging.discordErrorWebHookURL)
-              .set('Content-Type', 'application/json')
-              .set('Accept', 'application/json')
-              .set('User-Agent', this.getUserAgent())
-              .send({
-                username: 'Mc-Auth.org (Error-Reporter)',
-                avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
-                embeds: [
+          getHttpClient().post(cfg.logging.discordErrorWebHookURL, {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'User-Agent': generateUserAgent()
+          }, {
+            username: 'Mc-Auth.org (Error-Reporter)',
+            avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
+            embeds: [
+              {
+                title: 'An error occurred',
+                fields: [
                   {
-                    title: 'An error occurred',
-                    fields: [
-                      {
-                        name: 'HTTP-Code',
-                        value: httpCode,
-                        inline: true
-                      },
-                      {
-                        name: 'Message',
-                        value: message,
-                        inline: true
-                      },
-                      {
-                        name: 'Details',
-                        value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
-                      }
-                    ]
+                    name: 'HTTP-Code',
+                    value: httpCode,
+                    inline: true
+                  },
+                  {
+                    name: 'Message',
+                    value: message,
+                    inline: true
+                  },
+                  {
+                    name: 'Details',
+                    value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
                   }
                 ]
-              })
-              .end((err, res) => {
-                if (err) return console.error('Discord WebHook err:', err);
+              }
+            ]
+          })
+              .then((httpRes) => {
                 // TODO: write to 'webhookRequestsLeft' and use setTimeout() to automatically set it when RateLimit is over (https://discord.com/developers/docs/topics/rate-limits#header-format)
-                console.log(`Discord WebHook (${res.status}):`, res.text); // TODO: remove debug
-              });
+                console.log(`Discord WebHook (${httpRes.statusCode}):`, httpRes.text); // TODO: remove debug
+              })
+              .catch((err) => console.error('Discord WebHook err:', err));
         }
       }
     });
-  }
-
-  static getUserAgent() {
-    return `MC-Auth.org/${APP_VERSION} (${osType()}; ${process.arch}; ${process.platform}) (+https://github.com/Mc-Auth-com/Mc-Auth-Web#readme)`;
   }
 }
