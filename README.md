@@ -90,11 +90,14 @@ Configuration is done inside `./storage/` and interesting npm scripts are `dev`,
    ```shell
    docker run \
    --detach \
-   --publish 8080:8080 \
    --name mc-auth-web \
+   --publish 8080:8080 \
+   --volume mc-auth-web-storage:/app/storage/ \
+   --volume mc-auth-web-logs:/app/logs/ \
    --cpus 2 \
    --memory 256M \
-   --volume mc-auth-web-storage:/app/storage/ \
+   --security-opt=no-new-privileges \
+   --read-only \
    mc-auth-web:latest
    ```
 3. Edit the configuration inside the container at `/app/storage/`
