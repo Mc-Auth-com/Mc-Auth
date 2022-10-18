@@ -2,10 +2,6 @@ main {
     margin: 2rem 0;
 }
 
-.langDropdown .flag-icon {
-    border-radius: 3px;
-}
-
 .centeredCard {
     margin:        0;
     position:      absolute;
