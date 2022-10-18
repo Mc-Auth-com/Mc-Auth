@@ -59,7 +59,7 @@
           <div class="dropdown-menu dropdown-menu-right langDropdown" aria-labelledby="langDropdown">
             <%1 for (const langKey in loc.languages) { %1>
               <a class="dropdown-item" href="<%2- currLocalizedURL['<%1- langKey -%1>'] -%2>">
-                <%1- langKey -%1>
+                <%1- loc.getString(langKey, 'meta.language_switch.label') -%1>
               </a>
             <%1 } %1>
           </div>

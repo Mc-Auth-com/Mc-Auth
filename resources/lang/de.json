@@ -1,5 +1,10 @@
 [
   {
+    "term": "meta.language_switch.label",
+    "definition": "Deutsch (German)",
+    "context": "Syntax: 'name of language in own language' ('name of language in english')"
+  },
+  {
     "term": "html.authorize.app_created_on",
     "definition": "Erstellt",
     "context": "",
@@ -593,7 +598,7 @@
   },
   {
     "term": "words.email_address",
-    "definition": "E-Mail-Ad­res­se",
+    "definition": "E-Mail-Adresse",
     "context": "",
     "term_plural": "",
     "reference": "",
