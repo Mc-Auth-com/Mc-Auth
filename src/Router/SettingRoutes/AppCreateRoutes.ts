@@ -41,7 +41,6 @@ export default class AppCreateRoutes {
 
           if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, {body: req.body}));
 
-
           // Check if reCAPTCHA has been solved
           httpPost('https://www.google.com/recaptcha/api/siteverify')
               .field('secret', getCfg().data.reCAPTCHA.private)

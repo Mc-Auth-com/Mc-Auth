@@ -9,10 +9,8 @@
 
   <script>
     // Force page-reload when using browser-pageinator to get to this page (regenerate Grant-ID)
-    window.addEventListener('pageshow', (e) => {
-      if (historyTraversal = e.persisted ||
-        (window.performance &&
-          window.performance.navigation.type === 2)) {
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
         window.location.reload();
       }
     });
@@ -29,8 +27,8 @@
         <img src="<%2- page.apps[0].iconID ?
           `<%0- global.url.base -%0>/uploads/${page.apps[0].iconID}.png` :
           `<%0- global.url.static -%0>/uploads/default.png` -%2>"
-          class="img-fluid" height="128px" width="128px"
-          alt="<%1- loc.getString(langKey, 'html.authorize.app_logo') -%1>">
+             class="img-fluid" height="128px" width="128px"
+             alt="<%1- loc.getString(langKey, 'html.authorize.app_logo') -%1>">
         <h3><%1- loc.getString(langKey, 'html.authorize.login_request_from_app') -%1></h3>
       </div>
 
@@ -52,7 +50,8 @@
             <div class="row">
               <div class="col">
                 <div class="float-right">
-                  <img width="24px" height="24px" src="https://api.sprax2013.de/mc/skin/<%2- page.apps[0].owner -%2>/head?size=24">
+                  <img width="24px" height="24px"
+                       src="https://api.sprax2013.de/mc/skin/<%2- page.apps[0].owner -%2>/head?size=24">
                   <%1- loc.getString(langKey, 'html.authorize.app_created_by') -%1>
                 </div>
               </div>
@@ -73,7 +72,8 @@
             <div>
               <p class="text-center"><%1- loc.getString(langKey, 'html.authorize.app_wants_access_to') -%1></p>
 
-              <img class="float-left" style="margin-right: 1rem" width="48px" height="48px" src="<%0- global.url.static -%0>/img/icons/globe.svg">
+              <img class="float-left" style="margin-right: 1rem" width="48px" height="48px"
+                   src="<%0- global.url.static -%0>/img/icons/globe.svg">
               <p class="text-left">
                 <%1- loc.getString(langKey, 'html.authorize.scope.profile') -%1>
                 <br>

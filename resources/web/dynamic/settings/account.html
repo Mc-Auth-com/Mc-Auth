@@ -34,7 +34,8 @@
           <form method="POST">
             <div class="form-group">
               <label for="mcName"><u><%1- loc.getString(langKey, 'words.username') -%1></u></label>
-              <input id="mcName" type="text" class="form-control" value="<%2= con.mcProfile.name -%2>" aria-describedby="mcNameInfo" readonly>
+              <input id="mcName" type="text" class="form-control" value="<%2= con.mcProfile.name -%2>"
+                     aria-describedby="mcNameInfo" readonly>
               <small id="mcNameInfo" class="form-text text-muted">
                 <%1- loc.getString(langKey, 'html.settings.form.name_info') -%1>
               </small>
@@ -48,7 +49,8 @@
                   <strong class="text-danger"><%1- loc.getString(langKey, 'html.settings.form.email_pending') -%1></strong>
                 <%2 } %2>
 
-                <input id="mailAddr" name="mailAddr" type="email" class="form-control" value="<%2= page.account.email -%2>" aria-describedby="mailAddrInfo">
+                <input id="mailAddr" name="mailAddr" type="email" class="form-control"
+                       value="<%2= page.account.email -%2>" aria-describedby="mailAddrInfo">
 
                 <div class="input-group-append">
                   <div class="input-group-text">
@@ -65,7 +67,8 @@
               </small>
             </div>
 
-            <button type="submit" name="updateMail" value="1" class="btn btn-success"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
+            <button type="submit" name="updateMail" class="btn btn-success"
+                    value="1"><%1- loc.getString(langKey, 'words.save_changes') -%1></button>
           </form>
 
           <!-- Uncomment as soon as 'delete account' is added again -->

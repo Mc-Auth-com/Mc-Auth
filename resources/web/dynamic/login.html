@@ -11,9 +11,9 @@
   <title><%1- loc.getString(langKey, 'words.login') -%1> | Mc-Auth.com</title>
 
   <%0- /* -%0>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
-    integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg=="
-    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css"
+          integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg=="
+          crossorigin="anonymous">
   <%0- */ -%0>
 
   <%2 if(con.isLoggedIn) { %2>
@@ -65,9 +65,8 @@
                     <%1- loc.getString(langKey, 'html.login.start_minecraft_and_connect') -%1>
 
                     <button type="button" class="btn btn-sm btn-outline-info"
-                      onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"
-                      aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"><i class="far fa-clipboard"
-                        aria-hidden="true"></i></button>
+                            aria-label="<%1- loc.getString(langKey, 'html.login.click_to_copy_minecraft_host_to_clipboard') -%1>"
+                            onclick="copyToClipboard(this, '<%0- global.url.mcServer -%0>')"><i class="far fa-clipboard" aria-hidden="true"></i></button>
 
                     <br>
                     <%1- loc.getString(langKey, 'html.login.kicked_with_code') -%1>
@@ -80,7 +79,7 @@
                     </div>
 
                     <input type="text" class="form-control" id="otp" name="otp" placeholder="123 456" minlength="6"
-                      maxlength="7" autocomplete="off" required>
+                           maxlength="7" autocomplete="off" required>
                   </div>
                 </div>
 
@@ -89,10 +88,12 @@
 
                 <div class="form-group form-check">
                   <input type="checkbox" checked class="form-check-input" id="keepLogin" name="keepLogin">
-                  <label class="form-check-label" for="keepLogin"><%1- loc.getString(langKey, 'html.login.stay_logged_in') -%1></label>
+                  <label class="form-check-label"
+                         for="keepLogin"><%1- loc.getString(langKey, 'html.login.stay_logged_in') -%1></label>
                 </div>
 
-                <button type="submit" class="btn btn-primary" id="submitBtn"><%1- loc.getString(langKey, 'words.next') -%1> »</button>
+                <button type="submit" class="btn btn-primary"
+                        id="submitBtn"><%1- loc.getString(langKey, 'words.next') -%1> »</button>
               </form>
             <%2 } %2>
           </div>

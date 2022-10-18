@@ -364,7 +364,9 @@ export class DbUtils {
   }
 
   async shutdown(): Promise<void> {
-    if (this.pool == null) return new Promise((resolve, _reject) => { resolve(); });
+    if (this.pool == null) {
+      return new Promise((resolve) => resolve());
+    }
 
     const result = this.pool.end();
     this.pool = null;
