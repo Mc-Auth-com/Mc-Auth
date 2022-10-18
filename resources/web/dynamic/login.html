@@ -5,6 +5,9 @@
   <%0- _HEAD -%0>
 
   <link rel="canonical" href="<%1- global.url.baseLocalized -%1>/login">
+  <%2 if(Object.keys(con.query).length > 0) { %2>
+    <meta name="robots" content="noindex">
+  <%2 } %2>
 
   <title><%1- loc.getString(langKey, 'words.login') -%1> | Mc-Auth.com</title>
 
