@@ -6,27 +6,60 @@
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
         <loc>https://mc-auth.com/</loc>
-        <lastmod>2019-12-31T04:29:22+00:00</lastmod>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
         <priority>1.00</priority>
     </url>
     <url>
+        <loc>https://mc-auth.com/en/</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://mc-auth.com/de/</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+
+    <url>
+        <loc>https://mc-auth.com/demo</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://mc-auth.com/en/demo</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://mc-auth.com/de/demo</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+
+    <url>
         <loc>https://mc-auth.com/login</loc>
-        <lastmod>2019-12-31T04:29:22+00:00</lastmod>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
         <priority>0.50</priority>
     </url>
     <url>
-        <loc>https://mc-auth.com/demo</loc>
-        <lastmod>2019-12-31T04:29:22+00:00</lastmod>
-        <priority>1.00</priority>
+        <loc>https://mc-auth.com/en/login</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>0.50</priority>
     </url>
     <url>
+        <loc>https://mc-auth.com/de/login</loc>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
+        <priority>0.50</priority>
+    </url>
+
+    <url>
         <loc>https://mc-auth.com/legal</loc>
-        <lastmod>2019-12-31T04:29:22+00:00</lastmod>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
         <priority>0.25</priority>
     </url>
     <url>
         <loc>https://mc-auth.com/privacy</loc>
-        <lastmod>2019-12-31T04:29:22+00:00</lastmod>
+        <lastmod>2022-10-19T00:15:00+00:00</lastmod>
         <priority>0.25</priority>
     </url>
 </urlset>
