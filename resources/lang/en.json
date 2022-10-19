@@ -413,6 +413,54 @@
     "comment": ""
   },
   {
+    "term": "html.demo.login_using_mc_auth",
+    "definition": "Login using Mc-Auth.com",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_logged_in",
+    "definition": "You are logged into this demo application!",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_not_logged_in",
+    "definition": "You are <strong>not</strong> logged into this demo application!",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are",
+    "definition": "You are:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error",
+    "definition": "Error",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error_description",
+    "definition": "Error description",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "words.agree",
     "definition": "Agree",
     "context": "",

@@ -14,8 +14,8 @@
     <div class="container">
       <%2 if(page.demo.err) { %2>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          <p><strong>Error</strong>: <%2- page.demo.err.name -%2></p>
-          <p><strong>Error-Description</strong>: <%2- page.demo.err.info || '<em>-</em>' -%2></p>
+          <p><strong><%1- loc.getString(langKey, 'words.error') -%1></strong>: <%2- page.demo.err.name -%2></p>
+          <p><strong><%1- loc.getString(langKey, 'words.error_description') -%1></strong>: <%2- page.demo.err.info || '<em>-</em>' -%2></p>
 
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -24,24 +24,28 @@
       <%2 } %2>
 
       <%2 if(page.demo.mcProfile) { %2>
-        <h2>You are logged into this demo application!</h2>
-        <a class="btn btn-primary" href="<%1- global.url.baseLocalized -%1>/demo/logout" role="button">Logout</a>
+        <h2><%1- loc.getString(langKey, 'html.demo.you_are_logged_in') -%1></h2>
+        <a class="btn btn-primary" href="<%1- global.url.baseLocalized -%1>/demo/logout"
+           role="button"><%1- loc.getString(langKey, 'words.logout') -%1></a>
 
         <br><br>
+        <hr>
 
-        <!-- TODO: New layout: 'You are\n${SKIN_IMG}\n${Username}\n${UUID}' -->
-        <p><strong>Username</strong>: <%2- page.demo.mcProfile.name -%2></p>
-        <p><strong>UUID</strong>: <%2- page.demo.mcProfile.id -%2></p>
-
-        <p>
-          <strong>Skin</strong>:
-          <img src="https://api.sprax2013.de/mc/skin/<%2- page.demo.mcProfile.id -%2>/body?size=64"
-               alt="Your Minecraft-Skin">
-        </p>
+        <h3><%1- loc.getString(langKey, 'html.demo.you_are') -%1></h3>
+        <div class="row">
+          <div class="col-auto">
+            <p><strong><%1- loc.getString(langKey, 'words.username') -%1></strong>: <%2- page.demo.mcProfile.name -%2></p>
+            <p><strong><abbr title="Universally Unique Identifier">UUID</abbr></strong>: <%2- page.demo.mcProfile.id -%2></p>
+          </div>
+          <div class="col">
+            <img src="https://api.sprax2013.de/mc/skin/<%2- page.demo.mcProfile.id -%2>/body?size=100"
+                 alt="Your Minecraft-Skin" height="200px" width="100px">
+          </div>
+        </div>
       <%2 } else { %2>
-        <h2>You are <strong>not</strong> logged into this demo application!</h2>
+        <h2><%1- loc.getString(langKey, 'html.demo.you_are_not_logged_in') -%1></h2>
         <a class="btn btn-primary" href="<%1- global.url.baseLocalized -%1>/demo/login"
-           role="button">Login using Mc-Auth.com</a>
+           role="button"><%1- loc.getString(langKey, 'html.demo.login_using_mc_auth') -%1></a>
       <%2 } %2>
     </div>
   </main>

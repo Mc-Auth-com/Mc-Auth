@@ -413,6 +413,54 @@
     "comment": ""
   },
   {
+    "term": "html.demo.login_using_mc_auth",
+    "definition": "Mit Mc-Auth.com einloggen",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_logged_in",
+    "definition": "Du bist in der Demo-App eingeloggt!",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_not_logged_in",
+    "definition": "Du bist aktuell <strong>nicht</strong> in der Demo-App eingeloggt!",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are",
+    "definition": "Du bist:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error",
+    "definition": "Fehler",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error_description",
+    "definition": "Fehlerbeschreibung",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
     "term": "words.agree",
     "definition": "Zustimmen",
     "context": "",
