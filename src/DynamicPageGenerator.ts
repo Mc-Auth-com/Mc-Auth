@@ -95,8 +95,12 @@ export class DynamicPageGenerator {
       moment: getLocalization().momentInstances[res.locals.lang]
     };
 
+    let pageUrlSuffixForLanguageSwitch = stripLangKeyFromURL(req.originalUrl);
+    if (!pageUrlSuffixForLanguageSwitch.startsWith('/oAuth2/authorize?')) {
+      pageUrlSuffixForLanguageSwitch = stripParamsFromURL(pageUrlSuffixForLanguageSwitch);
+    }
     for (const langKey in getLocalization().languages) {
-      data.currLocalizedURL[langKey] = this.globals.url.base + '/' + langKey + stripLangKeyFromURL(stripParamsFromURL(req.originalUrl));
+      data.currLocalizedURL[langKey] = this.globals.url.base + '/' + langKey + pageUrlSuffixForLanguageSwitch;
     }
 
     for (const key in req.query) {
