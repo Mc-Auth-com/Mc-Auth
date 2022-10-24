@@ -72,7 +72,7 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.8.0",
     "pg": "^8.8.0",
-    "rate-limiter-flexible": "^2.3.12",
+    "rate-limiter-flexible": "^2.4.1",
     "rotating-file-stream": "^3.0.4",
     "sharp": "^0.31.1",
     "ts-deepmerge": "^4.0.0"
