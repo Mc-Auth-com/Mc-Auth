@@ -74,7 +74,7 @@
     "pg": "^8.8.0",
     "rate-limiter-flexible": "^2.3.12",
     "rotating-file-stream": "^3.0.4",
-    "sharp": "^0.31.1",
+    "sharp": "^0.31.2",
     "ts-deepmerge": "^4.0.0"
   },
   "devDependencies": {
