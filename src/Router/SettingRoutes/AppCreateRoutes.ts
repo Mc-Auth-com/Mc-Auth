@@ -40,11 +40,9 @@ export default class AppCreateRoutes {
 
           if (typeof captcha != 'string' || captcha.length == 0) return next(new ApiError(400, 'reCAPTCHA failed', false, {body: req.body}));
 
+          const reCaptchaBody = `secret=${encodeURIComponent(getCfg().data.reCAPTCHA.private)}&response=${encodeURIComponent(captcha)}`;
           getHttpClient()
-              .post('https://www.google.com/recaptcha/api/siteverify', undefined, {
-                'secret': getCfg().data.reCAPTCHA.private,
-                'response': captcha,
-              })
+              .post('https://www.google.com/recaptcha/api/siteverify', {'Content-Type': 'application/x-www-form-urlencoded'}, reCaptchaBody)
               .then((httpRes) => {
                 const recaptchaResponse = JSON.parse(httpRes.body.toString('utf-8'));
                 if (recaptchaResponse.success != true) {
