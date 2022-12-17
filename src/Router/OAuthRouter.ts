@@ -3,9 +3,10 @@ import { Router } from 'express';
 import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
 import { db } from '../index';
-import { appendParamsToURL, restful, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
+import { appendParamsToURL, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 
 // TODO Add rate limiting
 //  No confirmed mail: 5/second (burst, status 429), 100/hour (status 429)
@@ -19,7 +20,7 @@ export default class OAuthRouter {
     const router = Router();
 
     router.all('/authorize', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (!req.session?.loggedIn) return res.redirect(`${getPageGenerator().globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
           if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
@@ -214,7 +215,7 @@ export default class OAuthRouter {
     router.all('/token', (req, res, next) => {
       const supportedBodyContentTypes = ['application/json', 'application/x-www-form-urlencoded'];
 
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         post: () => {
           if (!req.is(supportedBodyContentTypes)) {
             return next(ApiError.create(ApiErrs.unsupportedBodyContentType(req.header('Content-Type') ?? '', supportedBodyContentTypes)));

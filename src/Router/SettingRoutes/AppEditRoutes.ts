@@ -4,17 +4,18 @@ import { Router } from 'express';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { db } from '../../index';
-import { restful, stripLangKeyFromURL } from '../../utils/_old_utils';
+import { stripLangKeyFromURL } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
 import Utils from '../../utils/Utils';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 
 export default class AppEditRoutes {
   static addRoutes(router: Router): void {
     router.all<{ appID?: string }>('/apps/:appID?', (req, res, next) => {
       const appID = req.params['appID'] || null;
 
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (!req.session?.loggedIn) return res.redirect(`${getPageGenerator().globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
           if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));

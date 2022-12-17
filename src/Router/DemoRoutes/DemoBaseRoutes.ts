@@ -1,13 +1,14 @@
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { CookieOptions, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
-import { getPartOfSecret, restful } from '../../utils/_old_utils';
+import { getPartOfSecret } from '../../utils/_old_utils';
 
 export default class DemoBaseRoutes {
   static addRoutes(router: Router, cookieOptions: CookieOptions): void {
     router.all('/', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           // Error? => Failed login
           if (req.query.error) {

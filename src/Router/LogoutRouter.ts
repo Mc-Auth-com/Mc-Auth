@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import { getPageGenerator } from '../Constants';
-import { getReturnURL, restful } from '../utils/_old_utils';
+import { getReturnURL } from '../utils/_old_utils';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 
 export default class LogoutRouter {
   static createRouter(): Router {
     const router = Router();
 
     router.all('/', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (!req.session) return res.redirect(getReturnURL(req) ?? getPageGenerator().globals.url.base);
 

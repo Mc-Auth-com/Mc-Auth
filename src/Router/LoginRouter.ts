@@ -3,15 +3,16 @@ import { Router } from 'express';
 import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
 import { db } from '../index';
-import { getReturnURL, restful } from '../utils/_old_utils';
+import { getReturnURL } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 
 export default class LoginRouter {
   static createRouter(): Router {
     const router = Router();
 
     router.all('/', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (req.session?.loggedIn) return res.redirect(getReturnURL(req) ?? getPageGenerator().globals.url.base);
 

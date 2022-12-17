@@ -5,7 +5,7 @@ import { join as joinPath } from 'path';
 import sharp from 'sharp';
 import { getPageGenerator } from '../Constants';
 import { db } from '../index';
-import { restful } from '../utils/_old_utils';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
 
@@ -15,7 +15,7 @@ export default class UploadsRouter {
 
     // TODO Add rate limit to upload
     router.all('/', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         post: () => {
           if (!req.session?.loggedIn) return next(ApiError.create(ApiErrs.UNAUTHORIZED));
 
@@ -56,8 +56,8 @@ export default class UploadsRouter {
     const DEFAULT_ICON: Buffer = readFileSync(joinPath(__dirname, '..', '..', 'resources', 'web', 'static', 'uploads', 'default.png'));
 
     router.all<{ fileID?: any }>('/:fileID?', (req, res, next) => {
-      restful(req, res, next, {
-        get: async () => {
+      handleRequestRestfully(req, res, next, {
+        get: async (): Promise<void> => {
           let fileID = req.params['fileID']?.toLowerCase() || null;
 
           // Validate user input
@@ -69,23 +69,21 @@ export default class UploadsRouter {
           let status = 200;
 
           if (StringUtils.isNumeric(fileID)) {
-            try {
-              const file = await db.getOptimizedIconBuffer(fileID);
+            const file = await db.getOptimizedIconBuffer(fileID);
 
-              if (file != null && file.length != 0) {
-                return res.type('png')
-                    .send(file);
-              } else {
-                status = 404;
-              }
-            } catch (err) {
-              return next(err);
+            if (file != null && file.length != 0) {
+              res.type('png')
+                  .send(file);
+              return;
+            } else {
+              status = 404;
             }
           }
 
-          return res.status(status)
+          res.status(status)
               .type('png')
               .send(DEFAULT_ICON);
+          return;
         },
         post: next  // Fallthrough and call non-noCookie router
       });

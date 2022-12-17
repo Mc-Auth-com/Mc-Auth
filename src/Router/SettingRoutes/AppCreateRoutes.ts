@@ -3,15 +3,16 @@ import { Router } from 'express';
 import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { db } from '../../index';
-import { restful, stripLangKeyFromURL } from '../../utils/_old_utils';
+import { stripLangKeyFromURL } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
 import Utils from '../../utils/Utils';
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 
 export default class AppCreateRoutes {
   static addRoutes(router: Router): void {
     router.all('/apps/create', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (!req.session?.loggedIn) return res.redirect(`${getPageGenerator().globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
 

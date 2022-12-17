@@ -1,7 +1,8 @@
+import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { CookieOptions, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
-import { getPartOfSecret, restful } from '../../utils/_old_utils';
+import { getPartOfSecret } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
 
@@ -10,7 +11,7 @@ export default class DemoAuthorizationRoutes {
     const redirectURI = getPageGenerator().globals.url.base + '/demo/login';
 
     router.all('/login', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           if (req.query.error) {  // User did authenticate but Mc-Auth sends us an error
             return res.redirect(`${getPageGenerator().globals.url.base}/demo?error=${req.query.error}${req.query.error_description ? `&error_description=${req.query.error_description}` : ''}`);
@@ -73,7 +74,7 @@ export default class DemoAuthorizationRoutes {
     });
 
     router.all('/logout', (req, res, next) => {
-      restful(req, res, next, {
+      handleRequestRestfully(req, res, next, {
         get: () => {
           res.clearCookie('demoSession', cookieOptions);
 
