@@ -82,7 +82,7 @@
     "@types/connect-pg-simple": "^7.0.0",
     "@types/cookie-parser": "^1.4.3",
     "@types/ejs": "^3.1.1",
-    "@types/express": "^4.17.14",
+    "@types/express": "^4.17.15",
     "@types/express-session": "^1.17.5",
     "@types/jest": "^29.2.4",
     "@types/jsonwebtoken": "^8.5.9",
