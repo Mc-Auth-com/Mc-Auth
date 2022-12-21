@@ -253,6 +253,7 @@ export default class OAuthRouter {
 
                       if (grant.scopes.includes('profile')) {
                         try {
+                          (result.data as any)._warning = `WARNING: The 'data' field will be removed in the future. Please use /api/v2/profile instead! (https://github.com/Mc-Auth-com/Mc-Auth/issues/103)`;
                           result.data.profile = await getMinecraftApi().getProfile(grant.mcAccountId) as object; // TODO: handle null value
                         } catch (err) {
                           return next(ApiError.create(ApiErrs.SRV_FETCHING_MINECRAFT_PROFILE, {uuid: grant.mcAccountId}));
