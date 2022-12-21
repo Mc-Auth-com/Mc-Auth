@@ -88,7 +88,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.18.9",
-    "@types/nodemailer": "^6.4.6",
+    "@types/nodemailer": "^6.4.7",
     "@types/pg": "^8.6.5",
     "@types/request": "^2.48.8",
     "@types/sharp": "^0.31.0",
