@@ -343,6 +343,27 @@ export class DbUtils {
     });
   }
 
+  async getActiveGrantForAccessToken(accessToken: string): Promise<Grant | null> {
+    if (this.pool == null) throw ApiError.create(ApiErrs.NO_DATABASE, {pool: this.pool});
+
+    const dbResult = await this.pool.query(`
+        SELECT
+            *
+        FROM
+            grants
+        WHERE
+            access_token = $1
+            AND result = 'GRANTED'::"GrantResult"
+            AND issued >= (CURRENT_TIMESTAMP - INTERVAL '60 MINUTES');
+    `, [accessToken]);
+
+    if (dbResult.rows.length > 1) {
+      throw new Error('Multiple grants found for accessToken');
+    }
+
+    return dbResult.rows.length > 0 ? RowUtils.toGrant(dbResult.rows[0]) : null;
+  }
+
   /* Helper */
 
   isAvailable(): boolean {

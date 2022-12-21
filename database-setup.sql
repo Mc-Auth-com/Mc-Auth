@@ -131,6 +131,7 @@ CREATE TABLE "public"."apps" (
   "website" varchar(512) COLLATE "pg_catalog"."default" NOT NULL DEFAULT '[]'::character varying,
   "icon" int8,
   "redirect_uris" jsonb NOT NULL DEFAULT '[]'::jsonb,
+--   FIXME: Generate secret similar to new access and exchange tokens
   "secret" varchar(255) COLLATE "pg_catalog"."default" DEFAULT concat(random_string(8), '.', generate_snowflake('public.apps_secret_sequence'::text), '.', random_string(4)),
   "verified" bool NOT NULL DEFAULT false,
   "deleted" bool NOT NULL DEFAULT false,
@@ -149,8 +150,8 @@ CREATE TABLE "public"."grants" (
   "scopes" jsonb NOT NULL,
   "response_type" varchar(128) COLLATE "pg_catalog"."default" NOT NULL,
   "state" varchar(128) COLLATE "pg_catalog"."default",
-  "access_token" varchar(32) COLLATE "pg_catalog"."default",
-  "exchange_token" varchar(32) COLLATE "pg_catalog"."default",
+  "access_token" varchar(37) COLLATE "pg_catalog"."default",
+  "exchange_token" varchar(37) COLLATE "pg_catalog"."default",
   "redirect_uri" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "issued" timestamptz(0) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -214,8 +215,7 @@ ALTER TABLE "public"."apps" ADD CONSTRAINT "applications_pkey" PRIMARY KEY ("id"
 -- ----------------------------
 -- Indexes structure for table grants
 -- ----------------------------
-CREATE UNIQUE INDEX "grants_app_access_token_idx" ON "public"."grants" USING btree (
-  "app" "pg_catalog"."int8_ops" ASC NULLS LAST,
+CREATE UNIQUE INDEX "grants_access_token_idx" ON "public"."grants" USING btree (
   "access_token" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
 CREATE UNIQUE INDEX "grants_exchange_token_idx" ON "public"."grants" USING btree (

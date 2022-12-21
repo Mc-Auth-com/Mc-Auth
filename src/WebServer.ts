@@ -8,6 +8,7 @@ import { join as joinPath } from 'path';
 import { dbCfg, webAccessLogStream } from '.';
 import { getCfg, getPageGenerator } from './Constants';
 import { getLocalization } from './Localization';
+import { createApiRouter } from './Router/ApiRouter';
 import DemoRouter from './Router/DemoRouter';
 import LoginRouter from './Router/LoginRouter';
 import LogoutRouter from './Router/LogoutRouter';
@@ -185,6 +186,7 @@ export default class WebServer {
     // Handle all the basic pages (index.html, legal.html, ...)
     app.use(StaticPagesRouter.createRouter());
 
+    app.use('/api', createApiRouter());
     app.use('/oauth2', OAuthRouter.createAuthorizedRouter());
     app.use('/login', LoginRouter.createRouter());
     app.use('/logout', LogoutRouter.createRouter());

@@ -35,4 +35,8 @@ export default class ApiErrs {
   static unsupportedBodyContentType(given: string, supported: string[]): ApiErrTemplate {
     return {httpCode: 400, message: `Provided Content-Type '${given}' must be one of the following: ${supported.join(', ')}`, logErr: false};
   }
+
+  static missingScopeForAccessToken(scope: string): ApiErrTemplate {
+    return {httpCode: 403, message: `Missing scope '${scope}' for access_token`, logErr: false};
+  }
 }
