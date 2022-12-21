@@ -3,6 +3,7 @@ import { Pool, PoolClient } from 'pg';
 import { Grant, GrantType, mcAuthAccount, mcAuthDbCfg, OAuthApp, OAuthAppIcon } from '../global';
 import { ApiError } from './ApiError';
 import ApiErrs from './ApiErrs';
+import Tokens from './Tokens';
 
 export class DbUtils {
   private pool: Pool | null = null;
@@ -309,7 +310,7 @@ export class DbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, {pool: this.pool}));
 
-      this.pool.query('UPDATE grants SET exchange_token=random_string(32) WHERE id =$1 RETURNING exchange_token;', [grantID], (err, res) => {
+      this.pool.query('UPDATE grants SET exchange_token=$2 WHERE id =$1 RETURNING exchange_token;', [grantID, Tokens.generateExchangeToken()], (err, res) => {
         if (err) return reject(err);
 
         return resolve(RowUtils.toGrant(res.rows[0]).exchangeToken);
@@ -321,8 +322,7 @@ export class DbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, {pool: this.pool}));
 
-
-      this.pool.query(`UPDATE grants SET access_token=random_string(32),result='GRANTED'::"GrantResult" WHERE id =$1 RETURNING access_token;`, [grantID], (err, res) => {
+      this.pool.query(`UPDATE grants SET access_token=$2, result='GRANTED'::"GrantResult" WHERE id =$1 RETURNING access_token;`, [grantID, Tokens.generateAccessToken()], (err, res) => {
         if (err) return reject(err);
 
         return resolve(RowUtils.toGrant(res.rows[0]).accessToken);
@@ -334,8 +334,9 @@ export class DbUtils {
     return new Promise((resolve, reject) => {
       if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, {pool: this.pool}));
 
-      this.pool.query(`UPDATE grants SET access_token =random_string(32) WHERE app =$1 AND access_token IS NULL AND exchange_token =$2 AND lower(redirect_uri) =lower($3) AND result ='GRANTED'::"GrantResult" AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
-          [appId, exchange_token, redirect_uri], (err, res) => {
+      // TODO: Make sure that access_token does not already exist!
+      this.pool.query(`UPDATE grants SET access_token =$4 WHERE app =$1 AND access_token IS NULL AND exchange_token =$2 AND lower(redirect_uri) =lower($3) AND result ='GRANTED'::"GrantResult" AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`,
+          [appId, exchange_token, redirect_uri, Tokens.generateAccessToken()], (err, res) => {
             if (err) return reject(err);
 
             resolve(res.rows.length > 0 ? RowUtils.toGrant(res.rows[0]) : null);
