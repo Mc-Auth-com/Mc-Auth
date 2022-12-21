@@ -6,6 +6,7 @@ import { getPartOfSecret } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
 
+// FIXME: Heavily refactor this class
 export default class DemoAuthorizationRoutes {
   static addRoutes(router: Router, cookieOptions: CookieOptions): void {
     const redirectURI = getPageGenerator().globals.url.base + '/demo/login';
@@ -56,16 +57,29 @@ export default class DemoAuthorizationRoutes {
 
                   // Authentication was successful!!
 
-                  // I use a temporary cookie as it hold no sensitive data and this is supposed to be a demo page
-                  res.cookie('demoSession',
-                      jwt.sign({
-                        mcProfile: {
-                          id: responseBody.data.profile.id,
-                          name: responseBody.data.profile.name
+                  // fetch the Minecraft profile
+                  getHttpClient().get(getPageGenerator().globals.url.base + '/api/v2/profile', {
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${responseBody.access_token}`
+                  })
+                      .then((profileResponse) => {
+                        if (!profileResponse.ok) {
+                          throw new Error('Could not fetch profile, status code: ' + profileResponse.status);
                         }
-                      }, getPartOfSecret(256), {algorithm: 'HS256', expiresIn: '12 hours'}), cookieOptions);
 
-                  return res.redirect(`${getPageGenerator().globals.url.base}/demo`);
+                        const profile = JSON.parse(profileResponse.body.toString('utf-8'));
+
+                        // I use a temporary cookie as it hold no sensitive data and this is supposed to be a demo page
+                        res.cookie('demoSession',
+                            jwt.sign({
+                              mcProfile: {
+                                id: profile.id,
+                                name: profile.name
+                              }
+                            }, getPartOfSecret(256), {algorithm: 'HS256', expiresIn: '12 hours'}), cookieOptions);
+
+                        return res.redirect(`${getPageGenerator().globals.url.base}/demo`);
+                      });
                 })
                 .catch(next);
           }

@@ -5,6 +5,7 @@ import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { getPartOfSecret } from '../../utils/_old_utils';
 
+// FIXME: Heavily refactor this class
 export default class DemoBaseRoutes {
   static addRoutes(router: Router, cookieOptions: CookieOptions): void {
     router.all('/', (req, res, next) => {
