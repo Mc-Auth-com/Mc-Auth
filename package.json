@@ -89,7 +89,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.18.10",
     "@types/nodemailer": "^6.4.7",
-    "@types/pg": "^8.6.5",
+    "@types/pg": "^8.6.6",
     "@types/request": "^2.48.8",
     "@types/sharp": "^0.31.0",
     "jest": "^29.3.1",
