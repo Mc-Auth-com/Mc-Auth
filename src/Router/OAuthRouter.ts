@@ -22,7 +22,7 @@ export default class OAuthRouter {
     router.all('/authorize', (req, res, next) => {
       handleRequestRestfully(req, res, next, {
         get: () => {
-          if (!req.session?.loggedIn) return res.redirect(`${getPageGenerator().globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}`);
+          if (!req.session?.loggedIn) return res.redirect(`${getPageGenerator().globals.url.base}/login?return=${encodeURIComponent(stripLangKeyFromURL(req.originalUrl))}${typeof req.query['mcauth.username'] == 'string' ? `&username=${encodeURIComponent(req.query['mcauth.username'])}` : ''}`);
           if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
 
           const clientID = req.query.client_id,

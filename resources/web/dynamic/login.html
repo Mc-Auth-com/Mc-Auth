@@ -54,7 +54,9 @@
                       <span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span>
                     </div>
 
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                           <%2- typeof con.query['username'] === 'string' && /^[a-z0-9_-]+$/i.test(con.query['username']) ? `value="${con.query['username']}"` : '' -%2>
+                           required>
                   </div>
                 </div>
 
