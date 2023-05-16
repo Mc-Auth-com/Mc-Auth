@@ -70,7 +70,7 @@
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
-    "nodemailer": "^6.9.1",
+    "nodemailer": "^6.9.2",
     "pg": "^8.10.0",
     "rate-limiter-flexible": "^2.4.1",
     "rotating-file-stream": "^3.1.0",
