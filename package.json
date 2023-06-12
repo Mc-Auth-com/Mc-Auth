@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#12123e997e5b0ead09d93a09daa2a070181dddd4",
-    "connect-pg-simple": "^8.0.0",
+    "connect-pg-simple": "^9.0.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.9",
     "escape-html": "^1.0.3",
