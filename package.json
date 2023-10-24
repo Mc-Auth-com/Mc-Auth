@@ -45,9 +45,6 @@
     "test": "jest --coverage",
     "dev": "nodemon --ext ts,html,json,txt --watch ./src/ --watch ./resources/lang/ --watch ./resources/web/dynamic/ --watch ./resources/email/ --exec \"ts-node src/index.ts\"",
 
-    "snyk": "npm run build && snyk test",
-    "snyk:docker": "npm run docker:build:prod && snyk container test mc-auth-web:latest --file=Dockerfile",
-
     "docker:build": "docker build --rm .",
     "docker:build:prod": "npm run docker:build -- --target prod --tag mc-auth-web:latest",
     "docker:build:dev": "npm run docker:build -- --target dev --tag mc-auth-web:dev --build-arg BUILD_SCRIPT=\"build:dev\"",
@@ -92,7 +89,6 @@
     "@types/request": "^2.48.8",
     "jest": "^29.5.0",
     "nodemon": "^2.0.22",
-    "snyk": "^1.1186.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
