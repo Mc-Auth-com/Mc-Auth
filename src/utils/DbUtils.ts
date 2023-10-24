@@ -163,6 +163,7 @@ export class DbUtils {
 
       this.pool.connect((err, client, done) => {
         if (err) return reject(err);
+        if (!client) return reject(new Error('No client'));
 
         client.query('BEGIN', (err) => {
           if (this.shouldAbortTransaction(client, done, err)) return reject(err);

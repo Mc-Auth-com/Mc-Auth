@@ -1,5 +1,6 @@
 import express from 'express';
 import { RateLimiterMemory, RateLimiterRes } from 'rate-limiter-flexible';
+import { ApiError } from '../utils/ApiError';
 
 export function createRateLimiterMiddleware(points: number, durationInSeconds: number): (req: express.Request, res: express.Response, next: express.NextFunction) => void {
   const rateLimiter = new RateLimiterMemory({
@@ -9,6 +10,14 @@ export function createRateLimiterMiddleware(points: number, durationInSeconds: n
   });
 
   return (req, res, next) => {
+    if (req.ip == null) {
+      res.status(500)
+        .send('Internal Server Error');
+
+      ApiError.log(500, 'Unable to get IP address from request', true, null);
+      return;
+    }
+
     rateLimiter.consume(req.ip)
         .then((rateLimiterRes) => {
           setRateLimitHeader(res, points, rateLimiterRes);
