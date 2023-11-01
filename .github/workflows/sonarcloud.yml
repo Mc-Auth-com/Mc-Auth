@@ -19,7 +19,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         if: ${{ env.SONAR_TOKEN != null }}
         with:
           node-version: 18.x
