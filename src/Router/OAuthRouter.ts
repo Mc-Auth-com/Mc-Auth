@@ -33,13 +33,20 @@ export default class OAuthRouter {
                 return !!elem;
               });
 
+          function isParseableRedirectUriWithOrigin(uri: string): boolean {
+            try {
+              return new URL(uri).origin.length > 0;
+            } catch (ex) {
+              return false;
+            }
+          }
+
           /* Basic input validation */
           if (typeof clientID != 'string' || !StringUtils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
             typeof: typeof clientID,
             clientID
           }));
-          if (typeof redirectURI != 'string' ||
-              redirectURI.length == 0) return next(ApiError.create(ApiErrs.invalidQueryArg('redirect_uri'), {
+          if (typeof redirectURI != 'string' || redirectURI.length == 0 || !isParseableRedirectUriWithOrigin(redirectURI)) return next(ApiError.create(ApiErrs.invalidQueryArg('redirect_uri'), {
             typeof: typeof redirectURI,
             redirectURI
           }));
