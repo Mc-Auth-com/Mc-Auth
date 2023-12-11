@@ -9,7 +9,6 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "@types/*"
-      - dependency-name: "snyk"
 
   - package-ecosystem: "github-actions"
     directory: "/"
