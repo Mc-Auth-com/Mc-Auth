@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         if: ${{ env.SONAR_TOKEN != null }}
         with:
-          node-version: 18.x
+          node-version: 20.x
           cache: npm
 
       - name: Run Tests
