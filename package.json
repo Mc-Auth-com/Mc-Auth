@@ -55,7 +55,7 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
-    "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#3c5641d74fdd6e368d0132d2d2a681b312e31822",
+    "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#a6d4ba7891a78a3fa1d5c78d98884597bf67503b",
     "connect-pg-simple": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.9",
@@ -83,7 +83,7 @@
     "@types/jest": "^29.5.11",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^18.19.3",
+    "@types/node": "^18.19.4",
     "@types/nodemailer": "^6.4.14",
     "@types/pg": "^8.10.9",
     "@types/request": "^2.48.12",
