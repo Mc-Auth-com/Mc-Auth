@@ -69,7 +69,7 @@
     "node-cache": "^5.1.2",
     "nodemailer": "^6.9.8",
     "pg": "^8.11.3",
-    "rate-limiter-flexible": "^4.0.0",
+    "rate-limiter-flexible": "^4.0.1",
     "rotating-file-stream": "^3.2.1",
     "sharp": "^0.33.1"
   },
