@@ -24,7 +24,7 @@ FROM base as builder
 
 ARG BUILD_SCRIPT=build
 
-RUN npm ci
+RUN npm clean-install
 COPY --chown=node:node tsconfig.json ./tsconfig.json
 COPY --chown=node:node src/ ./src/
 RUN npm run $BUILD_SCRIPT
@@ -36,7 +36,7 @@ RUN npm run $BUILD_SCRIPT
 FROM base as dev
 
 # TODO: Check if volume mounts could be beneficial for development
-RUN npm ci
+RUN npm clean-install
 
 COPY --chown=node:node --from=builder /app/dist/ ./dist/
 COPY --chown=node:node resources/ ./resources/
@@ -54,7 +54,7 @@ HEALTHCHECK --interval=1m --timeout=30s --retries=3 \
             CMD wget --spider $(hostname):8080
 
 ENV NODE_ENV=production
-RUN npm ci && \
+RUN npm clean-install && \
     npm cache clean --force && \
     rm -Rf /home/node/.npm/
 

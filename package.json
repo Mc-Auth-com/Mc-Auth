@@ -45,9 +45,9 @@
     "test": "jest --coverage",
     "dev": "nodemon --ext ts,html,json,txt --watch ./src/ --watch ./resources/lang/ --watch ./resources/web/dynamic/ --watch ./resources/email/ --exec \"ts-node src/index.ts\"",
 
-    "docker:build": "docker build --rm .",
+    "docker:build": "docker build --pull --rm .",
     "docker:build:prod": "npm run docker:build -- --target prod --tag mc-auth-web:latest",
-    "docker:build:dev": "npm run docker:build -- --pull --target dev --tag mc-auth-web:dev --build-arg BUILD_SCRIPT=\"build:dev\"",
+    "docker:build:dev": "npm run docker:build --  --target dev  --tag mc-auth-web:dev --build-arg BUILD_SCRIPT=\"build:dev\"",
     "docker:dev": "npm run docker:build:dev && (docker stop mc-auth-web-dev;docker rm mc-auth-web-dev;echo '') && docker run --network host --name mc-auth-web-dev --cpus 2 --memory 256M --volume $(realpath ./storage/):/app/storage/ mc-auth-web:dev"
   },
   "engines": {
