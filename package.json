@@ -74,7 +74,7 @@
     "sharp": "^0.33.2"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.2",
+    "@tsconfig/node20": "^20.1.4",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.7",
     "@types/ejs": "^3.1.5",
