@@ -60,21 +60,21 @@
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.9",
     "escape-html": "^1.0.3",
-    "express": "^4.18.3",
+    "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
     "minecraft-api-client": "github:SpraxDev/Node-Minecraft-API-Client#21ae7d33752ff6839be2b38c7735fde33552cff5",
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
-    "nodemailer": "^6.9.12",
-    "pg": "^8.11.3",
+    "nodemailer": "^6.9.13",
+    "pg": "^8.11.5",
     "rate-limiter-flexible": "^5.0.0",
     "rotating-file-stream": "^3.2.1",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.3"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.2",
+    "@tsconfig/node20": "^20.1.4",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.7",
     "@types/ejs": "^3.1.5",
@@ -83,7 +83,7 @@
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^20.11.27",
+    "@types/node": "^20.12.3",
     "@types/nodemailer": "^6.4.14",
     "@types/pg": "^8.11.2",
     "@types/request": "^2.48.12",
@@ -91,6 +91,6 @@
     "nodemon": "^3.1.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   }
 }
