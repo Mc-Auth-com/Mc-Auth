@@ -58,7 +58,7 @@
     "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#b29223e6d0f48e7c217f628d818251cbfeb62342",
     "connect-pg-simple": "^9.0.1",
     "cookie-parser": "^1.4.6",
-    "ejs": "^3.1.9",
+    "ejs": "^3.1.10",
     "escape-html": "^1.0.3",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
