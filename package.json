@@ -71,7 +71,7 @@
     "pg": "^8.11.5",
     "rate-limiter-flexible": "^5.0.0",
     "rotating-file-stream": "^3.2.1",
-    "sharp": "^0.33.3"
+    "sharp": "^0.33.4"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.4",
