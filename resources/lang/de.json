@@ -61,14 +61,6 @@
     "comment": ""
   },
   {
-    "term": "html.authorize.always_ask_for_app",
-    "definition": "Bei dieser App jedes Mal nachfragen",
-    "context": "",
-    "term_plural": "",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "html.authorize.will_redirect_to",
     "definition": "Du wirst umgeleitet auf",
     "context": "",

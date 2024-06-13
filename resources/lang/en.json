@@ -69,14 +69,6 @@
     "comment": ""
   },
   {
-    "term": "html.authorize.always_ask_for_app",
-    "definition": "Always ask for this application",
-    "context": "",
-    "term_plural": "",
-    "reference": "",
-    "comment": ""
-  },
-  {
     "term": "html.authorize.will_redirect_to",
     "definition": "You will be redirected to",
     "context": "",
