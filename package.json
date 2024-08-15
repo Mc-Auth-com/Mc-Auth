@@ -51,7 +51,7 @@
     "docker:dev": "npm run docker:build:dev && (docker stop mc-auth-web-dev;docker rm mc-auth-web-dev;echo '') && docker run --network host --name mc-auth-web-dev --cpus 2 --memory 256M --volume $(realpath ./storage/):/app/storage/ mc-auth-web:dev"
   },
   "engines": {
-    "node": ">=20.0.0",
+    "node": ">=22.0.0",
     "npm": ">=10.0.0"
   },
   "dependencies": {
@@ -74,7 +74,7 @@
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^20.1.4",
+    "@tsconfig/node22": "^22.0.0",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.7",
     "@types/ejs": "^3.1.5",
@@ -83,7 +83,7 @@
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^20.14.15",
+    "@types/node": "^22.3.0",
     "@types/nodemailer": "^6.4.15",
     "@types/pg": "^8.11.6",
     "@types/request": "^2.48.12",

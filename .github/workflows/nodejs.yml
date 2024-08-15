@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 20.x, 21.x ]  # Oldest 'Active' version: https://nodejs.org/en/about/previous-releases#release-schedule
+        node-version: [ 22.x ]  # Oldest 'Active' version: https://nodejs.org/en/about/previous-releases#release-schedule
 
     steps:
       - uses: actions/checkout@v4
