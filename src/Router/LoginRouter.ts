@@ -33,7 +33,7 @@ export default class LoginRouter {
 
                 const success = profile != null && await db.invalidateOneTimePassword(profile.id, otp as string);
 
-                if (!success) return next(new ApiError(400, 'Username or One-Time-Passwort do not match', false, {
+                if (!success) return next(new ApiError(400, 'Username or One-Time-Password do not match', false, {
                   username,
                   otp,
                   keepLoggedIn,
