@@ -276,6 +276,43 @@ export default class OAuthRouter {
       });
     });
 
+    router.all('/alternate-code-exchange', (req, res, next) => {
+      const supportedBodyContentTypes = ['application/json', 'application/x-www-form-urlencoded'];
+
+      handleRequestRestfully(req, res, next, {
+        post: () => {
+          if (!req.is(supportedBodyContentTypes)) {
+            return next(ApiError.create(ApiErrs.unsupportedBodyContentType(req.header('Content-Type') ?? '', supportedBodyContentTypes)));
+          }
+
+          const clientID = req.body['client_id'],
+            clientSecret = req.body['client_secret'],
+            mcId = req.body['mc_id'],
+            code = req.body['code'];
+
+          if (!clientID || !clientSecret || !mcId) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
+          if (typeof mcId !== 'string' || mcId.replaceAll('-', '').length != 32) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
+          if (typeof code !== 'string' || code.replaceAll(' ', '').length != 7 || !StringUtils.isNumeric(code.replaceAll(' ', '').substring(1))) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
+
+          db.getApp(clientID)
+            .then((app) => {
+              if (!app || app.deleted || app.secret != clientSecret) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
+
+              return db.invalidateAlternateOneTimePassword(mcId.replaceAll('-', ''), code.replaceAll(' ', '').charAt(0), code.replaceAll(' ', '').substring(1))
+                .then(async (success) => {
+                  if (!success) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
+
+                  return res.send({
+                    _info: 'WARNING: This endpoint is subject to change in the future. This response will contain a "_warning" field (please add logging for it or join my Discord server https://sprax.me/discord for a notification).',
+                    profile: await getMinecraftApi().getProfile(mcId)
+                  });
+                });
+            })
+            .catch(next);
+        }
+      });
+    });
+
     return router;
   }
 }

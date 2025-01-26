@@ -267,6 +267,18 @@ export class DbUtils {
     });
   }
 
+  async invalidateAlternateOneTimePassword(mcUUID: string, otpPrefix: string, otp: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (this.pool == null) return reject(ApiError.create(ApiErrs.NO_DATABASE, {pool: this.pool}));
+
+      this.pool.query(`DELETE FROM alternate_otps WHERE account =$1 AND code_prefix =$2 AND code =$3 AND issued >= CURRENT_TIMESTAMP - INTERVAL '5 MINUTES' RETURNING *;`, [mcUUID, otpPrefix, otp], (err, res) => {
+        if (err) return reject(err);
+
+        resolve(res.rows.length > 0);
+      });
+    });
+  }
+
   /* Grants */
 
   async createGrant(clientID: string, mcUUID: string, redirectURI: string, responseType: string, state: string | null, scopes: string[]): Promise<Grant> {

@@ -17,6 +17,7 @@ export default class ApiErrs {
   static readonly INVALID_REDIRECT_URI_FOR_APP: ApiErrTemplate = { httpCode: 400, message: 'Invalid redirect_uri - Please contact the administrator of the page that sent you here', logErr: false };
   static readonly INVALID_GRANT_TYPE: ApiErrTemplate = { httpCode: 400, message: 'Invalid grant_type', logErr: false };
   static readonly INVALID_CODE_FOR_TOKEN_EXCHANGE: ApiErrTemplate = { httpCode: 400, message: 'Invalid code! expired? Wrong redirect_uri?', logErr: false };
+  static readonly INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE: ApiErrTemplate = { httpCode: 400, message: 'Invalid code! maybe expired?', logErr: false };
 
   static readonly INVALID_OR_EXPIRED_MAIL_CONFIRMATION: ApiErrTemplate = { httpCode: 400, message: 'Invalid or expired email confirmation token', logErr: false };
 

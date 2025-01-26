@@ -181,6 +181,17 @@ CREATE TABLE "public"."otps" (
 COMMENT ON TABLE "public"."otps" IS 'OTPs or One-Time-Passwords';
 
 -- ----------------------------
+-- Table structure for alternate_otps
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."alternate_otps";
+CREATE TABLE "public"."alternate_otps" (
+  "account" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
+  "code_prefix" varchar(1) COLLATE "pg_catalog"."default" NOT NULL,
+  "code" int4 NOT NULL,
+  "issued" timestamptz(0) DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ----------------------------
 -- Table structure for sessions
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."sessions";
@@ -246,6 +257,11 @@ ALTER TABLE "public"."icons" ADD CONSTRAINT "images_pkey" PRIMARY KEY ("id");
 -- Primary Key structure for table otps
 -- ----------------------------
 ALTER TABLE "public"."otps" ADD CONSTRAINT "otps_pkey" PRIMARY KEY ("account");
+
+-- ----------------------------
+-- Primary Key structure for table alternate_otps
+-- ----------------------------
+ALTER TABLE "public"."alternate_otps" ADD CONSTRAINT "alternate_otps_pkey" PRIMARY KEY ("account");
 
 -- ----------------------------
 -- Indexes structure for table sessions
