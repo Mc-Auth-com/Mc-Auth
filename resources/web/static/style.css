@@ -35,6 +35,10 @@ main {
     background-color: #f8f9fa;
 }
 
+.appCard code {
+    word-break: keep-all;
+}
+
 .row .w-100 {
     margin-top: 2vh;
 }
