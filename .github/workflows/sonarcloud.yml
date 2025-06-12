@@ -30,7 +30,7 @@ jobs:
         run: npm ci && npm run test
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@master
         if: ${{ env.SONAR_TOKEN != null }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
