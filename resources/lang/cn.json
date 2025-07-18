@@ -1,7 +1,7 @@
 [
   {
     "term": "meta.language_switch.label",
-    "definition": "简体中文 (中国)",
+    "definition": "简体中文 (Simplified Chinese)",
     "context": "Syntax: 'name of language in own language' ('name of language in english')"
   },
   {
