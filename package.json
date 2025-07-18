@@ -1,6 +1,6 @@
 {
   "name": "mc-auth-web",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "private": true,
   "description": "Easily login with your Minecraft account without giving your password or email to strangers! Fully oAuth2 compliant!",
   "homepage": "https://mc-auth.com",
