@@ -1,0 +1,759 @@
+[
+  {
+    "term": "meta.language_switch.label",
+    "definition": "简体中文 (Simplified Chinese)",
+    "context": "Syntax: 'name of language in own language' ('name of language in english')"
+  },
+  {
+    "term": "html.authorize.app_created_on",
+    "definition": "创建于",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_logo",
+    "definition": "应用图标",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_created_by",
+    "definition": "由 {0} 创建",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_creation_time",
+    "definition": "创建于 {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.app_wants_access_to",
+    "definition": "授权后<strong>{0}</strong>将获取以下权限:",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.authorizing_app",
+    "definition": "正在授权至 {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.login_request_from_app",
+    "definition": "<strong>{0}</strong> 想要获取你的Minecraft授权",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.no_app_description",
+    "definition": "<em>应用开发者未提供描述</em>",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.will_redirect_to",
+    "definition": "授权后，你将跳转至",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.scope.profile",
+    "definition": "公开的账号信息",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.scope.profile.note",
+    "definition": "获得你的公开信息（用户名、皮肤、UUID等）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.authorize.your_minecraft_skin",
+    "definition": "你的皮肤",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.support_me_on_ko_fi",
+    "definition": "在Ko&#8209;fi赞助我！",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.legal_data_protection",
+    "definition": "隐私政策",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.legal_info",
+    "definition": "用户协议",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.footer.support_on_discord",
+    "definition": "在我们的Discord频道获取支持",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.logged_in_as",
+    "definition": "登录到{0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.open_language_selection",
+    "definition": "打开语言选择菜单",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.toggle_dark_theme",
+    "definition": "选择深夜和白天模式",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.header.your_minecraft_face",
+    "definition": "我的MC头像",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.content1",
+    "definition": "你是网页开发者吗？欢迎阅读文档 {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.content2",
+    "definition": "试试我们的Demo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step1",
+    "definition": "访问 {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step2",
+    "definition": "输入你的Minecraft用户名",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step3",
+    "definition": "打开Minecraft并加入{0}服务器",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step4",
+    "definition": "记下服务器返回给你的6位数验证码（家常便饭）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.step5",
+    "definition": "在网页中输入6位验证码以验证你的账号",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.how.title",
+    "definition": "他是如何工作的？",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.used_by",
+    "definition": "Mc-Auth.com的活跃用户：",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.what_is.content1",
+    "definition": "Mc-Auth.com 旨在向用户提供无需提供密码的Minecraft登录验证<br>向网页开发者提供更方便安全可信的登录验证方法",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.what_is.content2",
+    "definition": "通过使用 Mc-Auth.com 让您的网站 “Minecraft登录授权” 更加安全可靠！",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.index.what_is.title",
+    "definition": "Mc-Auth.com是什么？",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.already_logged_in",
+    "definition": "你已登录",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.click_to_copy_minecraft_host_to_clipboard",
+    "definition": "点击复制服务器IP至你的剪贴板",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.kicked_with_code",
+    "definition": "服务器会移除你并向你返回6位数验证码",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.six_digit_code",
+    "definition": "6位验证码",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.start_minecraft_and_connect",
+    "definition": "打开 Minecraft 加入服务器： {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.stay_logged_in",
+    "definition": "保持登录状态",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.login.your_minecraft_name",
+    "definition": "你的Minecraft用户名（玩家名）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.click_image_above_to_upload",
+    "definition": "点击图片切换它",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.click_to_show",
+    "definition": "点击取消隐藏",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.create_app",
+    "definition": "创建新的应用",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.manage_app",
+    "definition": "管理应用",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.max_length_128_characters",
+    "definition": "最多128字符",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.max_length_512_characters",
+    "definition": "最多512字符",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.please_provide_exact_info",
+    "definition": "这些信息将在授权页面向用户公开披露，请不要填入敏感内容",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.redirect_uris",
+    "definition": "重定向链接配置URIs (一行一个，区分大小写)",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.return_to_settings",
+    "definition": "返回应用配置",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.you_do_not_have_any_apps",
+    "definition": "你还没有创建应用，快去创建一个吧",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.your_applications_title",
+    "definition": "我的应用",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.login_using_mc_auth",
+    "definition": "使用 Mc-Auth.com 登录",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_logged_in",
+    "definition": "你已成功登录Demo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are_not_logged_in",
+    "definition": "你 <strong>并没有</strong> 成功登录Demo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.demo.you_are",
+    "definition": "你是：",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error",
+    "definition": "出错",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.error_description",
+    "definition": "描述出错",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.agree",
+    "definition": "同意",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.website",
+    "definition": "网站",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.create",
+    "definition": "创建",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.deny",
+    "definition": "拒绝",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.description",
+    "definition": "描述",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.documentation",
+    "definition": "文档",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.frontpage",
+    "definition": "主页",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.login",
+    "definition": "登录",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.logo",
+    "definition": "图标Logo",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.logout",
+    "definition": "退出登录",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.manage",
+    "definition": "管理",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.name",
+    "definition": "应用程序名",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.next",
+    "definition": "下一步",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.save_changes",
+    "definition": "保存更改",
+    "context": "Text should be placed on a button",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.settings",
+    "definition": "账户配置",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_settings",
+    "definition": "账户",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.notifications",
+    "definition": "通知公告",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.account_security",
+    "definition": "账户安全",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.developer_settings",
+    "definition": "应用配置（开发者）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.oauth_apps",
+    "definition": "oAuth应用",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.your_oauth_apps",
+    "definition": "我的oAuth应用",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.editing_app",
+    "definition": "正在编辑 {0}",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.username",
+    "definition": "用户名",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "words.email_address",
+    "definition": "邮箱Email",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.name_info",
+    "definition": "这与你的 Minecraft 用户名一致 \n<br>\n 更多信息详见 {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_info",
+    "definition": "输入邮箱可以提高你的账户在 <em>Mc-Auth.com</em> 中的安全性 \n<br>\n 更多内容详见 {0}.",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.form.email_pending",
+    "definition": "我们已将验证邮件发送至 {0} ，<br>请打开邮箱确认验证邮件",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account",
+    "definition": "注销账号（Delete）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_app",
+    "definition": "注销应用（Delete）",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.delete_account_warning",
+    "definition": "<strong>这将永久注销你在 <em>Mc-Auth.com</em> 的账户 — 这不会影响到你在Minecraft中的账户 </strong>\n<br>\n<br>\n\n此过程需人工审核，大约需要 <em>7天</em>.\n<br>\n如果你填入了邮件地址，注销后我们会向你发送通知",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "html.settings.confirm_regenerate_secret",
+    "definition": "确认生成新的 client_secret 吗？旧的将失效",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.subject",
+    "definition": "确认你的邮件地址",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.greeting",
+    "definition": "你好！{0}：",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.please_confirm",
+    "definition": "请确认你在 Mc-Auth.com 注册的账户",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.signature",
+    "definition": "— 来自 Mc-Auth.com",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.button_label",
+    "definition": "确认邮件地址",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.report_abuse",
+    "definition": "，如果不是你在操作，请忽略邮件，不要点击按钮",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  },
+  {
+    "term": "email.confirm_email.follow_on_twitter",
+    "definition": "X 已有 {0} 关注",
+    "context": "",
+    "term_plural": "",
+    "reference": "",
+    "comment": ""
+  }
+]
