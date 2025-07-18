@@ -49,10 +49,6 @@ CMD ["node", "--enable-source-maps", "dist/index.js"]
 ##
 FROM base AS prod
 
-# TODO: This heavily relies on hostname being set and the default port 8080 being used
-HEALTHCHECK --interval=1m --timeout=30s --retries=3 \
-            CMD wget --spider $(hostname):8080
-
 ENV NODE_ENV=production
 RUN npm clean-install && \
     npm cache clean --force && \
