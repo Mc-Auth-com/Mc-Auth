@@ -206,7 +206,7 @@
   },
   {
     "term": "html.index.how.step4",
-    "definition": "记下服务器返回给你的6位数验证码（家常便饭）",
+    "definition": "记下服务器返回给你的6位数验证码",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -222,7 +222,7 @@
   },
   {
     "term": "html.index.how.title",
-    "definition": "他是如何工作的？",
+    "definition": "它是如何工作的？",
     "context": "",
     "term_plural": "",
     "reference": "",
@@ -446,7 +446,7 @@
   },
   {
     "term": "words.error_description",
-    "definition": "描述出错",
+    "definition": "错误详情",
     "context": "",
     "term_plural": "",
     "reference": "",
