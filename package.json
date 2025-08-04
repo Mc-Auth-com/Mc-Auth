@@ -87,7 +87,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.15.4",
     "@types/request": "^2.48.12",
-    "jest": "^30.0.4",
+    "jest": "^30.0.5",
     "nodemon": "^3.1.10",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
