@@ -1,4 +1,4 @@
-import StringValidators from '@spraxdev/node-commons/dist/strings/StringValidators';
+import {StringValidators} from '@spraxdev/node-commons';
 import { Router } from 'express';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
@@ -6,7 +6,7 @@ import { db, mailer } from '../../index';
 import {  stripLangKeyFromURL } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 export default class AccountSettingsRoutes {
   static addRoutes(router: Router): void {
@@ -29,7 +29,7 @@ export default class AccountSettingsRoutes {
         post: () => {
           if (req.body.updateMail == '1' && req.body.mailAddr) {
             if (!req.session?.mcProfile?.id) return next(ApiError.create(ApiErrs.INTERNAL_SERVER_ERROR, {'req.session?.mcProfile?.id': req.session?.mcProfile?.id}));
-            if (!StringValidators.looksLikeValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, {body: req.body.mailAddr}));
+            if (!StringValidators.default.looksLikeValidEmail(req.body.mailAddr)) return next(new ApiError(400, 'Invalid email address', true, {body: req.body.mailAddr}));
 
             db.getAccount(req.session?.mcProfile?.id)
                 .then((account) => {

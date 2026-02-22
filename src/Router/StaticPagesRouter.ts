@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../utils/old-node-commons/RestfulRequestHandler';
 
 const pages: { [key: string]: PageTemplate } = {
   '/': PageTemplate.INDEX,

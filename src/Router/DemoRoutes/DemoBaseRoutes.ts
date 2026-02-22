@@ -1,9 +1,9 @@
-import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { CookieOptions, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { getPartOfSecret } from '../../utils/_old_utils';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 // FIXME: Heavily refactor this class
 export default class DemoBaseRoutes {

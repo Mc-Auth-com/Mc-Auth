@@ -1,4 +1,3 @@
-import ConfigFile from '@spraxdev/node-commons/dist/ConfigFile';
 import Fs from 'fs';
 import { createServer, Server } from 'http';
 import Path from 'path';
@@ -8,6 +7,7 @@ import { mcAuthDbCfg } from './global';
 import { ApiError } from './utils/ApiError';
 import { DbUtils } from './utils/DbUtils';
 import { MailUtils } from './utils/MailUtils';
+import ConfigFile from './utils/old-node-commons/ConfigFile';
 import WebServer from './WebServer';
 
 export let dbCfg: ConfigFile<mcAuthDbCfg>;

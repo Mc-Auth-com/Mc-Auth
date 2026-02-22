@@ -56,7 +56,7 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
-    "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#b29223e6d0f48e7c217f628d818251cbfeb62342",
+    "@spraxdev/node-commons": "github:SpraxDev/Node-Commons#e2a639c558b7d59c032b02c5884c774154639add",
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
     "ejs": "^4.0.1",
@@ -64,7 +64,7 @@
     "express": "^4.22.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
-    "minecraft-api-client": "github:SpraxDev/Node-Minecraft-API-Client#21ae7d33752ff6839be2b38c7735fde33552cff5",
+    "minecraft-api-client": "github:SpraxDev/Node-Minecraft-API-Client#d634d9f778fa403219e848c75aa8c469412e9635",
     "moment": "^2.30.1",
     "morgan": "^1.10.1",
     "node-cache": "^5.1.2",

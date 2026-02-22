@@ -1,4 +1,4 @@
-import StringValidators from '@spraxdev/node-commons/dist/strings/StringValidators';
+import {StringValidators} from '@spraxdev/node-commons';
 import { Router } from 'express';
 import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
@@ -7,7 +7,7 @@ import { stripLangKeyFromURL } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
 import Utils from '../../utils/Utils';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 export default class AppCreateRoutes {
   static addRoutes(router: Router): void {
@@ -34,7 +34,7 @@ export default class AppCreateRoutes {
 
           if (typeof appWebsite != 'string' || appWebsite.trim().length == 0) return next(new ApiError(400, 'Missing application website', false, {body: req.body}));
           if (Utils.normalizeWhitespaceChars(appWebsite).length > 512) return next(new ApiError(400, 'Application website exceeds 512 characters', false, {body: req.body}));
-          if (!StringValidators.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
+          if (!StringValidators.default.looksLikeHttpUrl(Utils.normalizeWhitespaceChars(appWebsite))) return next(new ApiError(400, 'Application website is not a valid URL', false, {body: req.body}));
 
           if (typeof appDesc != 'string') return next(new ApiError(400, 'Invalid application description', false, {body: req.body}));
           if (Utils.normalizeWhitespaceChars(appDesc).length > 512) return next(new ApiError(400, 'Application description exceeds 512 characters', false, {body: req.body}));
@@ -43,7 +43,10 @@ export default class AppCreateRoutes {
 
           const reCaptchaBody = `secret=${encodeURIComponent(getCfg().data.reCAPTCHA.private)}&response=${encodeURIComponent(captcha)}`;
           getHttpClient()
-              .post('https://www.google.com/recaptcha/api/siteverify', {'Content-Type': 'application/x-www-form-urlencoded'}, reCaptchaBody)
+            .post('https://www.google.com/recaptcha/api/siteverify', {
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              body: reCaptchaBody
+            })
               .then((httpRes) => {
                 const recaptchaResponse = JSON.parse(httpRes.body.toString('utf-8'));
                 if (recaptchaResponse.success != true) {

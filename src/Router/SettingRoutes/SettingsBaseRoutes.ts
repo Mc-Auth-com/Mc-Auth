@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getPageGenerator } from '../../Constants';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 export default class SettingsBaseRoutes {
   static addRoutes(router: Router): void {

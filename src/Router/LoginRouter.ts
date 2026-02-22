@@ -1,11 +1,11 @@
-import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
+import {StringUtils} from '@spraxdev/node-commons';
 import { Router } from 'express';
 import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
 import { db } from '../index';
 import { getReturnURL } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../utils/old-node-commons/RestfulRequestHandler';
 
 export default class LoginRouter {
   static createRouter(): Router {
@@ -25,7 +25,7 @@ export default class LoginRouter {
           let otp: string | undefined = req.body.otp; // valid otp may have up to 1 space: '### ###'
 
           if (typeof username != 'string' || username.length > 16) return next(new ApiError(401, 'You have to provide a valid username', false, {body: req.body}));
-          if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !StringUtils.isNumeric(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, {body: req.body}));
+          if (typeof otp != 'string' || (otp = otp.replace(/ /, '')).length != 6 || !StringUtils.default.isNumeric(otp)) return next(new ApiError(401, 'Invalid One-Time-Password', false, {body: req.body}));
 
           getMinecraftApi().getProfile(username)
               .then(async (profile: any /* FIXME: type */): Promise<void> => {

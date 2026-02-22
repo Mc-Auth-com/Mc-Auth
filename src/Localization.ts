@@ -1,10 +1,10 @@
 // TODO: Think of a new file structure for en.json. It needs to be easily translatable and contain info like 'de', 'de_DE', 'Deutsch'
-import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
-import { readdirSync, readFileSync, statSync } from 'fs';
-import moment, { Moment } from 'moment';
-import { join as joinPath } from 'path';
+import {StringUtils} from '@spraxdev/node-commons';
+import {readdirSync, readFileSync, statSync} from 'fs';
+import moment, {Moment} from 'moment';
+import {join as joinPath} from 'path';
 
-import { ApiError } from './utils/ApiError';
+import {ApiError} from './utils/ApiError';
 
 let loc: Localization | null = null;
 
@@ -111,7 +111,7 @@ export function getLocalization(): Localization {
             }
           }
 
-          tempLoc[langKey][langElem.term] = StringUtils.format(langElem.definition, langArgs);
+          tempLoc[langKey][langElem.term] = StringUtils.default.format(langElem.definition, langArgs);
         }
 
         if (duplicateTerms.length > 0) {

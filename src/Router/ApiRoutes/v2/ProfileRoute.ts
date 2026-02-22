@@ -1,9 +1,9 @@
-import { handleRequestRestfully } from '@spraxdev/node-commons';
 import Express from 'express';
 import { getMinecraftApi } from '../../../Constants';
 import { Grant } from '../../../global';
 import { ApiError } from '../../../utils/ApiError';
 import ApiErrs from '../../../utils/ApiErrs';
+import handleRequestRestfully from '../../../utils/old-node-commons/RestfulRequestHandler';
 
 export default function handleProfileRequest(req: Express.Request, res: Express.Response, next: Express.NextFunction): void {
   handleRequestRestfully(req, res, next, {

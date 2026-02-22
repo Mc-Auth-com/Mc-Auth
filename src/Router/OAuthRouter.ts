@@ -1,4 +1,4 @@
-import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
+import {StringUtils} from '@spraxdev/node-commons';
 import { Router } from 'express';
 import { getMinecraftApi, getPageGenerator } from '../Constants';
 import { PageTemplate } from '../DynamicPageGenerator';
@@ -6,7 +6,7 @@ import { db } from '../index';
 import { appendParamsToURL, stripLangKeyFromURL, stripParamsFromURL } from '../utils/_old_utils';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../utils/old-node-commons/RestfulRequestHandler';
 
 // TODO Add rate limiting
 //  No confirmed mail: 5/second (burst, status 429), 100/hour (status 429)
@@ -42,7 +42,7 @@ export default class OAuthRouter {
           }
 
           /* Basic input validation */
-          if (typeof clientID != 'string' || !StringUtils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
+          if (typeof clientID != 'string' || !StringUtils.default.isNumeric(clientID)) return next(ApiError.create(ApiErrs.invalidQueryArg('client_id'), {
             typeof: typeof clientID,
             clientID
           }));
@@ -116,8 +116,8 @@ export default class OAuthRouter {
               agreed = req.body.result == '1';
 
           /* Basic input validation */
-          if (typeof grantID != 'string' || !StringUtils.isNumeric(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
-          if (typeof clientID != 'string' || !StringUtils.isNumeric(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
+          if (typeof grantID != 'string' || !StringUtils.default.isNumeric(grantID)) return next(new ApiError(400, 'Invalid body parameter: authenticity_token', false, {body: req.body}));
+          if (typeof clientID != 'string' || !StringUtils.default.isNumeric(clientID)) return next(new ApiError(400, 'Invalid body parameter: client_id', false, {body: req.body}));
           if (typeof state != 'string' && state != null) return next(new ApiError(400, 'Invalid body parameter: state', false, {body: req.body}));
           if (typeof req.body.result != 'string') return next(new ApiError(400, 'Invalid body parameter: result', false, {body: req.body}));
           // Done with basic validation
@@ -234,7 +234,7 @@ export default class OAuthRouter {
               redirectURI = req.body['redirect_uri'],
               grantType = req.body['grant_type'];
 
-          if (!clientID || !clientSecret || !StringUtils.isNumeric(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
+          if (!clientID || !clientSecret || !StringUtils.default.isNumeric(clientID)) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
 
           db.getApp(clientID)
               .then((app) => {
@@ -292,7 +292,7 @@ export default class OAuthRouter {
 
           if (!clientID || !clientSecret || !mcId) return next(ApiError.create(ApiErrs.INVALID_CLIENT_ID_OR_SECRET));
           if (typeof mcId !== 'string' || mcId.replaceAll('-', '').length != 32) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
-          if (typeof code !== 'string' || code.replaceAll(' ', '').length != 7 || !StringUtils.isNumeric(code.replaceAll(' ', '').substring(1))) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
+          if (typeof code !== 'string' || code.replaceAll(' ', '').length != 7 || !StringUtils.default.isNumeric(code.replaceAll(' ', '').substring(1))) return next(ApiError.create(ApiErrs.INVALID_CODE_FOR_ALTERNATE_TOKEN_EXCHANGE));
 
           db.getApp(clientID)
             .then((app) => {

@@ -1,13 +1,13 @@
-import StringUtils from '@spraxdev/node-commons/dist/strings/StringUtils';
+import { StringUtils } from '@spraxdev/node-commons';
 import { Router } from 'express';
 import { readFileSync } from 'fs';
 import { join as joinPath } from 'path';
 import sharp from 'sharp';
 import { getPageGenerator } from '../Constants';
 import { db } from '../index';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { ApiError } from '../utils/ApiError';
 import ApiErrs from '../utils/ApiErrs';
+import handleRequestRestfully from '../utils/old-node-commons/RestfulRequestHandler';
 
 export default class UploadsRouter {
   static createAuthorizedRouter(): Router {
@@ -68,7 +68,7 @@ export default class UploadsRouter {
 
           let status = 200;
 
-          if (StringUtils.isNumeric(fileID)) {
+          if (StringUtils.default.isNumeric(fileID)) {
             const file = await db.getOptimizedIconBuffer(fileID);
 
             if (file != null && file.length != 0) {

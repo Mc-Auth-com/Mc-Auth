@@ -1,5 +1,5 @@
-import { generateUserAgent, getCfg, getHttpClient } from '../Constants';
-import { ApiErrTemplate } from './ApiErrs';
+import {generateUserAgent, getCfg, getHttpClient} from '../Constants';
+import {ApiErrTemplate} from './ApiErrs';
 
 export class ApiError extends Error {
   private static webhookRequestsLeft: number = 10;
@@ -18,7 +18,7 @@ export class ApiError extends Error {
     this.internalDetails = internalDetails;
 
     ApiError.log(this.httpCode, this.message, logErr, this.internalDetails, this.stack)
-        .catch(console.error);
+      .catch(console.error);
   }
 
   static fromError(err: Error, httpCode: number = 500, logErr: boolean | 'console' | 'discord' = true, internalDetails: object | null = null): ApiError {
@@ -55,39 +55,42 @@ export class ApiError extends Error {
         const cfg = getCfg().data;
         if (ApiError.webhookRequestsLeft > 0 && cfg && cfg.logging.discordErrorWebHookURL) {
           getHttpClient().post(cfg.logging.discordErrorWebHookURL, {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            'User-Agent': generateUserAgent()
-          }, {
-            username: 'Mc-Auth.org (Error-Reporter)',
-            avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
-            embeds: [
-              {
-                title: 'An error occurred',
-                fields: [
-                  {
-                    name: 'HTTP-Code',
-                    value: httpCode,
-                    inline: true
-                  },
-                  {
-                    name: 'Message',
-                    value: message,
-                    inline: true
-                  },
-                  {
-                    name: 'Details',
-                    value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
-                  }
-                ]
-              }
-            ]
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              'User-Agent': generateUserAgent()
+            },
+            body: JSON.stringify({
+              username: 'Mc-Auth.org (Error-Reporter)',
+              avatar_url: 'https://cdn.discordapp.com/attachments/541917740135350272/743868648611119204/Mc-Auth-4096px.png',
+              embeds: [
+                {
+                  title: 'An error occurred',
+                  fields: [
+                    {
+                      name: 'HTTP-Code',
+                      value: httpCode,
+                      inline: true
+                    },
+                    {
+                      name: 'Message',
+                      value: message,
+                      inline: true
+                    },
+                    {
+                      name: 'Details',
+                      value: internalDetails ? '```JS\n' + JSON.stringify(internalDetails, null, 2).replace(/\\r?\\n/g, '\n') + '\n```' : '-'
+                    }
+                  ]
+                }
+              ]
+            })
           })
-              .then((httpRes) => {
-                // TODO: write to 'webhookRequestsLeft' and use setTimeout() to automatically set it when RateLimit is over (https://discord.com/developers/docs/topics/rate-limits#header-format)
-                console.log(`Discord WebHook (${httpRes.statusCode}):`, httpRes.text); // TODO: remove debug
-              })
-              .catch((err) => console.error('Discord WebHook err:', err));
+            .then((httpRes) => {
+              // TODO: write to 'webhookRequestsLeft' and use setTimeout() to automatically set it when RateLimit is over (https://discord.com/developers/docs/topics/rate-limits#header-format)
+              console.log(`Discord WebHook (${httpRes.statusCode}):`, httpRes.parseBodyAsText()); // TODO: remove debug
+            })
+            .catch((err) => console.error('Discord WebHook err:', err));
         }
       }
     });

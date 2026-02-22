@@ -1,10 +1,10 @@
-import { handleRequestRestfully } from '@spraxdev/node-commons';
 import { CookieOptions, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { getCfg, getHttpClient, getPageGenerator } from '../../Constants';
 import { getPartOfSecret } from '../../utils/_old_utils';
 import { ApiError } from '../../utils/ApiError';
 import ApiErrs from '../../utils/ApiErrs';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 // FIXME: Heavily refactor this class
 export default class DemoAuthorizationRoutes {
@@ -48,7 +48,7 @@ export default class DemoAuthorizationRoutes {
               grant_type: 'authorization_code'  // REQUIRED. See oAuth2 specs
             };
 
-            getHttpClient().post(exchangeReqURL, requestHeaders, requestBody)
+            getHttpClient().post(exchangeReqURL, {headers: requestHeaders, body: JSON.stringify(requestBody)})
                 .then((httpRes) => {
                   const responseBody = JSON.parse(httpRes.body.toString('utf-8'));
 
@@ -59,12 +59,14 @@ export default class DemoAuthorizationRoutes {
 
                   // fetch the Minecraft profile
                   getHttpClient().get(getPageGenerator().globals.url.base + '/api/v2/profile', {
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${responseBody.access_token}`
+                    headers: {
+                      Accept: 'application/json',
+                      Authorization: `Bearer ${responseBody.access_token}`
+                    }
                   })
                       .then((profileResponse) => {
                         if (!profileResponse.ok) {
-                          throw new Error('Could not fetch profile, status code: ' + profileResponse.status);
+                          throw new Error('Could not fetch profile, status code: ' + profileResponse.statusCode);
                         }
 
                         const profile = JSON.parse(profileResponse.body.toString('utf-8'));

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { getPageGenerator } from '../../Constants';
 import { PageTemplate } from '../../DynamicPageGenerator';
 import { stripLangKeyFromURL } from '../../utils/_old_utils';
-import { handleRequestRestfully } from '@spraxdev/node-commons';
+import handleRequestRestfully from '../../utils/old-node-commons/RestfulRequestHandler';
 
 export default class SecuritySettingRoutes {
   static addRoutes(router: Router): void {

@@ -1,5 +1,4 @@
-import ConfigFile from '@spraxdev/node-commons/dist/ConfigFile';
-import HttpClient from '@spraxdev/node-commons/dist/HttpClient';
+import {type HttpClient, UndiciHttpClient, UserAgentGenerator} from '@spraxdev/node-commons/http';
 import Fs from 'fs';
 import MinecraftApi from 'minecraft-api-client';
 import Path from 'path';
@@ -7,6 +6,7 @@ import { DynamicMailGenerator } from './DynamicMailGenerator';
 import { DynamicPageGenerator } from './DynamicPageGenerator';
 import { mcAuthCfg } from './global';
 import { getLocalization } from './Localization';
+import ConfigFile from './utils/old-node-commons/ConfigFile';
 
 export const APP_VERSION: string = JSON.parse(Fs.readFileSync(Path.join(__dirname, '..', 'package.json'), 'utf-8')).version ?? 'UNKNOWN_APP_VERSION';
 
@@ -18,7 +18,7 @@ let mailGenerator: DynamicMailGenerator;
 let pageGenerator: DynamicPageGenerator;
 
 export function generateUserAgent(): string {
-  return HttpClient.generateUserAgent('Mc-Auth.com', APP_VERSION, true, 'https://github.com/Mc-Auth-com/Mc-Auth#readme');
+  return UserAgentGenerator.generate('Mc-Auth.com', APP_VERSION, true, 'https://github.com/Mc-Auth-com/Mc-Auth#readme');
 }
 
 export function getCfg(): ConfigFile<mcAuthCfg> {
@@ -80,7 +80,16 @@ export function getCfg(): ConfigFile<mcAuthCfg> {
 
 export function getMinecraftApi(): MinecraftApi {
   if (minecraftApi == null) {
-    minecraftApi = new MinecraftApi(generateUserAgent());
+    minecraftApi = new MinecraftApi(generateUserAgent(), {
+      profile: [
+        {url: 'https://api.sprax.dev/mc/v1/profile/%s', acceptsUsername: true, ignoreTimeoutWhenNoEndpointsLeft: true},
+        {url: 'https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false'}
+      ],
+      usernameToUuid: [
+        {url: 'https://api.sprax.dev/mc/v1/uuid/%s', ignoreTimeoutWhenNoEndpointsLeft: true},
+        {url: 'https://api.mojang.com/users/profiles/minecraft/%s'}
+      ]
+    });
   }
 
   return minecraftApi;
@@ -88,7 +97,7 @@ export function getMinecraftApi(): MinecraftApi {
 
 export function getHttpClient(): HttpClient {
   if (httpClient == null) {
-    httpClient = new HttpClient(generateUserAgent());
+    httpClient = new UndiciHttpClient(generateUserAgent());
   }
 
   return httpClient;
