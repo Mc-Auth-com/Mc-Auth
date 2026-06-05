@@ -90,7 +90,7 @@
     "@types/request": "^2.48.13",
     "jest": "^30.4.2",
     "nodemon": "^3.1.14",
-    "ts-jest": "^29.4.9",
+    "ts-jest": "^29.4.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
