@@ -24,7 +24,7 @@ FROM base AS builder
 
 ARG BUILD_SCRIPT=build
 
-RUN npm clean-install
+RUN npm clean-install --allow-git=root
 COPY --chown=node:node tsconfig.json ./tsconfig.json
 COPY --chown=node:node src/ ./src/
 RUN npm run $BUILD_SCRIPT
@@ -36,7 +36,7 @@ RUN npm run $BUILD_SCRIPT
 FROM base AS dev
 
 # TODO: Check if volume mounts could be beneficial for development
-RUN npm clean-install
+RUN npm clean-install --allow-git=root
 
 COPY --chown=node:node --from=builder /app/dist/ ./dist/
 COPY --chown=node:node resources/ ./resources/
@@ -50,7 +50,7 @@ CMD ["node", "--enable-source-maps", "dist/index.js"]
 FROM base AS prod
 
 ENV NODE_ENV=production
-RUN npm clean-install && \
+RUN npm clean-install --allow-git=root && \
     npm cache clean --force && \
     rm -Rf /home/node/.npm/
 
