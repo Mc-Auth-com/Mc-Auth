@@ -125,6 +125,7 @@ export default class OAuthRouter {
           db.getGrant(grantID)
               .then((grant) => {
                 if (!grant) return next(ApiError.create(ApiErrs.NOT_FOUND));
+                if (grant.mcAccountId != req.session?.mcProfile?.id || grant.appId != clientID) return next(ApiError.create(ApiErrs.NOT_FOUND));
                 if (grant.result != null || grant.issuedDuringLast24Hours != true) return next(new ApiError(400, 'Grant already fulfilled or expired', false, {grantID: grant.id}));
 
                 db.getApp(clientID)
