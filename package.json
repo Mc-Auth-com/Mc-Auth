@@ -61,7 +61,7 @@
     "cookie-parser": "^1.4.7",
     "ejs": "^5.0.2",
     "escape-html": "^1.0.3",
-    "express": "^4.22.2",
+    "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
     "minecraft-api-client": "github:SpraxDev/Node-Minecraft-API-Client#9aff19eff29a041e3f405ca37ac8be06bf0c9fbc",
