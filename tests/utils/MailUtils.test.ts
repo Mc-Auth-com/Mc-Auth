@@ -23,7 +23,8 @@ describe('Send mails [Mocked]', () => {
       auth: {
         username: '',
         password: ''
-      }
+      },
+      from: 'no-reply@localhost'
     });
   });
 

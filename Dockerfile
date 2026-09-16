@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM docker.io/node:24-alpine AS base
 
-LABEL maintainer="Christian Koop <contact@sprax2013.de>"
-
 RUN apk --no-cache -U upgrade && \
     npm i -g npm --update-notifier false && \
     npm cache clean --force

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
+import nodemailer, { type SentMessageInfo } from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
 import { getMailGenerator } from '../Constants';
 
@@ -24,7 +24,7 @@ TODO: temporarily blacklist mails when returned with 'hard bounce'?
 export class MailUtils {
   private mailer: Mail;
 
-  constructor(options: { host: string, port: number, secure: boolean, auth: { username: string, password: string } }) {
+  constructor(options: { host: string, port: number, secure: boolean, auth: { username: string, password: string }, from: string }) {
     this.mailer = nodemailer.createTransport({
       host: options.host,
       port: options.port,
@@ -33,21 +33,21 @@ export class MailUtils {
         user: options.auth.username,
         pass: options.auth.password
       }
-    }, {from: 'no-reply@mc-auth.com'});
+    }, { from: options.from });
   }
 
-  async send(name: string, email: string, subject: string, html: string, text?: string): Promise<{ accepted: string[], rejected: string[], response: string, messageId: string }> {
-    const mailResult = await this.mailer.sendMail({to: `${name} <${email}>`, subject, html, text});
+  async send(name: string, email: string, subject: string, html: string, text?: string): Promise<SentMessageInfo> {
+    const mailResult = await this.mailer.sendMail({ to: `${name} <${email}>`, subject, html, text });
 
     console.log(`[INFO] Sent mail '${mailResult.messageId}' to '${name}' with subject '${subject}'`);
     return mailResult;
   }
 
-  async sendConfirmEmail(account: mcAuthAccount, newEmail: string, langKey: string): Promise<{ accepted: string[], rejected: string[], response: string, messageId: string }> {
+  async sendConfirmEmail(account: mcAuthAccount, newEmail: string, langKey: string): Promise<SentMessageInfo> {
     const content = getMailGenerator().renderMail(MailTemplate.CONFIRM_EMAIL, langKey, {
       confirm_mail: {
-        mcProfile: {id: account.id, name: account.name},
-        token: jwt.sign({id: account.id, email: newEmail}, getPartOfSecret(256), {expiresIn: '2d'})
+        mcProfile: { id: account.id, name: account.name },
+        token: jwt.sign({ id: account.id, email: newEmail }, getPartOfSecret(256), { expiresIn: '2d' }),
       }
     });
 
