@@ -67,7 +67,7 @@
     "moment": "^2.31.0",
     "morgan": "^1.12.1",
     "node-cache": "^5.1.2",
-    "nodemailer": "^10.0.10",
+    "nodemailer": "^10.0.16",
     "pg": "^8.23.1",
     "rate-limiter-flexible": "^11.2.1",
     "rotating-file-stream": "^3.2.10",
